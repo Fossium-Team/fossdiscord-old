@@ -13,7 +13,7 @@ class General(commands.Cog):
 
     @commands.command(description='Shows information about bot instance.')
     async def about(self, ctx):
-        em = discord.Embed(title = "About this instance"")
+        em = discord.Embed(title = "About this instance")
         em.add_field(name = "Website", value = "Coming soon")
         em.add_field(name = "Project URL", value = "https://github.com/reoccurtech/fosscord/")
         em.add_field(name = "Support server", value = "Coming soon")
