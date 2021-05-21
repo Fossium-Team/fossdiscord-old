@@ -36,5 +36,3 @@ Made with discord.py v9.
 **RIP FreeDiscord (2021-2021)**
 
 *This is a project replacing FreeDiscord. This is not an unauthorized fork.*
-
-test2
