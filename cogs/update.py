@@ -20,24 +20,36 @@ class Update(commands.Cog):
         """Attempts to check for updates using the GitHub repository"""
         if str(ctx.message.author.id) == config.ownerID:
             # username = os.getlogin()
-            with open('globalconfig.py') as f:
+            if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "darwin":
+                tmpdir = "/tmp"
+            elif sys.platform == "win32":
+                tmpdir = "/Temp"
+            with open('config.py') as f:
                 if not 'latest_version' in f.read():
-                    with open('globalconfig.py', 'a') as writeFile :
+                    with open('config.py', 'a') as writeFile :
                         writeFile.write("latest_version = 'unknown'")
                         writeFile.close()
-                        importlib.reload(globalconfig)
-            if not os.path.exists('/tmp/updatecheck'):
-                os.makedirs('/tmp/updatecheck')
+                        importlib.reload(config)
+            if not os.path.exists(tmpdir + '/updatecheck'):
+                os.makedirs(tmpdir + '/updatecheck')
+            elif os.path.exists(tmpdir + '/updatecheck'):
+                new_name = str("unlock")
+                os.rename(tmpdir + '/updatecheck/.git/objects/pack', new_name)
+                shutil.rmtree(tmpdir + '/updatecheck')
             #os.mkdir('/tmp/freeupdate')
-            HTTPS_REMOTE_URL = config.github_login_url
+            HTTPS_REMOTE_URL = globalconfig.github_login_url
             first_embed = discord.Embed(title = "Checking for updates...", description = "FreeDiscord is now checking for updates. Please be patient.")
             # send a first message with an embed
             msg = await ctx.send(embed=first_embed)
-            DEST_NAME = '/tmp/updatecheck'
+            DEST_NAME = tmpdir + '/updatecheck'
             cloned_repo = Repo.clone_from(HTTPS_REMOTE_URL, DEST_NAME)
             dir_path = os.getcwd()
-            copyfile('/tmp/updatecheck/globalconfig.py', dir_path + '/updateconfig.py')
-            shutil.rmtree("/tmp/updatecheck")
+            copyfile(tmpdir + '/updatecheck/globalconfig.py', dir_path + '/updateconfig.py')
+            try:
+                shutil.rmtree(tmpdir + '/updatecheck')
+            except os.error:
+                embed = discord.Embed(title = "Error in removing `" + tmpdir + "/updatecheck` folder", description = 'The `' + tmpdir + '/updatecheck` folder was not able to be removed, probably due to a permissions issue.')
+            await ctx.send(embed=embed) 
             import updateconfig
             if updateconfig.version > globalconfig.version:
                 new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!")
@@ -54,13 +66,13 @@ class Update(commands.Cog):
                 new_embed.add_field(name = "No updates found!", value = "You are up to date! This bot is at version `" + globalconfig.version + "` and the latest bot files available are at version `" + updateconfig.version + "`.")
                 new_embed.add_field(name = "How do I upgrade?", value = "You don't need to take any action, as you are up to date already. However, you can use `" + config.prefix + "help updatebot` for more details about the upgrade/downgrade process.")
                 await msg.edit(embed=new_embed)
-            with open('globalconfig.py', 'r') as file :
+            with open('config.py', 'r') as file :
                 filedata = file.read()
-            newdata = filedata.replace(globalconfig.latest_version, updateconfig.version)
-            with open('globalconfig.py', 'w') as file:
+            newdata = filedata.replace(config.latest_version, updateconfig.version)
+            with open('config.py', 'w') as file:
                 file.write(newdata)
             file.close()
-            importlib.reload(globalconfig)
+            importlib.reload(config)
             os.remove(dir_path + "/updateconfig.py")
 
         else:
@@ -100,10 +112,10 @@ class Update(commands.Cog):
                 subprocess.Popen(['python3', dir_path + '/bot.py'])
                 await ctx.bot.close()
            elif sys.platform == "win32":
-                em = discord.Embed(title = "`updatebot` is not yet available for Windows")
+                em = discord.Embed(title = "`updatebot` is not yet available for Windows.")
                 await ctx.send(embed = em)
            elif sys.platform == "darwin":
-                em = discord.Embed(title = "`updatebot` is not yet available for macOS")
+                em = discord.Embed(title = "`updatebot` is not yet available for macOS.")
                 await ctx.send(embed = em)
 
         else:

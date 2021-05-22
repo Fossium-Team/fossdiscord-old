@@ -8,7 +8,7 @@ intents.members = True
 
 description = ""
 
-bot = commands.Bot(command_prefix='t!', description=description, intents=intents)
+bot = commands.Bot(command_prefix=config.prefix, description=description, intents=intents)
 bot.remove_command('help')
 
 @bot.event
