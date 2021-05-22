@@ -24,10 +24,10 @@ class Help(commands.Cog):
                 em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
                 em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
                 em.add_field(name = "Help", value = "help - Shows this message")
-                if globalconfig.latest_version > globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + globalconfig.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-                elif globalconfig.latest_version < globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + globalconfig.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+                if config.latest_version > globalconfig.version:
+                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+                elif config.latest_version < globalconfig.version:
+                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
             elif config.bot_lockdown_status == 'no_lockdown':
                 em = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
                 em.add_field(name = "General", value = "about")
@@ -40,10 +40,10 @@ class Help(commands.Cog):
                 em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
                 em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
                 em.add_field(name = "Help", value = "help - Shows this message")
-                if globalconfig.latest_version > globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + globalconfig.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-                elif globalconfig.latest_version < globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + globalconfig.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+                if config.latest_version > globalconfig.version:
+                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+                elif config.latest_version < globalconfig.version:
+                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
                 await ctx.send(embed = em)
 
     # Moderation commands

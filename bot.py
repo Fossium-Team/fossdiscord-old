@@ -35,15 +35,16 @@ bot.load_extension("cogs.admin")
 bot.load_extension("cogs.vt_scan")
 bot.load_extension("cogs.fun")
 
-#@bot.event
-#async def on_message(msg):
-#    for word in config.bad_words:
-#        if word in msg.content.lower():
-#            await msg.delete()
-#            await msg.channel.send("Please don't use that word", delete_after=5.0)
-#        else:
-#            await bot.process_commands(msg)
-#        await bot.process_commands(msg)
+@bot.event
+async def on_message(msg):
+    for word in config.bad_words:
+        if word in msg.content.lower():
+            await msg.delete()
+            await msg.channel.send("Please don't use that word", delete_after=5.0)
+        else:
+            await bot.process_commands(msg)
+
+    await bot.process_commands(msg)
 
 @bot.event
 async def on_command_error(ctx, error):
