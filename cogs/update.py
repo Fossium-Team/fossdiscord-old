@@ -100,7 +100,7 @@ class Update(commands.Cog):
                 dest = dir_path + "/cogs"
                 destination = shutil.copytree(src, dest)
                 copyfile('/tmp/freeupdate/bot.py', dir_path + '/bot.py')
-                copyfile('/tmp/freeupdate/freesetup.py', dir_path + '/freesetup.py')
+                copyfile('/tmp/freeupdate/setup.py', dir_path + '/setup.py')
                 copyfile('/tmp/freeupdate/README.md', dir_path + '/README.md')
                 copyfile('/tmp/freeupdate/globalconfig.py', dir_path + '/globalconfig.py')
                 shutil.rmtree('/tmp/freeupdate')
