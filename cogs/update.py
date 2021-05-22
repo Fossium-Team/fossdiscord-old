@@ -36,6 +36,7 @@ class Update(commands.Cog):
                 if os.path.exists(tmpdir + '/updatecheck/.git/objects/pack'):
                     new_name = str("unlock")
                     os.rename(tmpdir + '/updatecheck/.git/objects/pack', new_name)
+                    shutil.rmtree('unlock')
                 shutil.rmtree(tmpdir + '/updatecheck')
             #os.mkdir('/tmp/freeupdate')
             HTTPS_REMOTE_URL = globalconfig.github_login_url
@@ -104,6 +105,7 @@ class Update(commands.Cog):
                 copyfile('/tmp/freeupdate/setup.py', dir_path + '/setup.py')
                 copyfile('/tmp/freeupdate/README.md', dir_path + '/README.md')
                 copyfile('/tmp/freeupdate/globalconfig.py', dir_path + '/globalconfig.py')
+                copyfile('/tmp/freeupdate/start.py', dir_path + '/start.py')
                 shutil.rmtree('/tmp/freeupdate')
                 print("Done! Restart the bot to apply the changes!")
                 em = discord.Embed(title = "Updated!", description = "FreeDiscord updated! No error reported. Check your console to confirm this.")

@@ -13,7 +13,7 @@ If you find an issue, or have a feature suggestion, please let us know by openin
 4. Run `python3 setup.py` for an interative configuration creator. The bot will not run if you don't do this.
 5. Before starting, make sure the Server Members Intent is enabled in your bot settings in the Discord Developer Portal.
 6. To make sure the `mute` and `unmute` commands work, please make a role called `muted` in your server. The bot will not (yet) do this for you.
-7. Run the main bot file: `python3 bot.py`.
+7. Run the main bot file: `python3 start.py` (or see the commands with `python3 start.py --help`).
 
 ### Features
 
