@@ -8,7 +8,7 @@ intents.members = True
 
 description = ""
 
-bot = commands.Bot(command_prefix=config.prefix, intents=intents, description=description)
+bot = commands.Bot(command_prefix='t!', description=description, intents=intents)
 bot.remove_command('help')
 
 @bot.event
@@ -21,6 +21,8 @@ async def on_ready():
     print('------')
     # Changes bot status to the default status when the bot starts up
     await bot.change_presence(activity=discord.Game(name='v' + globalconfig.version + " | " + config.prefix + "help"))
+    user = bot.get_user(int(config.ownerID))
+    await user.send("The bot is back online.")
 
 bot.load_extension("cogs.general")
 bot.load_extension("cogs.utils")
@@ -33,15 +35,15 @@ bot.load_extension("cogs.admin")
 bot.load_extension("cogs.vt_scan")
 bot.load_extension("cogs.fun")
 
-@bot.event
-async def on_message(msg):
-    for word in config.bad_words:
-        if word in msg.content.lower():
-            await msg.delete()
-            await msg.channel.send("Please don't use that word", delete_after=5.0)
-        else:
-            await bot.process_commands(msg)
-        await bot.process_commands(msg)
+#@bot.event
+#async def on_message(msg):
+#    for word in config.bad_words:
+#        if word in msg.content.lower():
+#            await msg.delete()
+#            await msg.channel.send("Please don't use that word", delete_after=5.0)
+#        else:
+#            await bot.process_commands(msg)
+#        await bot.process_commands(msg)
 
 @bot.event
 async def on_command_error(ctx, error):
