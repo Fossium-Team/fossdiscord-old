@@ -33,8 +33,9 @@ class Update(commands.Cog):
             if not os.path.exists(tmpdir + '/updatecheck'):
                 os.makedirs(tmpdir + '/updatecheck')
             elif os.path.exists(tmpdir + '/updatecheck'):
-                new_name = str("unlock")
-                os.rename(tmpdir + '/updatecheck/.git/objects/pack', new_name)
+                if os.path.exists(tmpdir + '/updatecheck/.git/objects/pack'):
+                    new_name = str("unlock")
+                    os.rename(tmpdir + '/updatecheck/.git/objects/pack', new_name)
                 shutil.rmtree(tmpdir + '/updatecheck')
             #os.mkdir('/tmp/freeupdate')
             HTTPS_REMOTE_URL = globalconfig.github_login_url
