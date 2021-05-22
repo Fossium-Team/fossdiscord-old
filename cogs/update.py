@@ -49,8 +49,8 @@ class Update(commands.Cog):
             try:
                 shutil.rmtree(tmpdir + '/updatecheck')
             except os.error:
-                embed = discord.Embed(title = "Error in removing `" + tmpdir + "/updatecheck` folder", description = 'The `' + tmpdir + '/updatecheck` folder was not able to be removed, probably due to a permissions issue.')
-            await ctx.send(embed=embed) 
+                sendembed = discord.Embed(title = "Error in removing `" + tmpdir + "/updatecheck` folder", description = 'The `' + tmpdir + '/updatecheck` folder was not able to be removed, probably due to a permissions issue.')
+            await ctx.send(embed=sendembed) 
             import updateconfig
             if updateconfig.version > globalconfig.version:
                 new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!")
