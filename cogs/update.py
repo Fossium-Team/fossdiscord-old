@@ -132,7 +132,7 @@ class Update(commands.Cog):
             except OSError:
                 os.rmdir('/tmp/cogupdate')
                 os.mkdir('/tmp/cogupdate')
-            HTTPS_REMOTE_URL = config.github_login_url
+            HTTPS_REMOTE_URL = globalconfig.github_login_url
             DEST_NAME = '/tmp/cogupdate'
             cloned_repo = Repo.clone_from(HTTPS_REMOTE_URL, DEST_NAME)
             dir_path = os.getcwd()
