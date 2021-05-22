@@ -6,7 +6,9 @@ import globalconfig
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix=config.prefix, intents=intents)
+description = ""
+
+bot = commands.Bot(command_prefix=config.prefix, intents=intents, description=description)
 bot.remove_command('help')
 
 @bot.event
