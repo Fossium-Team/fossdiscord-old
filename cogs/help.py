@@ -31,7 +31,7 @@ class Help(commands.Cog):
             elif config.bot_lockdown_status == 'no_lockdown':
                 em = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
                 em.add_field(name = "General", value = "about")
-                em.add_field(name = "Moderation", value = "ban, delwarn, kick, mute, purge, unban, unmute, warn, warns")
+                em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
                 em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
                 em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
                 em.add_field(name = "Fun", value = "add, choose, f")
@@ -51,6 +51,11 @@ class Help(commands.Cog):
     async def _ban(self, ctx):
         em = discord.Embed(title = "Moderation: Ban", description = config.prefix + "ban <user> optional:<reason> \n\nBan a member.")
         await ctx.send(embed = em)
+    
+    @help.command(name="changenick")
+    async def _reloadcog(self, ctx):
+        em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname> \n\nChanges the nickname of a user or a bot.")
+        await ctx.send(embed = em)
 
     @help.command(name="delwarn")
     async def _delwarn(self, ctx):
@@ -60,6 +65,11 @@ class Help(commands.Cog):
     @help.command(name="kick")
     async def _kick(self, ctx):
         em = discord.Embed(title = "Moderation: Kick", description = config.prefix + "kick <user> optional:<reason> \n\nKick a member.")
+        await ctx.send(embed = em)
+    
+    @help.command(name="modnick")
+    async def _reloadcog(self, ctx):
+        em = discord.Embed(title = "Moderation: ModNick", description = config.prefix + "modnick <user ID or mention>\n\nModerates the nickname of a user or a bot (sets the nickname to 'ModdedNick' plus a random string of letters or numbers).")
         await ctx.send(embed = em)
 
     @help.command(name="mute")

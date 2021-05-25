@@ -1,7 +1,6 @@
-import discord, time
+import discord, time, json, base64, requests, asyncio
 from discord.ext import commands
 import config
-import json, base64, requests, asyncio
 
 apikey = config.virustotal_api
 

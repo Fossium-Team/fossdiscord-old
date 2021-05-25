@@ -1,10 +1,7 @@
 import discord
-import time
-import os
+import time, os, random, asyncio, config, string
 from discord.ext import commands
 from discord.utils import get
-import asyncio
-import config
 
 ##immune_roles variable
 #def check_immune(roles):
@@ -215,6 +212,32 @@ class Moderation(commands.Cog):
             f = open(fn, 'w')
             f.writelines(output)
             f.close()
+            await ctx.send("Successfully removed that warning")
+        elif config.bot_lockdown_status == "lockdown_activated":
+            em = discord.Embed(title = "This bot is locked down", description = "<@!" + config.ownerID + "> has locked down this bot globally.")
+            await ctx.send(embed = em)
+    
+    @commands.command(pass_context=True)
+    @commands.has_permissions(manage_nicknames=True)
+    async def modnick(self, ctx, *, user: discord.Member):
+        if config.bot_lockdown_status == 'no_lockdown':
+            source = string.ascii_letters + string.digits
+            result_str = ''.join((random.choice(source) for i in range(8)))
+            newnickname = f"ModdedNick{result_str}"
+            await user.edit(nick=newnickname)
+            await ctx.message.delete()
+            await ctx.send(f'Nickname was moderated for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)
+        elif config.bot_lockdown_status == "lockdown_activated":
+            em = discord.Embed(title = "This bot is locked down", description = "<@!" + config.ownerID + "> has locked down this bot globally.")
+            await ctx.send(embed = em)
+
+    @commands.command(pass_context=True)
+    @commands.has_permissions(manage_nicknames=True)
+    async def changenick(self, ctx, user: discord.Member, nick):
+        if config.bot_lockdown_status == 'no_lockdown':
+            await user.edit(nick=nick)
+            await ctx.message.delete()
+            await ctx.send(f'Nickname was changed for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)
             await ctx.send("Successfully removed that warning")
         elif config.bot_lockdown_status == "lockdown_activated":
             em = discord.Embed(title = "This bot is locked down", description = "<@!" + config.ownerID + "> has locked down this bot globally.")

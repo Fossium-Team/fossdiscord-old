@@ -1,4 +1,6 @@
-import os, ctypes, sys, subprocess, config
+import os, ctypes, sys, subprocess, config, globalconfig, shutil
+from git import Repo
+from shutil import copyfile
 
 commands = ["--help", "--updatebot", "--start", "--credits"]
 
@@ -18,13 +20,13 @@ def botupdate():
             os.mkdir('/tmp/freeupdate')
         HTTPS_REMOTE_URL = globalconfig.github_login_url
         DEST_NAME = '/tmp/freeupdate'
-        cloned_repo = Repo.clone_from(HTTPS_REMOTE_URL, DEST_NAME)
+        Repo.clone_from(HTTPS_REMOTE_URL, DEST_NAME)
         dir_path = os.getcwd()
         shutil.rmtree(dir_path + "/cogs/")
-        path = dir_path
+        #path = dir_path
         src = '/tmp/freeupdate/cogs'
         dest = dir_path + "/cogs"
-        destination = shutil.copytree(src, dest)
+        shutil.copytree(src, dest)
         copyfile('/tmp/freeupdate/bot.py', dir_path + '/bot.py')
         copyfile('/tmp/freeupdate/setup.py', dir_path + '/setup.py')
         copyfile('/tmp/freeupdate/README.md', dir_path + '/README.md')
