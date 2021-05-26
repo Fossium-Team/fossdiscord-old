@@ -130,7 +130,12 @@ class Admin(commands.Cog):
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
             for channel in server.channels:
-                if channel.name == "general" or "général":
+                if channel.name == "general"
+                    await ctx.send(channel.id)
+                    invite = await channel.create_invite()
+                    await ctx.send(invite)
+                    break
+                elif channel.name == "général":
                     await ctx.send(channel.id)
                     invite = await channel.create_invite()
                     await ctx.send(invite)
