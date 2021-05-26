@@ -102,6 +102,19 @@ class Admin(commands.Cog):
         else:
             em = discord.Embed(title = "This command is for the bot owner only.")
             await ctx.send(embed = em)
+        
+
+    @commands.command()
+    async def servers(self, ctx):
+        if str(ctx.message.author.id) == config.ownerID:
+            servers = list(self.bot.guilds)
+            embed = discord.Embed(title = f"Connected on {str(len(servers))} servers:", description = '\n'.join(guild.name for guild in self.bot.guilds))
+            await ctx.send(embed = embed)
+            #await ctx.send(f"Connected on {str(len(servers))} servers:")
+            #await ctx.send('\n'.join(guild.name for guild in self.bot.guilds))
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only.")
+            await ctx.send(embed = em)
 
 def setup(bot):
     bot.add_cog(Admin(bot))
