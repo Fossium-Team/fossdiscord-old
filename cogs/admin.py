@@ -147,6 +147,9 @@ class Admin(commands.Cog):
             #channel = discord.utils.get(server.channels, name='General')
             #invite = channel.create_invite()
             #await ctx.send(invite)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only.")
+            await ctx.send(embed = em)
 
     @commands.command()
     async def getchannels(self, ctx, serverID):
@@ -166,6 +169,9 @@ class Admin(commands.Cog):
                 #await ctx.send(channel)
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only.")
+            await ctx.send(embed = em)
 
     @commands.command()
     async def leaveserver(self, ctx, serverID):
@@ -174,6 +180,9 @@ class Admin(commands.Cog):
             await server.leave()
             embed = discord.Embed(title = f"Left the server '{server.name}'.")
             await ctx.send(embed = embed)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only.")
+            await ctx.send(embed = em)
 
 def setup(bot):
     bot.add_cog(Admin(bot))
