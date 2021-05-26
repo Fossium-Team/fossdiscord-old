@@ -152,12 +152,12 @@ class Admin(commands.Cog):
     async def getchannels(self, ctx, serverID):
         if str(ctx.message.author.id) == config.ownerID:
             server = self.bot.get_guild(int(serverID))
-            await ctx.send(server)
+            #await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
             #channels == list(server.channels)
             embed = discord.Embed(title = f"List of channels for the server '{server.name}'")
-            embed.add_field(name = "Servers", value = '\n'.join(server.channels))
+            embed.add_field(name = "Servers", value = '\n'.join(list(server.channels)))
             await ctx.send(embed = embed)
             #for channel in server.channels:
                 #await ctx.send(channel)
