@@ -128,7 +128,7 @@ class Admin(commands.Cog):
             server = self.bot.get_guild(int(serverID))
             await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
-            await ctx.send(channel)
+            #await ctx.send(channel)
             for channel in server.channels:
                 if channel.name == "general":
                     await ctx.send(channel.id)
