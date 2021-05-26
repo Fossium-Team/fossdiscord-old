@@ -155,7 +155,7 @@ class Admin(commands.Cog):
             #await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
-            channelslist == list(server.channels)
+            channelslist = list(server.channels)
             embed = discord.Embed(title = f"List of channels for the server '{server.name}'")
             embed.add_field(name = "Servers", value = '\n'.join(str(channelslist)))
             await ctx.send(embed = embed)
