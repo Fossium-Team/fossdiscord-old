@@ -167,6 +167,12 @@ class Admin(commands.Cog):
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
 
+    @commands.command()
+    async def leaveserver(self, ctx, serverID):
+        if str(ctx.message.author.id) == config.ownerID:
+            server = self.bot.get_guild(int(serverID))
+            await self.bot.leave_server(server)
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
