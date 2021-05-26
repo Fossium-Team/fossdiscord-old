@@ -118,27 +118,27 @@ class Admin(commands.Cog):
         else:
             em = discord.Embed(title = "This command is for the bot owner only.")
             await ctx.send(embed = em)
-            def getInvite():
-                channel = discord.utils.get(guild.channels, name='General')
-                invite = channel.create_invite()
 
     @commands.command()
-    async def getinvite(self, ctx, serverID):
+    async def getinvite(self, ctx, serverID, channelName = None):
         if str(ctx.message.author.id) == config.ownerID:
+            if channelName != None:
+                channelQuery = channelName
+            elif channelName == None:
+                channelQuery = "general"
             server = self.bot.get_guild(int(serverID))
-            await ctx.send(server)
+            #await ctx.send(server)
+            embed = discord.Embed(title = f"Generated invite for '{server.name}'")
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
             for channel in server.channels:
-                if channel.name.__contains__("general") == True:
-                    await ctx.send(channel.id)
+                if channel.name.__contains__(channelQuery) == True:
+                    #await ctx.send(channel.id)
+                    embed.add_field(name = "Channel Name", value = channel.name)
+                    embed.add_field(name = "Channel ID", value = channel.id)
                     invite = await channel.create_invite()
-                    await ctx.send(invite)
-                    break
-                elif channel.name.__contains__("général") == True:
-                    await ctx.send(channel.id)
-                    invite = await channel.create_invite()
-                    await ctx.send(invite)
+                    embed.add_field(name = "Channel Invite", value = invite)
+                    await ctx.send(embed = embed)
                     break
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
@@ -155,15 +155,14 @@ class Admin(commands.Cog):
             await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
-            for channel in server.channels:
-                await ctx.send(channel)
+            channels == list(server.channels)
+            embed = discord.Embed(title = f"List of channels for the server '{server.name}'")
+            embed.add_field(name = "Servers", value = '\n'.join(server.channels))
+            await ctx.send(embed = embed)
+            #for channel in server.channels:
+                #await ctx.send(channel)
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
-            #guildID = ctx
-            #server = discord.utils.get(str(guildID))
-            #channel = discord.utils.get(server.channels, name='General')
-            #invite = channel.create_invite()
-            #await ctx.send(invite)
 
 
 def setup(bot):
