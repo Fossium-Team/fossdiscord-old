@@ -125,18 +125,16 @@ class Admin(commands.Cog):
     @commands.command()
     async def getinvite(self, ctx, serverID):
         if str(ctx.message.author.id) == config.ownerID:
-            servers = list(self.bot.guilds)
-            for guild in self.bot.guilds:
-                server = self.bot.get_guild(int(serverID))
-                await ctx.send(server)
-                #channel = discord.utils.get(server.channels, name='general')
-                #await ctx.send(channel)
-                for channel in server.channels:
-                    if channel.name == "general":
-                        await ctx.send(channel.id)
-                        invite = await channel.create_invite()
-                        await ctx.send(invite)
-                        break
+            server = self.bot.get_guild(int(serverID))
+            await ctx.send(server)
+            #channel = discord.utils.get(server.channels, name='general')
+            await ctx.send(channel)
+            for channel in server.channels:
+                if channel.name == "general":
+                    await ctx.send(channel.id)
+                    invite = await channel.create_invite()
+                    await ctx.send(invite)
+                    break
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
             #guildID = ctx
