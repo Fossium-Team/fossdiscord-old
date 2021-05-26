@@ -143,6 +143,23 @@ class Admin(commands.Cog):
             #invite = channel.create_invite()
             #await ctx.send(invite)
 
+    @commands.command()
+    async def getchannels(self, ctx, serverID):
+        if str(ctx.message.author.id) == config.ownerID:
+            server = self.bot.get_guild(int(serverID))
+            await ctx.send(server)
+            #channel = discord.utils.get(server.channels, name='general')
+            #await ctx.send(channel)
+            for channel in server.channels:
+                await ctx.send(channel)
+                #invite = channel.create_invite()
+                #await ctx.send(invite)
+            #guildID = ctx
+            #server = discord.utils.get(str(guildID))
+            #channel = discord.utils.get(server.channels, name='General')
+            #invite = channel.create_invite()
+            #await ctx.send(invite)
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
