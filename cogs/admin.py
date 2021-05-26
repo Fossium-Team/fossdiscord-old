@@ -135,7 +135,7 @@ class Admin(commands.Cog):
                     invite = await channel.create_invite()
                     await ctx.send(invite)
                     break
-                elif channel.name == "général":
+                elif channel.name.__contains__("général") == True:
                     await ctx.send(channel.id)
                     invite = await channel.create_invite()
                     await ctx.send(invite)
