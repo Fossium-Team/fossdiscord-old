@@ -53,7 +53,7 @@ class Help(commands.Cog):
         await ctx.send(embed = em)
     
     @help.command(name="changenick")
-    async def _reloadcog(self, ctx):
+    async def _changenick(self, ctx):
         em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname> \n\nChanges the nickname of a user or a bot.")
         await ctx.send(embed = em)
 
@@ -68,7 +68,7 @@ class Help(commands.Cog):
         await ctx.send(embed = em)
     
     @help.command(name="modnick")
-    async def _reloadcog(self, ctx):
+    async def _modnick(self, ctx):
         em = discord.Embed(title = "Moderation: ModNick", description = config.prefix + "modnick <user ID or mention>\n\nModerates the nickname of a user or a bot (sets the nickname to 'ModdedNick' plus a random string of letters or numbers).")
         await ctx.send(embed = em)
 
