@@ -171,7 +171,7 @@ class Admin(commands.Cog):
     async def leaveserver(self, ctx, serverID):
         if str(ctx.message.author.id) == config.ownerID:
             server = self.bot.get_guild(int(serverID))
-            await server.leave_server(server)
+            await server.leave(server)
             embed = discord.Embed(title = f"Left the server '{server.name}'.")
             await ctx.send(embed = embed)
 
