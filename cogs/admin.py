@@ -111,12 +111,40 @@ class Admin(commands.Cog):
             embed = discord.Embed(title = f"Connected on {str(len(servers))} servers:")
             embed.add_field(name = "Servers", value = '\n'.join(guild.name for guild in self.bot.guilds))
             embed.add_field(name = "Server IDs", value = '\n'.join(str(guild.id) for guild in self.bot.guilds))
+            #embed.add_field(name = "Server Invites", value = '\n'.join(for guild in self.bot.guilds: server = self.bot.get_guild(int(guild.id)); for channel in server.channels: invite = await channel.create_invite() if channel.name == "general"))
             await ctx.send(embed = embed)
             #await ctx.send(f"Connected on {str(len(servers))} servers:")
             #await ctx.send('\n'.join(guild.name for guild in self.bot.guilds))
         else:
             em = discord.Embed(title = "This command is for the bot owner only.")
             await ctx.send(embed = em)
+            def getInvite():
+                channel = discord.utils.get(guild.channels, name='General')
+                invite = channel.create_invite()
+
+    @commands.command()
+    async def getinvite(self, ctx, serverID):
+        if str(ctx.message.author.id) == config.ownerID:
+            servers = list(self.bot.guilds)
+            for guild in self.bot.guilds:
+                server = self.bot.get_guild(int(serverID))
+                await ctx.send(server)
+                #channel = discord.utils.get(server.channels, name='general')
+                #await ctx.send(channel)
+                for channel in server.channels:
+                    if channel.name == "general":
+                        await ctx.send(channel.id)
+                        invite = await channel.create_invite()
+                        await ctx.send(invite)
+                        break
+                #invite = channel.create_invite()
+                #await ctx.send(invite)
+            #guildID = ctx
+            #server = discord.utils.get(str(guildID))
+            #channel = discord.utils.get(server.channels, name='General')
+            #invite = channel.create_invite()
+            #await ctx.send(invite)
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
