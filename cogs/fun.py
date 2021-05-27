@@ -34,7 +34,7 @@ class Fun(commands.Cog):
     async def emote(self, ctx, emote):
         """emote command"""
         try:
-            emote = discord.utils.get(self.bot.emojis, name=emote)
+            emote = discord.utils.get(self.bot.emojis, name=str(emote))
             em = discord.Embed(title = "Emote:")
             em.add_field(name="", value=emote)
             await ctx.send(embed = em)
