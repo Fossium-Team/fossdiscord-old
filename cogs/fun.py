@@ -31,7 +31,7 @@ class Fun(commands.Cog):
                 await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
-    async def choose(self, ctx, emote):
+    async def emote(self, ctx, emote):
         """emote command"""
         try:
             emote = discord.utils.get(self.bot.emojis, name=emote)
