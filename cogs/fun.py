@@ -31,15 +31,18 @@ class Fun(commands.Cog):
                 await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
-    async def emote(self, ctx, emote):
+    async def emote(self, ctx, emote: str):
         """emote command"""
-        try:
-            emote = discord.utils.get(self.bot.emojis, name=str(emote))
-            em = discord.Embed(title = f"Here is the emote: {emote}",)
-            await ctx.send(embed = em)
-        except Exception as e:
-            await ctx.send(str(e))
-            return
+        if str(emote) == "":
+            emote = discord.utils.get.server.emojis()
+        else:
+            try:
+                emote = discord.utils.get(self.bot.emojis, name=str(emote))
+            except Exception as e:
+                await ctx.send(str(e))
+                return
+        em = discord.Embed(title = "Here is the emote: ", body = emote)
+        await ctx.send(embed = em)
 
 
     @commands.command()
