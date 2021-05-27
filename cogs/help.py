@@ -21,7 +21,7 @@ class Help(commands.Cog):
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
             em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
-            em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
+            em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, lockdownbot, reloadcog, restartbot, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
             if config.latest_version > globalconfig.version:
                 em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
@@ -221,6 +221,21 @@ class Help(commands.Cog):
     @help.command(name="unloadcog")
     async def _reloadcog(self, ctx):
         em = discord.Embed(title = "Owner: UnloadCog", description = config.prefix + "unloadcog <cog> \n\nUnloads the user specified cog. Owner only.")
+        await ctx.send(embed = em)
+
+    @help.command(name="servers")
+    async def _servers(self, ctx):
+        em = discord.Embed(title = "Owner: Servers", description = config.prefix + "servers \n\nProvides a list of servers the bot is in, along with server IDs. Owner only.")
+        await ctx.send(embed = em)
+
+    @help.command(name="getchannels")
+    async def _getchannels(self, ctx):
+        em = discord.Embed(title = "Owner: GetChannels", description = config.prefix + "getchannels <serverid> \n\nGets the channels of the server provided. The bot must be in the server for this to work. Owner only.")
+        await ctx.send(embed = em)
+
+    @help.command(name="getinvite")
+    async def _getinvite(self, ctx):
+        em = discord.Embed(title = "Owner: GetInvite", description = config.prefix + "getinvite <serverid> <channel>\n\nGenerates an invite for the server provided. A channel name can optionally be provided and it defauts to `general`. Owner only.")
         await ctx.send(embed = em)
 
 
