@@ -238,7 +238,6 @@ class Moderation(commands.Cog):
             await user.edit(nick=nick)
             await ctx.message.delete()
             await ctx.send(f'Nickname was changed for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)
-            await ctx.send("Successfully removed that warning")
         elif config.bot_lockdown_status == "lockdown_activated":
             em = discord.Embed(title = "This bot is locked down", description = "<@!" + config.ownerID + "> has locked down this bot globally.")
             await ctx.send(embed = em)

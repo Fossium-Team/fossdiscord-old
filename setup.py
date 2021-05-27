@@ -110,6 +110,35 @@ def badwordWrite() :
         print("Invalid response, please rerun the script.")
         exit()
 
+def blacklistWrite() :
+    print("Please put in blacklisted users that can't use the bot.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
+    print('["blacklisteduser1", "blacklisteduser2", "blacklisteduser3"]')
+    badwords = input("Enter the bad words (make sure to use the format): ")
+    verificationFour = input("Is this correct? (y/n/s): '" + blacklist + "'")
+    if verificationFour == "y":
+        print("Writing...")
+        config = open('config.py', 'a')
+        writePrefixTemplate = "blacklist = " + blacklist + "\n"
+        config.write(writePrefixTemplate)
+        config.close()
+        print("Written!")
+        print()
+    elif verificationFour == "n":
+        print("Please rerun the file and input the bad words you want to be filtered.")
+        exit()
+    elif verificationFour == "s":
+        print("Writing...")
+        config = open('config.py', 'a')
+        writePrefixTemplate = "blacklist = []\n"
+        config.write(writePrefixTemplate)
+        config.close()
+        print("Written!")
+        print()
+        print("You have chosen not to input bad words. You may add them by editing the config.py file later.")
+    elif verificationFour != "n" or "y" or "s":
+        print("Invalid response, please rerun the script.")
+        exit()
+
 def immunerolesWrite() :
     print("Please put in names of the roles that you want to be immune to the mute command.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
     print('["RoleName1", "RoleName2", "RoleName3"]')
@@ -159,6 +188,7 @@ ownerIDWrite()
 vtapiWrite()
 badwordWrite()
 immunerolesWrite()
+blacklistWrite()
 
 config = open('config.py', 'a')
 config.write("bot_lockdown_status = 'no_lockdown'")
