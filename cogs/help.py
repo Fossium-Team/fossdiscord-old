@@ -17,7 +17,7 @@ class Help(commands.Cog):
             em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            em.add_field(name = "Fun", value = "add, choose, f")
+            em.add_field(name = "Fun", value = "add, choose, f, emote")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
             em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
