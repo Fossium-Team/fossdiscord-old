@@ -188,7 +188,7 @@ ownerIDWrite()
 vtapiWrite()
 badwordWrite()
 immunerolesWrite()
-blacklistWrite()
+#blacklistWrite()
 
 config = open('config.py', 'a')
 config.write("bot_lockdown_status = 'no_lockdown'")
