@@ -12,39 +12,22 @@ class Help(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def help(self, ctx):
         if ctx.invoked_subcommand is None:
-            if config.bot_lockdown_status == 'lockdown_activated':
-                em = discord.Embed(title = "Help", description = "Note: global bot lockdown is enabled, so most commands are disabled. Use `" + config.prefix + "help <command>` for extended information on a command.")
-                em.add_field(name = "General", value = "GLOBAL BOT LOCKDOWN ENABLED, only the `about` command works.")
-                em.add_field(name = "Moderation", value = "GLOBAL BOT LOCKDOWN ENABLED")
-                em.add_field(name = "Settings", value = "GLOBAL BOT LOCKDOWN ENABLED")
-                em.add_field(name = "Utils", value = "GLOBAL BOT LOCKDOWN ENABLED")
-                em.add_field(name = "Caesarcrypt", value = "GLOBAL BOT LOCKDOWN ENABLED")
-                em.add_field(name = "VirusTotal", value = "GLOBAL BOT LOCKDOWN ENABLED")
-                em.add_field(name = "Owner", value = "lockdownbot, reloadcog, restartbot, shutdownbot")
-                em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
-                em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
-                em.add_field(name = "Help", value = "help - Shows this message")
-                if config.latest_version > globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-                elif config.latest_version < globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-            elif config.bot_lockdown_status == 'no_lockdown':
-                em = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
-                em.add_field(name = "General", value = "about")
-                em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
-                em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-                em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-                em.add_field(name = "Fun", value = "add, choose, f")
-                em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-                em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
-                em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
-                em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
-                em.add_field(name = "Help", value = "help - Shows this message")
-                if config.latest_version > globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-                elif config.latest_version < globalconfig.version:
-                    em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-                await ctx.send(embed = em)
+            em = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
+            em.add_field(name = "General", value = "about")
+            em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
+            em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
+            em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
+            em.add_field(name = "Fun", value = "add, choose, f")
+            em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
+            em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
+            em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
+            em.add_field(name = "Admin", value = "loadcog, lockdownbot, reloadcog, restartbot, shutdownbot, unloadcog")
+            em.add_field(name = "Help", value = "help - Shows this message")
+            if config.latest_version > globalconfig.version:
+                em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+            elif config.latest_version < globalconfig.version:
+                em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+            await ctx.send(embed = em)
 
     # Moderation commands
     @help.command(name="ban")
