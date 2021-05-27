@@ -80,23 +80,26 @@ class Utils(commands.Cog):
     @commands.command()
     async def serverinfo(self, ctx):
         """Gives some information about the server."""
+        role_count = len(ctx.guild.roles)
         name = str(ctx.guild.name)
-        description = str(ctx.guild.description)
+        description = "Description: " + str(ctx.guild.description)
         owner = str(ctx.guild.owner)
         id = str(ctx.guild.id)
         region = str(ctx.guild.region)
         memberCount = str(ctx.guild.member_count)
         icon = str(ctx.guild.icon_url)
         embed = discord.Embed(
-            title=name + " Server Information",
             description=description,
             color=discord.Color.blue()
             )
         embed.set_thumbnail(url=icon)
+        embed.set_author(name=name, icon_url=icon)
         embed.add_field(name="Owner", value=owner, inline=True)
         embed.add_field(name="Server ID", value=id, inline=True)
+        embed.add_field(name="Server Created", value=ctx.guild.created_at.__format__('%d/%m/%Y, %I:%M %p'))
         embed.add_field(name="Region", value=region, inline=True)
-        embed.add_field(name="Member Count", value=memberCount, inline=True)
+        embed.add_field(name="Number of Members", value=memberCount, inline=True)
+        embed.add_field(name="Number of Roles", value=str(role_count), inline=True)
 
         await ctx.send(embed=embed)
 

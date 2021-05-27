@@ -29,6 +29,18 @@ class Fun(commands.Cog):
             else:
                 em = discord.Embed(title = random.choice(choices))
                 await ctx.send(embed = em)
+    
+    @commands.command(description='#emotes')
+    async def emote(self, ctx, emote):
+        """emote command"""
+        try:
+            emote = discord.utils.get(self.bot.emojis, name=str(emote))
+            em = discord.Embed(title = "Emote:")
+            em.add_field(name="", value=emote)
+            await ctx.send(embed = em)
+        except Exception as e:
+            await ctx.send(str(e))
+            return
 
 
     @commands.command()
