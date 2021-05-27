@@ -191,7 +191,7 @@ immunerolesWrite()
 blacklistWrite()
 
 config = open('config.py', 'a')
-config.write("bot_lockdown_status = 'no_lockdown'")
+config.write("latest_version = 'unknown'")
 config.close()
 print("Your config file should be written now!")
 print("To start your bot, run 'python3 start.py'")
