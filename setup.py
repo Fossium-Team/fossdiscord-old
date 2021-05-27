@@ -168,6 +168,38 @@ def immunerolesWrite() :
         print("Invalid response, please rerun the script.")
         exit()
 
+def dateformatWrite() :
+    print("Please choose the date format you want to use in the commands.")
+    print("Choices: 1) day/month/year hour:minutes AM/PM 2) month/day/year hour:minutes AM/PM 3) day/month/year hour:minutes (24 hour) 4) month/day/year hour:minutes (24 hour)")
+    writedateformat = input("Enter the number of your choice: ")
+    verificationOne = input("Is this correct? (y/n): '" + writedateformat + "'")
+    if verificationOne == "y":
+        print("Writing...")
+        if writedateformat == 1:
+            writeDateFormatTemplate = "date_format = '%d/%m/%Y, %I:%M %p'\n"
+        else:
+            if writedateformat == 2:
+                writeDateFormatTemplate = "date_format = '%m/%d/%Y, %I:%M %p'\n"
+            else:
+                if writedateformat == 3:
+                    writeDateFormatTemplate = "date_format = '%d/%m/%Y, %H:%M'\n"
+                else:
+                    if writedateformat == 4:
+                        writeDateFormatTemplate = "date_format = '%m/%d/%Y, %H:%M'\n"
+                    else:
+                        print("Invalid response, please rerun the script.")
+        config = open('config.py', 'a')
+        config.write(writeDateFormatTemplate)
+        config.close()
+        print("Written!")
+        print()
+    elif verificationOne == "n":
+        print("Please rerun the file and input the correct bot token.")
+        exit()
+    elif verificationOne != "n" or "y":
+        print("Invalid response, please rerun the script.")
+        exit()
+
 if os.path.exists("config.py"):
     prompt = input("Existing config.py found. Should I delete it? (y/n)")
     if prompt == "y":
@@ -188,6 +220,7 @@ ownerIDWrite()
 vtapiWrite()
 badwordWrite()
 immunerolesWrite()
+dateformatWrite()
 #blacklistWrite()
 
 config = open('config.py', 'a')

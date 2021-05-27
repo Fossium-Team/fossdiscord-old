@@ -36,7 +36,7 @@ class Utils(commands.Cog):
                 usernickname = "None"
             else:
                 usernickname = user.display_name
-            date_format = "%d/%m/%Y, %I:%M %p"
+            date_format = config.date_format
             embed = discord.Embed()
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
@@ -53,7 +53,7 @@ class Utils(commands.Cog):
                 usernickname = "None"
             else:
                 usernickname = user.display_name
-            date_format = "%d/%m/%Y, %I:%M %p"
+            date_format = config.date_format
             embed = discord.Embed()
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
@@ -96,7 +96,7 @@ class Utils(commands.Cog):
         embed.set_author(name=name, icon_url=icon)
         embed.add_field(name="Owner", value=owner, inline=True)
         embed.add_field(name="Server ID", value=id, inline=True)
-        embed.add_field(name="Server Created", value=ctx.guild.created_at.__format__('%d/%m/%Y, %I:%M %p'))
+        embed.add_field(name="Server Created", value=ctx.guild.created_at.__format__(config.date_format))
         embed.add_field(name="Region", value=region, inline=True)
         embed.add_field(name="Number of Members", value=memberCount, inline=True)
         embed.add_field(name="Number of Roles", value=str(role_count), inline=True)
