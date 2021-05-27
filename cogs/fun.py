@@ -35,7 +35,7 @@ class Fun(commands.Cog):
         """emote command"""
         try:
             emote = discord.utils.get(self.bot.emojis, name=str(emote))
-            em = discord.Embed(title = f"Here is the emote: {emote}",)
+            em = discord.Embed(title = "Here is the emote: ", body = emote)
             await ctx.send(embed = em)
         except Exception as e:
             await ctx.send(str(e))
