@@ -175,26 +175,23 @@ def dateformatWrite() :
     verificationOne = input("Is this correct? (y/n): '" + writedateformat + "'")
     if verificationOne == "y":
         print("Writing...")
-        if writedateformat == 1:
+        if writedateformat == "1":
             writeDateFormatTemplate = "date_format = '%d/%m/%Y, %I:%M %p'\n"
+        elif writedateformat == "2":
+            writeDateFormatTemplate = "date_format = '%m/%d/%Y, %I:%M %p'\n"
+        elif writedateformat == "3":
+            writeDateFormatTemplate = "date_format = '%d/%m/%Y, %H:%M'\n"
+        elif writedateformat == "4": 
+            writeDateFormatTemplate = "date_format = '%m/%d/%Y, %H:%M'\n"
         else:
-            if writedateformat == 2:
-                writeDateFormatTemplate = "date_format = '%m/%d/%Y, %I:%M %p'\n"
-            else:
-                if writedateformat == 3:
-                    writeDateFormatTemplate = "date_format = '%d/%m/%Y, %H:%M'\n"
-                else:
-                    if writedateformat == 4:
-                        writeDateFormatTemplate = "date_format = '%m/%d/%Y, %H:%M'\n"
-                    else:
-                        print("Invalid response, please rerun the script.")
+            print("Invalid response, please rerun the script.")
         config = open('config.py', 'a')
         config.write(writeDateFormatTemplate)
         config.close()
         print("Written!")
         print()
     elif verificationOne == "n":
-        print("Please rerun the file and input the correct bot token.")
+        print("Please rerun the file and input the correct number.")
         exit()
     elif verificationOne != "n" or "y":
         print("Invalid response, please rerun the script.")
