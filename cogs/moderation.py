@@ -223,7 +223,7 @@ class Moderation(commands.Cog):
         if config.bot_lockdown_status == 'no_lockdown':
             source = string.ascii_letters + string.digits
             result_str = ''.join((random.choice(source) for i in range(8)))
-            newnickname = f"ModdedNick{result_str}"
+            newnickname = f"ModdedNick-{result_str}"
             await user.edit(nick=newnickname)
             await ctx.message.delete()
             await ctx.send(f'Nickname was moderated for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)

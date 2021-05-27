@@ -103,6 +103,7 @@ class Utils(commands.Cog):
 
     @commands.command()
     async def quickpoll(self, ctx, *poll):
+        await ctx.message.delete()
         args = " ".join(poll[:])
         em = discord.Embed(title = f'{args}')
         msg = await ctx.send(embed = em)
