@@ -65,7 +65,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def f(self, ctx, *, message2):
-        em = discord.Embed(title = "F in the chat to: " + message2)
+        em = discord.Embed(title = f"F in the chat to **{message2}", color=discord.Color.orange())
         msg = await ctx.send(embed = em)
         await msg.add_reaction('🇫')
 
