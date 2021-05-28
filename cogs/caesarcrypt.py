@@ -7,9 +7,12 @@ class Caesarcrypt(commands.Cog):
         self.bot = bot
 
     @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
-    async def twisted_msg(self, ctx, rounds: int, *, message: str):
+    async def twisted_msg(self, ctx, rounds: int = None, *, message: str):
         """Encrypt a message."""
         await ctx.message.delete()
+        if rounds == None:
+            em = discord.Embed(title = 'No rounds given, syntax: command + rounds + message')
+            return await ctx.send(embed = em)
         encrypt = ""
         message = str(message)
         for char in message:
@@ -30,6 +33,9 @@ class Caesarcrypt(commands.Cog):
     async def untwisted_msg(self, ctx, rounds: int, *, message: str):
         """Decrypt a message."""
         await ctx.message.delete()
+        if rounds == None:
+            em = discord.Embed(title = 'No rounds given, syntax: command + rounds + message')
+            return await ctx.send(embed = em)
         decrypt = ""
         message = str(message)
         for char in message:
