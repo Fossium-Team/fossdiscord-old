@@ -1,4 +1,5 @@
 import discord
+from discord import embeds
 from discord.ext import commands
 import psutil
 import config
@@ -38,15 +39,20 @@ class Fun(commands.Cog):
             await ctx.send(embed=em)
             return
         else:
-            em = discord.Embed(timestamp=emote.created_at)
-            em.set_author(name=emote.name, icon_url=emote.url)
-            em.set_thumbnail(url=emote.url)
-            em.set_footer(text="Created on")
-            em.add_field(name="ID", value=emote.id)
-            em.add_field(name="Usage", value=f"`{emote}`")
-            em.add_field(name="URL", value=f"<{emote.url}>")
-            await ctx.send(embed=em)
-            return
+            try:
+                em = discord.Embed(timestamp=emote.created_at)
+                em.set_author(name=emote.name, icon_url=emote.url)
+                em.set_thumbnail(url=emote.url)
+                em.set_footer(text="Created on")
+                em.add_field(name="ID", value=emote.id)
+                em.add_field(name="Usage", value=f"`{emote}`")
+                em.add_field(name="URL", value=f"<{emote.url}>")
+                await ctx.send(embed=em)
+                return
+            except Exception:
+                em = discord.Embed(title="That emote probably is not in the server that the bot is in.")
+                await ctx.send(embed=em)
+                return
         '''
         else:
             try:
