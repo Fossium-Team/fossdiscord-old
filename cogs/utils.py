@@ -13,7 +13,7 @@ class Utils(commands.Cog):
         '''
         Get the latency of the bot.
         '''
-        em = discord.Embed(title = "Pong! `"f"{round(self.bot.latency*1000)} ms`.")
+        em = discord.Embed(title = "Pong! `"f"{round(self.bot.latency*1000)} ms`.", color = discord.Color.orange())
         await ctx.send(embed = em)
 
 
@@ -37,7 +37,7 @@ class Utils(commands.Cog):
             else:
                 usernickname = user.display_name
             date_format = config.date_format
-            embed = discord.Embed()
+            embed = discord.Embed(color = discord.Color.orange())
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
             embed.add_field(name="ID", value=user.id)
@@ -54,7 +54,7 @@ class Utils(commands.Cog):
             else:
                 usernickname = user.display_name
             date_format = config.date_format
-            embed = discord.Embed()
+            embed = discord.Embed(color = discord.Color.orange())
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
             embed.add_field(name="ID", value=user.id)
@@ -72,7 +72,7 @@ class Utils(commands.Cog):
     @commands.command()
     async def joined(self, ctx, member: discord.Member):
         """Says when a member joined."""
-        em = discord.Embed(title = '{0.name} joined in {0.joined_at}'.format(member))
+        em = discord.Embed(title = '{0.name} joined in {0.joined_at}'.format(member), color = discord.Color.orange())
         await ctx.send(embed = em)
 
 
@@ -90,7 +90,7 @@ class Utils(commands.Cog):
         icon = str(ctx.guild.icon_url)
         embed = discord.Embed(
             description=description,
-            color=discord.Color.blue()
+            color=discord.Color.orange()
             )
         embed.set_thumbnail(url=icon)
         embed.set_author(name=name, icon_url=icon)

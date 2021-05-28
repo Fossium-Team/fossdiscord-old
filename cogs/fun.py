@@ -13,7 +13,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def add(self, ctx, left: int, right: int):
         """Adds two numbers together."""
-        em = discord.Embed(title = left + right)
+        em = discord.Embed(title = left + right, color = discord.Color.orange())
         await ctx.send(embed = em)
 
     
@@ -21,26 +21,26 @@ class Fun(commands.Cog):
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
         if "@everyone" in choices:
-            em = discord.Embed(title = "Nice try, sadly that won't work here.")
+            em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
             await ctx.send(embed = em)
         else:
             if "@here" in choices:
-                em = discord.Embed(title = "Nice try, sadly that won't work here.")
+                em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
                 await ctx.send(embed = em)
             else:
-                em = discord.Embed(title = random.choice(choices))
+                em = discord.Embed(title = random.choice(choices), color = discord.Color.orange())
                 await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
         """emote command"""
         if emote == None:
-            em = discord.Embed(title="No emote given", description = f"Please use `{config.prefix}emote <emote>`.")
+            em = discord.Embed(title="No emote given", description = f"Please use `{config.prefix}emote <emote>`.", color = discord.Color.red())
             await ctx.send(embed=em)
             return
         else:
             try:
-                em = discord.Embed(timestamp=emote.created_at)
+                em = discord.Embed(timestamp=emote.created_at, color = discord.Color.orange())
                 em.set_author(name=emote.name, icon_url=emote.url)
                 em.set_thumbnail(url=emote.url)
                 em.set_footer(text="Created on")

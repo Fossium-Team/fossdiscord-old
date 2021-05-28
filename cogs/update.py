@@ -40,7 +40,7 @@ class Update(commands.Cog):
                 shutil.rmtree(tmpdir + '/updatecheck')
             #os.mkdir('/tmp/freeupdate')
             HTTPS_REMOTE_URL = globalconfig.github_login_url
-            first_embed = discord.Embed(title = "Checking for updates...", description = "FreeDiscord is now checking for updates. Please be patient.")
+            first_embed = discord.Embed(title = "Checking for updates...", description = "FreeDiscord is now checking for updates. Please be patient.", color = discord.Color.orange())
             # send a first message with an embed
             msg = await ctx.send(embed=first_embed)
             DEST_NAME = tmpdir + '/updatecheck'
@@ -50,21 +50,21 @@ class Update(commands.Cog):
             try:
                 shutil.rmtree(tmpdir + '/updatecheck')
             except os.error:
-                embed = discord.Embed(title = "Error in removing `" + tmpdir + "/updatecheck` folder", description = 'The `' + tmpdir + '/updatecheck` folder was not able to be removed, probably due to a permissions issue.')
+                embed = discord.Embed(title = "Error in removing `" + tmpdir + "/updatecheck` folder", description = 'The `' + tmpdir + '/updatecheck` folder was not able to be removed, probably due to a permissions issue.', color = discord.Color.red())
                 await ctx.send(embed=embed) 
             import updateconfig
             if updateconfig.version > globalconfig.version:
-                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!")
+                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!", color = discord.Color.green())
                 new_embed.add_field(name = "Upgrade found!", value = "It is recommended to update to version " + updateconfig.version + " from version " + globalconfig.version + " for the latest bug fixes and feature improvements.")
                 new_embed.add_field(name = "How do I upgrade?", value = "Use `" + config.prefix + "help updatebot` for more details.")
                 await msg.edit(embed=new_embed)
             if updateconfig.version < globalconfig.version:
-                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!")
+                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!", color = discord.Color.green())
                 new_embed.add_field(name = "Downgrade found!", value = "It is recommended to downgrade to version " + updateconfig.version + " from version " + globalconfig.version + " because something most likely broke in the latest release.")
                 new_embed.add_field(name = "How do I downgrade?", value = "Use `" + config.prefix + "help updatebot` for more details. (The update command also downgrades the bot.)")
                 await msg.edit(embed=new_embed)
             if updateconfig.version == globalconfig.version:
-                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!")
+                new_embed = discord.Embed(title = "Checking for updates...", description = "Checking for updates succeeded!", color = discord.Color.green())
                 new_embed.add_field(name = "No updates found!", value = "You are up to date! This bot is at version `" + globalconfig.version + "` and the latest bot files available are at version `" + updateconfig.version + "`.")
                 new_embed.add_field(name = "How do I upgrade?", value = "You don't need to take any action, as you are up to date already. However, you can use `" + config.prefix + "help updatebot` for more details about the upgrade/downgrade process.")
                 await msg.edit(embed=new_embed)
@@ -78,7 +78,7 @@ class Update(commands.Cog):
             os.remove(dir_path + "/updateconfig.py")
 
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.")
+            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -108,21 +108,21 @@ class Update(commands.Cog):
                 copyfile('/tmp/freeupdate/start.py', dir_path + '/start.py')
                 shutil.rmtree('/tmp/freeupdate')
                 print("Done! Restart the bot to apply the changes!")
-                em = discord.Embed(title = "Updated!", description = "FreeDiscord updated! No error reported. Check your console to confirm this.")
+                em = discord.Embed(title = "Updated!", description = "FreeDiscord updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
                 em.add_field(name = "Note", value = "The bot will now restart. If it doesn't, start it up manually. If it won't start, open an issue in FreeDiscord's GitHub repository.")
                 await ctx.send(embed = em)
                 dir_path = os.getcwd()
                 subprocess.Popen(['python3', dir_path + '/bot.py'])
                 await ctx.bot.close()
            elif sys.platform == "win32":
-                em = discord.Embed(title = "`updatebot` is not yet available for Windows.")
+                em = discord.Embed(title = "`updatebot` is not yet available for Windows.", color = discord.Color.red())
                 await ctx.send(embed = em)
            elif sys.platform == "darwin":
-                em = discord.Embed(title = "`updatebot` is not yet available for macOS.")
+                em = discord.Embed(title = "`updatebot` is not yet available for macOS.", color = discord.Color.red())
                 await ctx.send(embed = em)
 
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.")
+            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -146,11 +146,11 @@ class Update(commands.Cog):
             destination = shutil.copytree(src, dest)
             shutil.rmtree('/tmp/cogupdate')
             print("Done! Restart the bot to apply the changes!")
-            em = discord.Embed(title = "Updated!", description = "Cogs updated! No error reported. Check your console to confirm this.")
+            em = discord.Embed(title = "Updated!", description = "Cogs updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
             em.add_field(name = "Note", value = "If you want to use the new cogs, either restart the bot using `" + config.prefix + "restartbot` which will load all the cogs on startup (recommended), or reload every cog manually using `" + config.prefix + "reloadcog {every cog name}.`")
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.")
+            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
 

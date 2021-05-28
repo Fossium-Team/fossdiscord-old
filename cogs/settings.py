@@ -18,22 +18,22 @@ class Settings(commands.Cog):
             if args == '':
                 await self.bot.change_presence(activity=discord.Game(name=''))
 
-                em = discord.Embed(title = "Bot status successfully reset!")
+                em = discord.Embed(title = "Bot status successfully reset!", color = discord.Color.green())
                 await ctx.send(embed = em)
             else:
                 await self.bot.change_presence(activity=discord.Game(name=args))
 
-                em = discord.Embed(title = "Bot status successfully changed to `" + args + "`!")
+                em = discord.Embed(title = "Bot status successfully changed to `" + args + "`!", color = discord.Color.green())
                 await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.")
+            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
 
     @commands.command()
     async def botstatusrepeat(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
-            em = discord.Embed(title = "Status loop initiated.")
+            em = discord.Embed(title = "Status loop initiated.", color = discord.Color.orange())
             await ctx.send(embed = em)
 
             while True:

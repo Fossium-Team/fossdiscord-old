@@ -13,7 +13,7 @@ class General(commands.Cog):
 
     @commands.command(description='Shows information about bot instance.')
     async def about(self, ctx):
-        em = discord.Embed(title = "About this instance")
+        em = discord.Embed(title = "About this instance", color = discord.Color.orange())
         em.add_field(name = "Website", value = "https://freediscord.ga")
         em.add_field(name = "Project URL", value = "https://github.com/reoccurdevs/freediscord/")
         em.add_field(name = "Support server", value = "https://discord.gg/BNhVjFyB3S")

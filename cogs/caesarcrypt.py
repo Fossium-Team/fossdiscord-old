@@ -13,12 +13,12 @@ class Caesarcrypt(commands.Cog):
         """Encrypt a message."""
         await ctx.message.delete()
         if rounds == None:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
             return await ctx.send(embed = em)
         try:
             rounds = int(rounds)
         except Exception:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
             return await ctx.send(embed = em)
         encrypt = ""
         message = str(message)
@@ -31,7 +31,7 @@ class Caesarcrypt(commands.Cog):
             else:
                 # for lowercase z
                 encrypt = encrypt + chr((ord(char) + rounds - 97) % 26 + 97)
-        em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt))
+        em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt), color = discord.Color.orange())
         await ctx.send(embed = em)
 
 
@@ -41,12 +41,12 @@ class Caesarcrypt(commands.Cog):
         """Decrypt a message."""
         await ctx.message.delete()
         if rounds == None:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
             return await ctx.send(embed = em)
         try:
             rounds = int(rounds)
         except Exception:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
             return await ctx.send(embed = em)
         decrypt = ""
         message = str(message)
@@ -60,7 +60,7 @@ class Caesarcrypt(commands.Cog):
                 # for lowercase z
                 decrypt = decrypt + chr((ord(char) - rounds - 97) % 26 + 97)
 
-        em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt))
+        em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt), color = discord.Color.orange())
         await ctx.send(embed = em)
 
 

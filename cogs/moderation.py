@@ -42,11 +42,11 @@ class Moderation(commands.Cog):
         args = " ".join(reason[:])
         if not reason:
             await user.kick()
-            em = discord.Embed(title = f"**{user}** has been kicked, reason: **none**.")
+            em = discord.Embed(title = f"**{user}** has been kicked, reason: **none**.", color = discord.Color.orange())
             await ctx.send(embed = em)
         else:
             await user.kick()
-            em = discord.Embed(title = f"**{user}** has been kicked, reason: **{args}**.")
+            em = discord.Embed(title = f"**{user}** has been kicked, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
 
 
@@ -57,11 +57,11 @@ class Moderation(commands.Cog):
         args = " ".join(reason[:])
         if not reason:
             await user.ban()
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.")
+            em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.orange())
             await ctx.send(embed = em)
         else:
             await user.ban()
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.")
+            em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
 
 
@@ -73,7 +73,7 @@ class Moderation(commands.Cog):
         if timeconvertion(mutetime) != False:
             role = discord.utils.get(user.guild.roles, name="muted")
             await user.add_roles(role)
-            em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".")
+            em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
             await ctx.send(embed = em)
             await asyncio.sleep(timeconvertion(mutetime))
             await user.remove_roles(role)
@@ -89,10 +89,10 @@ class Moderation(commands.Cog):
         await ctx.guild.ban(user)
         await ctx.guild.unban(user)
         if not reason:
-            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **none**.")
+            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **none**.", color = discord.Color.orange())
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **{args}**.")
+            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
 
 
@@ -102,7 +102,7 @@ class Moderation(commands.Cog):
         """Unban a member."""
         userToUnban = await self.bot.fetch_user(id)
         await ctx.guild.unban(userToUnban)
-        em = discord.Embed(title = "Successfully unbanned `" + userToUnban.name + "`")
+        em = discord.Embed(title = "Successfully unbanned `" + userToUnban.name + "`.", color = discord.Color.green())
         await ctx.send(embed = em)
 
 
@@ -112,7 +112,7 @@ class Moderation(commands.Cog):
         """Unmute a member."""
         role = discord.utils.get(user.guild.roles, name="muted")
         await user.remove_roles(role)
-        em = discord.Embed(title = "Successfully unmuted `" + user.name + "`")
+        em = discord.Embed(title = "Successfully unmuted `" + user.name + "`", color = discord.Color.green())
         await ctx.send(embed = em)
 
 
@@ -125,7 +125,7 @@ class Moderation(commands.Cog):
             os.makedirs('warns')
         try:
             if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
-                await ctx.send("Successfully warned that member")
+                await ctx.send("Successfully warned that member.")
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write("\n")
@@ -133,13 +133,13 @@ class Moderation(commands.Cog):
                 warns.close()
 
             elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
-                await ctx.send("Successfully warned that member")
+                await ctx.send("Successfully warned that member.")
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write(writeReasonTemplate)
                 warns.close()
         except:
-            await ctx.send("Successfully warned that member")
+            await ctx.send("Successfully warned that member.")
             writeReasonTemplate = str(args)
             warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
             warns.write(writeReasonTemplate)
@@ -157,15 +157,15 @@ class Moderation(commands.Cog):
                     lines = f.readlines()
                     lines_clean = "".join(lines[:])
                     if not lines_clean:
-                        em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings")
+                        em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
                     else:
-                        em = discord.Embed(title = "Warns for " + str(user), description = lines_clean)
+                        em = discord.Embed(title = "Warns for " + str(user), description = lines_clean, color = discord.Color.orange())
                         await ctx.send(embed = em)
             elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
-                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings")
+                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
                 await ctx.send(embed = em)
         except:
-                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings")
+                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
                 await ctx.send(embed = em)
 
 
@@ -185,7 +185,7 @@ class Moderation(commands.Cog):
         f = open(fn, 'w')
         f.writelines(output)
         f.close()
-        await ctx.send("Successfully removed that warning")
+        await ctx.send("Successfully removed that warning.", delete_after=10.0)
 
     
     @commands.command(pass_context=True)
