@@ -31,10 +31,18 @@ class Fun(commands.Cog):
                 await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
-    async def emote(self, ctx, emote = None):
+    async def emote(self, ctx, emote : discord.Emoji = None):
         """emote command"""
         if str(emote) == None:
             emote = discord.utils.get(self.bot.get_all_emojis())
+        else:
+            embed = discord.Embed(title=emote.name, timestamp=emote.created_at)
+            embed.set_thumbnail(url=emote.url)
+            embed.set_footer(text="Created at")
+            embed.add_field(name="ID", value=emote.id)
+            embed.add_field(name="Usage", value=f"{emote}")
+            await ctx.send(embed=embed)
+        '''
         else:
             try:
                 emote = discord.utils(self.bot.get_all_emojis())
@@ -42,10 +50,7 @@ class Fun(commands.Cog):
             except Exception as e:
                 await ctx.send(str(e))
                 return
-        em = discord.Embed(title = "Here is the emote: ")
-        em.add_field(name=f"{emote}")
-        await ctx.send(embed = em)
-
+        '''
 
     @commands.command()
     async def f(self, ctx, *, message2):
