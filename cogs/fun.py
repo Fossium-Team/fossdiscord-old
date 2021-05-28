@@ -41,7 +41,7 @@ class Fun(commands.Cog):
             em.set_thumbnail(url=emote.url)
             em.set_footer(text="Created at")
             em.add_field(name="ID", value=emote.id)
-            em.add_field(name="Usage", value=f"{emote}")
+            #em.add_field(name="Usage", value=f"{emote}")
             return await ctx.send(embed=em)
         '''
         else:
