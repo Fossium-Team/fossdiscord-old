@@ -33,15 +33,16 @@ class Fun(commands.Cog):
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
         """emote command"""
-        if str(emote) == None:
-            emote = discord.utils.get(self.bot.get_all_emojis())
+        if emote == None:
+            em = discord.Embed(title="No emote given.", body = "Please use 'command' + 'emote'")
+            await ctx.send(embed=em)
         else:
-            embed = discord.Embed(title=emote.name, timestamp=emote.created_at)
-            embed.set_thumbnail(url=emote.url)
-            embed.set_footer(text="Created at")
-            embed.add_field(name="ID", value=emote.id)
-            embed.add_field(name="Usage", value=f"{emote}")
-            await ctx.send(embed=embed)
+            em = discord.Embed(title=emote.name, timestamp=emote.created_at)
+            em.set_thumbnail(url=emote.url)
+            em.set_footer(text="Created at")
+            em.add_field(name="ID", value=emote.id)
+            em.add_field(name="Usage", value=f"{emote}")
+            await ctx.send(embed=em)
         '''
         else:
             try:
