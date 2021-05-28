@@ -34,11 +34,11 @@ class Fun(commands.Cog):
     async def emote(self, ctx, emote = ""):
         """emote command"""
         if str(emote) == "":
-            emote = discord.utils.get.server.emojis()
+            emote = discord.utils.get.server.Emoji()
         else:
             try:
-                emote = emote.discord.utils.get.emojis.name()
-                emote = discord.utils.get(self.bot.emojis, name=emote)
+                emote = emote.discord.utils.get.Emoji.name()
+                emote = discord.utils.get(self.bot.Emoji, name=emote)
             except Exception as e:
                 await ctx.send(str(e))
                 return
