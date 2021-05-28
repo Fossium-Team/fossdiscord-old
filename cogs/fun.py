@@ -35,14 +35,14 @@ class Fun(commands.Cog):
         """emote command"""
         if emote == None:
             em = discord.Embed(title="No emote given.", body = "Please use 'command' + 'emote'")
-            await ctx.send(embed=em)
+            return await ctx.send(embed=em)
         else:
             em = discord.Embed(title=emote.name, timestamp=emote.created_at)
             em.set_thumbnail(url=emote.url)
             em.set_footer(text="Created at")
             em.add_field(name="ID", value=emote.id)
             em.add_field(name="Usage", value=f"{emote}")
-            await ctx.send(embed=em)
+            return await ctx.send(embed=em)
         '''
         else:
             try:
