@@ -34,7 +34,7 @@ class Fun(commands.Cog):
     async def emote(self, ctx, emote = ""):
         """emote command"""
         if str(emote) == "":
-            emote = discord.utils.get.server.emojis.name()
+            emote = discord.utils.get.server.emojis()
         else:
             try:
                 emote = emote.discord.utils.get.emojis.name()
