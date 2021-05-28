@@ -34,7 +34,7 @@ class Fun(commands.Cog):
     async def emote(self, ctx, emote : discord.Emoji = None):
         """emote command"""
         if emote == None:
-            em = discord.Embed(title="No emote given", body = f"Please use `{config.prefix}emote <emote>`.")
+            em = discord.Embed(title="No emote given", description = f"Please use `{config.prefix}emote <emote>`.")
             await ctx.send(embed=em)
             return
         else:
