@@ -30,10 +30,10 @@ class VT(commands.Cog):
         response = str(response).split(",")
         parsed = vt_json_parsing(response)
         if parsed == -1:
-            em = discord.Embed(title = "Something went wrong.")
+            em = discord.Embed(title = "Something went wrong.", color = discord.Color.red())
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "Detections: {}".format(parsed))
+            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.blue())
             await ctx.send(embed = em)
 
 
@@ -53,30 +53,35 @@ class VT(commands.Cog):
                 try:
                     result_id = str(response[1])
                 except Exception:
-                    em = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.")
+                    em = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.", color = discord.Color.red())
                     await ctx.send(embed = em)
                     return
                 break
         try:
             vturl = "https://www.virustotal.com/api/v3/urls/{}".format(result_id)
         except Exception:
-            em = discord.Embed(title = "Something went wrong.")
+            em = discord.Embed(title = "Something went wrong.", color = discord.Colour.red)
             await ctx.send(embed = em)
             return
-        em = discord.Embed(title = "Analyzing url...", description = "Please wait for 15 seconds.")
-        await ctx.send(embed = em)
+        em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
+        msg = await ctx.send(embed = em)
         await asyncio.sleep(15)
         response = requests.get(vturl, headers=header).json()
         response = str(response).split(",")
         parsed = vt_json_parsing(response)
         if parsed == -1:
-            em = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.")
-            await ctx.send(embed = em)
+            new_embed = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.", color = discord.Color.red())
+            #await ctx.send(embed = em)
+            await msg.edit(embed=new_embed)
         else:
             generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
-            em = discord.Embed(title = "Detections: {}".format(str(parsed)))
-            em.add_field(name="Link:", value=generated_link)
-            await ctx.send(embed = em)
+            if str(parsed) >= "1":
+                new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.red())
+            else:
+                new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.green())
+            new_embed.add_field(name="Link:", value=generated_link)
+            #await ctx.send(embed = em)
+            await msg.edit(embed=new_embed)
 
 
 def setup(bot):
