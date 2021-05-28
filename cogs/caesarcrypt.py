@@ -2,16 +2,23 @@ import discord, time
 from discord.ext import commands
 import config
 
+rounds_error = "No rounds given, syntax: command + rounds + message."
+
 class Caesarcrypt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
-    async def twisted_msg(self, ctx, rounds: int = None, *, message: str):
+    async def twisted_msg(self, ctx, rounds = None, *, message: str):
         """Encrypt a message."""
         await ctx.message.delete()
         if rounds == None:
-            em = discord.Embed(title = 'No rounds given, syntax: command + rounds + message')
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            return await ctx.send(embed = em)
+        try:
+            rounds = int(rounds)
+        except Exception:
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
             return await ctx.send(embed = em)
         encrypt = ""
         message = str(message)
@@ -34,7 +41,12 @@ class Caesarcrypt(commands.Cog):
         """Decrypt a message."""
         await ctx.message.delete()
         if rounds == None:
-            em = discord.Embed(title = 'No rounds given, syntax: command + rounds + message')
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
+            return await ctx.send(embed = em)
+        try:
+            rounds = int(rounds)
+        except Exception:
+            em = discord.Embed(title = "Wrong syntax.", description = rounds_error)
             return await ctx.send(embed = em)
         decrypt = ""
         message = str(message)
