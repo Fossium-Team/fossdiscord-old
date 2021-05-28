@@ -46,7 +46,7 @@ async def on_message(msg):
     for word in config.bad_words:
         if word in msg.content.lower():
             await msg.delete()
-            await msg.channel.send("Please don't use that word", delete_after=5.0)
+            await msg.channel.send("Please don't use that word", delete_after=5.0, color = discord.Color.orange())
         else:
             await bot.process_commands(msg)
 
@@ -55,19 +55,19 @@ async def on_message(msg):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        em = discord.Embed(title = "Error", description = "You do not have permission to do that.")
+        em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
     elif isinstance(error, commands.MissingRequiredArgument):
-        em = discord.Embed(title = "Error", description = "Your command is missing an argument.")
+        em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
     elif isinstance(error, commands.CommandNotFound):
-        em = discord.Embed(title = "Error", description = "Command not found")
+        em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
     else:
-        em = discord.Embed(title = "An internal error occurred.")
+        em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 

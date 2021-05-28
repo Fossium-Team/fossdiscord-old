@@ -40,6 +40,7 @@ class VT(commands.Cog):
     @commands.command()
     async def scan_url(self, ctx, url: str):
         #Need to import base64 module to work
+        iconurl = "https://freediscord.ga/vt_logo.png"
         await ctx.message.delete()
         header = {'x-apikey': '{}'.format(apikey)}
         data = {'url': url}
@@ -54,6 +55,7 @@ class VT(commands.Cog):
                     result_id = str(response[1])
                 except Exception:
                     em = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.", color = discord.Color.red())
+                    em.set_author(name="VirusTotal", icon_url=iconurl)
                     await ctx.send(embed = em)
                     return
                 break
@@ -61,9 +63,11 @@ class VT(commands.Cog):
             vturl = "https://www.virustotal.com/api/v3/urls/{}".format(result_id)
         except Exception:
             em = discord.Embed(title = "Something went wrong.", color = discord.Colour.red)
+            em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em)
             return
         em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
+        em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
         await asyncio.sleep(15)
         response = requests.get(vturl, headers=header).json()
@@ -79,6 +83,7 @@ class VT(commands.Cog):
                 new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.red())
             else:
                 new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.green())
+            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             new_embed.add_field(name="Link:", value=generated_link)
             #await ctx.send(embed = em)
             await msg.edit(embed=new_embed)
