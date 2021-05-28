@@ -38,11 +38,12 @@ class Fun(commands.Cog):
         else:
             try:
                 emote = emote.discord.utils.get.emojis.name()
-                emote = discord.utils.get(self.bot.emojis, name=str(emote))
+                emote = discord.utils.get(self.bot.emojis, name=emote)
             except Exception as e:
                 await ctx.send(str(e))
                 return
-        em = discord.Embed(title = "Here is the emote: ", body = emote.emojis)
+        em = discord.Embed(title = "Here is the emote: ")
+        em.add_field(name=f"{emote}")
         await ctx.send(embed = em)
 
 
