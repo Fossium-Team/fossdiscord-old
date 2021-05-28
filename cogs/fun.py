@@ -38,7 +38,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=em)
             return
         else:
-            em = discord.Embed(title=emote.name, timestamp=emote.created_at)
+            em = discord.Embed(title=emote.name, timestamp=emote.created_at, icon_url=emote.url))
             em.set_thumbnail(url=emote.url)
             em.set_footer(text="Created on")
             em.add_field(name="ID", value=emote.id)
