@@ -38,7 +38,7 @@ class VT(commands.Cog):
         else:
             generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
             if int(parsed) == 0 :
-                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.blue())
+                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.green())
             elif int(parsed) >= 1 :
                 em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
