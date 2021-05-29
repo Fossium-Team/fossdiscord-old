@@ -32,7 +32,7 @@ class VT(commands.Cog):
         response = str(response).split(",")
         parsed = vt_json_parsing(response)
         if parsed == -1:
-            em = discord.Embed(title = "Something went wrong.", color = discord.Color.red())
+            em = discord.Embed(title = "Something went wrong, could be the hash not in the VirusTotal database.", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         else:
