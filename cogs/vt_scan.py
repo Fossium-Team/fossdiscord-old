@@ -39,16 +39,12 @@ class VT(commands.Cog):
             generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
             if int(parsed) == 0 :
                 em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.blue())
-                em.set_author(name="VirusTotal", icon_url=iconurl)
-                em.add_field(name="Link:", value=generated_link)
-                await ctx.send(embed = em)
-                return
             elif int(parsed) >= 0 :
                 em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
-                em.set_author(name="VirusTotal", icon_url=iconurl)
-                em.add_field(name="Link:", value=generated_link)
-                await ctx.send(embed = em)
-                return
+            em.set_author(name="VirusTotal", icon_url=iconurl)
+            em.add_field(name="Link:", value=generated_link)
+            await ctx.send(embed = em)
+            return
 
 
     @commands.command()
