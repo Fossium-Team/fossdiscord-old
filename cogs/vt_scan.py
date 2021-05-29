@@ -3,6 +3,7 @@ from discord.ext import commands
 import config
 
 apikey = config.virustotal_api
+iconurl = "https://freediscord.ga/vt_logo.png"
 
 def vt_json_parsing(detections):
     try:
@@ -24,6 +25,7 @@ class VT(commands.Cog):
     @commands.command()
     async def vt_hash(self, ctx, hash: str):
         """VirusTotal Integration"""
+        await ctx.message.delete()
         header = {'x-apikey': '{}'.format(apikey)}
         vturl = "https://www.virustotal.com/api/v3/files/{}".format(hash)
         response = requests.get(vturl, headers = header).json()
@@ -32,15 +34,26 @@ class VT(commands.Cog):
         if parsed == -1:
             em = discord.Embed(title = "Something went wrong.", color = discord.Color.red())
             await ctx.send(embed = em)
+            return
         else:
-            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.blue())
-            await ctx.send(embed = em)
+            generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
+            if int(parsed) == 0 :
+                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.blue())
+                em.set_author(name="VirusTotal", icon_url=iconurl)
+                em.add_field(name="Link:", value=generated_link)
+                await ctx.send(embed = em)
+                return
+            elif int(parsed) >= 0 :
+                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
+                em.set_author(name="VirusTotal", icon_url=iconurl)
+                em.add_field(name="Link:", value=generated_link)
+                await ctx.send(embed = em)
+                return
 
 
     @commands.command()
     async def scan_url(self, ctx, url: str):
         #Need to import base64 module to work
-        iconurl = "https://freediscord.ga/vt_logo.png"
         await ctx.message.delete()
         header = {'x-apikey': '{}'.format(apikey)}
         data = {'url': url}
@@ -79,7 +92,7 @@ class VT(commands.Cog):
             await msg.edit(embed=new_embed)
         else:
             generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
-            if str(parsed) >= "1":
+            if int(parsed) >= 1:
                 new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.red())
             else:
                 new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.green())
