@@ -1,6 +1,6 @@
 # FreeDiscord
 ## Welcome to the official GitHub page of the FreeDiscord bot!
-FreeDiscord is a Discord bot made originally by the reoccurdevs team and now maintained by ([SKBotNL](https://github.com/SKBdtNL) and [Odysseus](https://github.com/Odysseus443) that you can edit and self host. If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/freediscord/issues).
+FreeDiscord is a Discord bot made originally by the reoccurdevs team (you can find their version [here](github.com/reoccurdevs/freediscord) and this repo is maintained by ([SKBotNL](https://github.com/SKBdtNL) and [Odysseus](https://github.com/Odysseus443) that you can edit and self host. If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/freediscord/issues).
 
 ## Documentation
 
