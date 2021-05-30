@@ -1,13 +1,13 @@
-# FreeDiscord
-## Welcome to the official GitHub page of the FreeDiscord bot!
-FreeDiscord is a Discord bot made originally by the reoccurdevs team (you can find their version [here](github.com/reoccurdevs/freediscord) and this repo is maintained by ([SKBotNL](https://github.com/SKBdtNL) and [Odysseus](https://github.com/Odysseus443) that you can edit and self host. If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/freediscord/issues).
+# FOSSDiscord
+## Welcome to the official GitHub page of the FOSSDiscord bot!
+FOSSDiscord is a Discord bot made originally by the reoccurdevs team (you can find their version [here](github.com/reoccurdevs/freediscord) and this repo is maintained by ([SKBotNL](https://github.com/SKBdtNL) and [Odysseus](https://github.com/Odysseus443) that you can edit and self host. If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/FOSSDiscord/issues).
 
 ## Documentation
 
 ### Starting the bot
 #### Make sure you have [Python 3](https://www.python.org/downloads/) installed (and put in path, if you're on Windows 10)!!!
-1. Clone the repository: `git clone https://github.com/reoccurdevs/freediscord.git` and go to step 2. An alternative is to download the ZIP file, unzip it, shift + right click in the `freediscord-main` folder, click on `Open Powershell window here`, and continue with step 3.
-2. `cd` to the repository folder: `cd freediscord`.
+1. Clone the repository: `git clone https://github.com/FOSS-Devs/FOSSDiscord.git` and go to step 2. An alternative is to download the ZIP file, unzip it, shift + right click in the `FOSSDiscord-main` folder, click on `Open Powershell window here`, and continue with step 3.
+2. `cd` to the repository folder: `cd FOSSDiscord`.
 3. Make sure all the dependencies are installed, Windows: `python -m pip install discord.py requests asyncio gitpython psutil datetime` Linux: `pip3 install discord.py requests asyncio gitpython psutil datetime`.
 4. Run `python3 setup.py` for a configuration creator. If you don't do this, the bot will not run.
 5. Before starting, make sure the Server Members Intent is enabled in your bot settings in the Discord Developer Portal.
