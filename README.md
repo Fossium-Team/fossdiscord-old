@@ -1,7 +1,6 @@
 # FreeDiscord
 ## Welcome to the official GitHub page of the FreeDiscord bot!
-FreeDiscord is a Discord bot made by the reoccurdevs team ([ItsJustLag](https://github.com/ItsJustLag), [reoccurcat](https://github.com/reoccurcat), and [Odysseus](https://github.com/Odysseus443)) that you can edit and self host. If you fork this project, please don't make a new project acting like this project is dead. **It isn't.** If you want to fork it and make a new bot, that's fine, but please give us credit. :)
-If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/reoccurdevs/freediscord/issues).
+FreeDiscord is a Discord bot made originally by the reoccurdevs team and now maintained by ([SKBotNL](https://github.com/SKBdtNL) and [Odysseus](https://github.com/Odysseus443) that you can edit and self host. If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/freediscord/issues).
 
 ## Documentation
 
@@ -28,7 +27,7 @@ There are many features of the bot. These features include:
 - Self updating feature
 - Lots more commands, and more commands being added regularly!
 
-Like earlier said, if you have any feature requests or issues with the bot, open an issue [here](https://github.com/reoccurdevs/freediscord/issues)!
+Like earlier said, if you have any feature requests or issues with the bot, open an issue [here](https://github.com/FOSS-Devs/freediscord/issues)!
 Enjoy the bot! We hope you have as much fun with it as we had programming it! :)
 
 Made with discord.py v9.
