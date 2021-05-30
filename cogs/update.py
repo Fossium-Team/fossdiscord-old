@@ -11,6 +11,7 @@ import config
 import globalconfig
 import importlib
 
+# Thanks for reoccurcat btw for this amazing update command
 class Update(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
