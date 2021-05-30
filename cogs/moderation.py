@@ -1,3 +1,6 @@
+# Copyright (c) 2021 SKBotNL (and the members of the FOSS-Devs)
+# See LICENSE in the project root for license information.
+
 import discord
 import time, os, random, asyncio, config, string
 from discord.ext import commands
