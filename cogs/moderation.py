@@ -77,7 +77,7 @@ class Moderation(commands.Cog):
             pass
         else:
             permission = discord.Permissions(send_messages=False, read_messages=False)
-            await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permission = permission)
+            await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permissions = permission)
         if timeconvertion(mutetime) != False:
             role = discord.utils.get(user.guild.roles, name="Muted")
             await user.add_roles(role)
