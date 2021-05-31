@@ -78,12 +78,17 @@ class Moderation(commands.Cog):
         else:
             #permission = discord.Permissions(send_messages=False, read_messages=False)
             #await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permissions = permission)
-            em = discord.Embed(title = "Muted is not in your server role list, please create it first.")
+            em = discord.Embed(title = "Muted is not in your server role list, please create it first.", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         if timeconvertion(mutetime) != False:
-            role = discord.utils.get(user.guild.roles, name="Muted")
-            await user.add_roles(role)
+            try:
+                role = discord.utils.get(user.guild.roles, name="Muted")
+                await user.add_roles(role)
+            except Exception:
+                em = discord.Embed(title = "User already muted, mute him again is not necessary.", color = discord.Color.orange())
+                await ctx.send(embed = em)
+                return
             em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
             await ctx.send(embed = em)
             await asyncio.sleep(timeconvertion(mutetime))
