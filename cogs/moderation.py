@@ -78,7 +78,7 @@ class Moderation(commands.Cog):
         else:
             #permission = discord.Permissions(send_messages=False, read_messages=False)
             #await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permissions = permission)
-            em = discord.Embed(title = "Muted is not in your server role list, please create it first.", color = discord.Color.orange())
+            em = discord.Embed(title = "A role named 'Muted' does not exist in your server, please create it first.", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         if timeconvertion(mutetime) != False:
