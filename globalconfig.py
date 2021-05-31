@@ -1,3 +1,6 @@
+# Copyright (c) 2021 SKBotNL (and the members of the FOSS-Devs)
+# See LICENSE in the project root for license information.
+
 version = "3.0"
 github_login_url = 'https://github.com/reoccurdevs/freediscord'
 # Command list

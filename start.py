@@ -1,3 +1,6 @@
+# Copyright (c) 2021 SKBotNL (and the members of the FOSS-Devs)
+# See LICENSE in the project root for license information.
+
 import os, ctypes, sys, subprocess, config, globalconfig, shutil
 from git import Repo
 from shutil import copyfile
