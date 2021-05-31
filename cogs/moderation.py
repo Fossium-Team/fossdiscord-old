@@ -73,8 +73,12 @@ class Moderation(commands.Cog):
     async def mute(self, ctx, user: discord.Member, mutetime):
         #BTW need to import time&asyncio module to work.
         """Mute a member."""
+        if get(ctx.guild.roles, name="Muted"):
+            pass
+        else:
+            await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000))
         if timeconvertion(mutetime) != False:
-            role = discord.utils.get(user.guild.roles, name="muted")
+            role = discord.utils.get(user.guild.roles, name="Muted")
             await user.add_roles(role)
             em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
             await ctx.send(embed = em)
@@ -113,7 +117,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, user: discord.Member):
         """Unmute a member."""
-        role = discord.utils.get(user.guild.roles, name="muted")
+        role = discord.utils.get(user.guild.roles, name="Muted")
         await user.remove_roles(role)
         em = discord.Embed(title = "Successfully unmuted `" + user.name + "`", color = discord.Color.green())
         await ctx.send(embed = em)
