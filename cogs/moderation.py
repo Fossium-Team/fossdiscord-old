@@ -6,16 +6,6 @@ import time, os, random, asyncio, config, string
 from discord.ext import commands
 from discord.utils import get
 
-##immune_roles variable
-#def check_immune(roles):
-#    roles = ''.join(filter(str.isalpha, str(roles)))
-#    roles = roles.replace('Roleidname', ' ')
-#    roles = roles.split()
-#    if any(role in roles for role in config.immune_roles) == True:
-#        return True
-#    else:
-#        return False
-
 def timeconvertion(time):# Time convertion
     convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
     letters_inside = ''.join(filter(str.isalpha, time))
