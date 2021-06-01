@@ -6,7 +6,7 @@ from discord.ext import commands
 import config
 
 apikey = config.virustotal_api
-iconurl = "https://freediscord.ga/vt_logo.png"
+iconurl = "https://raw.githubusercontent.com/FOSS-Devs/fossdiscord/main/src/vt_logo.png"
 
 def vt_json_parsing(detections):
     try:
