@@ -13,13 +13,6 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def add(self, ctx, left: int, right: int):
-        """Adds two numbers together."""
-        em = discord.Embed(title = left + right, color = discord.Color.orange())
-        await ctx.send(embed = em)
-
-    
     @commands.command(description='For when you wanna settle the score some other way')
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
