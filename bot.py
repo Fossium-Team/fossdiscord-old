@@ -17,6 +17,7 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
     # What gets printed in the terminal when the bot is succesfully logged in
+    print("REMEMBER: YOU MUST RUN THE COMMAND '" + config.prefix + "shutdownbot' TO SHUTDOWN THE BOT!!!!")
     print('\n')
     print('Logged in as')
     print(bot.user.name)
