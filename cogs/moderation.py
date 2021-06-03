@@ -171,8 +171,8 @@ class Moderation(commands.Cog):
                 em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
                 await ctx.send(embed = em)
         except:
-                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-                await ctx.send(embed = em)
+            em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
+            await ctx.send(embed = em)
 
 
     @commands.command()
