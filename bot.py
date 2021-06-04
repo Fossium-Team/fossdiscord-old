@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import config
 import globalconfig
+import socket
 
 intents = discord.Intents.default()
 intents.members = True
@@ -77,4 +78,22 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 
-bot.run(config.bot_token)
+def bind():
+    host = "127.0.0.1"
+    port = 18265
+    _socket = socket.socket()
+    _socket.bind((host,port))
+    _socket.listen(1)
+    conn, addr = _socket.accept()
+    while True:
+            data = conn.recv(1024).decode()
+            if str(data) == 'disconnect':
+                    print('Disconnect signal received, disconnecting...')
+                    _socket.close()
+                    break
+
+try:
+    bind()
+    bot.run(config.bot_token)
+except Exception:
+    print('Something went wrong, probably there is another instance running.')
