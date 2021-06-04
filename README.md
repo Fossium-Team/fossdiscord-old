@@ -11,8 +11,7 @@ FOSSDiscord is a general purpose Discord bot maintained by [SKBotNL](https://git
 3. Make sure all the dependencies are installed, Windows: `python -m pip install discord.py requests asyncio gitpython psutil datetime` Linux: `pip3 install discord.py requests asyncio gitpython psutil datetime`.
 4. Run `python3 setup.py` for a configuration creator. If you don't do this, the bot will not run.
 5. Before starting, make sure the Server Members Intent is enabled in your bot settings in the Discord Developer Portal.
-6. To make sure the `mute` and `unmute` commands work, please make a role called `muted` in your server. The bot will not (yet) do this for you. After you create the role, make sure to create overrides for the channels you don't want a muted user speaking in.
-7. Run the main bot file: `python3 start.py` (or see the commands with `python3 start.py --help`).
+6. Run the main bot file: `python3 bot.py`.
 
 ### Features
 
