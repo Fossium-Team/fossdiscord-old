@@ -159,48 +159,38 @@ class Admin(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    #@commands.command()
-    #async def blacklist(self, ctx, option, userID):
-        #if str(ctx.message.author.id) == config.ownerID:
-        #    if bool(ctx.guild) == True:
-        #        await ctx.message.delete()
-        #    if str(userID).isdigit() == True:
-        #        if str(option) == "remove":
-        #            oldlist = config.blacklist
-        #            oldlist.remove(str(userID))
-        #            importlib.reload(config)
-        #            em = discord.Embed(title = "Success", description = f"Successfully removed <@!{str(userID)}> from the blacklist.")
-        #            await ctx.send(embed = em, delete_after=5.0)
-        #        elif str(option) == "add":
-        #            importlib.reload(config)
-        #            with open('config.py', 'r') as file1:
-        #                filedata = file1.read()
-        #            oldlist = config.blacklist
-        #            print(oldlist)
-        #            oldlist.append(str(userID))
-        #            with open('tempconfig.py', 'w') as file:
-        #                file.write(str(oldlist))
-        #            with open('tempconfig.py', 'r') as file2:
-        #                filedata1 = file2.read()
-        #            print(str(config.blacklist))
-        #            print(str(filedata1))
-        #            filedata2 = filedata.replace(str(config.blacklist), str(filedata1))
-        #            with open('tempconfig2.py', 'w') as file3:
-        #                file3.write(filedata2)
-        #        elif str(option) == "list":
-        #            em = discord.Embed(title = "Blacklisted Users")
-        #            em.add_field(name = "User IDs", value = '\n'.join(list(config.blacklist)))
-        #            #em.add_field(name = "User Mentions", value = "<@!" + *config.blacklist, sep = "\n") + ">")
-        #            await ctx.send(embed = em, delete_after=10.0)
-        #        else:
-        #            em = discord.Embed(title = "Error", description = f"`{str(option)}` doesn't seem to be a valid option. The valid options are `add` and `remove`.")
-        #            await ctx.send(embed = em, delete_after=5.0)
-        #    else:
-        #        em = discord.Embed(title = "Error", description = f"`{str(userID)}` doesn't look like a User ID.")
-        #        await ctx.send(embed = em, delete_after=5.0)
-        #else:
-        #    em = discord.Embed(title = "This command is for the bot owner only.", delete_after=5.0)
-        #    await ctx.send(embed = em)
+    # @commands.command()
+    # async def blacklist(self, ctx, user : discord.Member):
+    #     if str(ctx.message.author.id) == config.ownerID:
+    #         with open("blacklist.py") as blacklistfilecheck:
+    #             if str(user.id) in blacklistfilecheck:
+    #                 em = discord.Embed(title = "That member is already blacklisted.", color = discord.Color.red())
+    #             else:
+    #                 await ctx.send("Successfully blacklisted that member.")
+    #                 writeBlacklist = str(user.id)
+    #                 blacklistfile = open("config/blacklist.py", 'a')
+    #                 blacklistfile.write(writeBlacklist)
+    #                 blacklistfile.close()
+    #     else:
+    #         em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+    #         await ctx.send(embed = em)
 
+    # @commands.command()
+    # async def delblacklist(self,ctx, user : discord.Member):
+    #     if not os.path.exists('warns'):
+    #         os.makedirs('warns')
+    #     fn = "blacklist.py"
+    #     f = open(fn)
+    #     output = []
+    #     word=str(user.id)
+    #     for line in f:
+    #         if not line.startswith(word):
+    #             output.append(line)
+    #     f.close()
+    #     f = open(fn, 'w')
+    #     f.writelines(output)
+    #     f.close()
+    #     em = discord.Embed(title = "Successfully removed the blacklist.", delete_after=10.0, color = discord.Color.green())
+    
 def setup(bot):
     bot.add_cog(Admin(bot))

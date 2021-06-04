@@ -196,7 +196,7 @@ class Moderation(commands.Cog):
         f = open(fn, 'w')
         f.writelines(output)
         f.close()
-        em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.orange())
+        em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.green())
 
     
     @commands.command(pass_context=True)

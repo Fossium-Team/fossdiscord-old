@@ -45,8 +45,9 @@ async def on_message(msg):
     # if str(msg.author.id) in config.blacklist:
     #     for command in globalconfig.commands:
     #         if msg.content.__contains__(str(command)):
-    #             em = discord.Embed(title = "User Blacklisted", description = f"You are blacklisted from using the bot. Please contact <@!{config.ownerID}> for more information.")
-    #             await msg.channel.send(embed = em, delete_after=5.0)
+    #             BotOwner = await bot.fetch_user(config.ownerID)
+    #             em = discord.Embed(title = "User Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+    #             await msg.channel.send(embed = em, delete_after=10.0)
     #             return
     for word in config.bad_words:
         if word in msg.content.lower():
