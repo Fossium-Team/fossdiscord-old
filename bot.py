@@ -25,8 +25,9 @@ async def on_ready():
     print('------')
     # Changes bot status to the default status when the bot starts up
     await bot.change_presence(activity=discord.Game(name='v' + globalconfig.version + " | " + config.prefix + "help"))
-    user = bot.get_user(int(config.ownerID))
-    await user.send("The bot is back online.")
+    botowner = bot.get_user(int(config.ownerID))
+    em = discord.Embed(title = "The bot is back online", color = discord.Color.green())
+    await botowner.send(embed = em)
 
 bot.load_extension("cogs.general")
 bot.load_extension("cogs.utils")

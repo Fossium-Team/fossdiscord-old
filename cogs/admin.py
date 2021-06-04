@@ -71,7 +71,7 @@ class Admin(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             first_embed = discord.Embed(title = "Shutting down bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
-            new_embed = discord.Embed(title = "Shut down bot!", description = "Check your console, as it may still be running a subprocess. If it is, press `ctrl + c` on your keyboard to end the process.", color = discord.Color.green())
+            new_embed = discord.Embed(title = "The bot is shut down!", description = "Check your console, as it may still be running a subprocess. If it is, press `ctrl + c` on your keyboard to end the process.", color = discord.Color.green())
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
         else:
