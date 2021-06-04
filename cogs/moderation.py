@@ -29,7 +29,8 @@ class Moderation(commands.Cog):
     
     @purge.command(name="user")
     async def _user(self, ctx, user: discord.Member, amount=10):
-        await ctx.channel.purge(check=lambda message: message.author == user)
+        await ctx.message.delete()
+        await ctx.channel.purge(limit=amount, check=lambda message: message.author == user)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
