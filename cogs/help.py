@@ -17,7 +17,7 @@ class Help(commands.Cog):
             em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            em.add_field(name = "Fun", value = "add, choose, f, emote")
+            em.add_field(name = "Fun", value = "choose, f, emote")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
             em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
@@ -89,12 +89,6 @@ class Help(commands.Cog):
     @help.command(name="about")
     async def _about(self, ctx):
         em = discord.Embed(title = "General: About", description = config.prefix + "about \n\nShows information about this bot instance.", color = discord.Color.green())
-        await ctx.send(embed = em)
-
-    # Fun commands
-    @help.command(name="add")
-    async def _add(self, ctx):
-        em = discord.Embed(title = "Fun: Add", description = config.prefix + "add <number1> <number2> \n\nAdds two numbers together.", color = discord.Color.green())
         await ctx.send(embed = em)
 
     @help.command(name="choose")
