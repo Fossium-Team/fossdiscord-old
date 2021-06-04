@@ -21,12 +21,15 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, amount=10):
         """Purge messages, default amount is 10."""
         await ctx.channel.purge(limit=amount+1)
-
+    
+    @purge.command(name="user")
+    async def _user(self, ctx, user: discord.Member, amount=10):
+        await ctx.channel.purge(check=lambda message: message.author == user)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)

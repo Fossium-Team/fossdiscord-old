@@ -3,9 +3,6 @@
 
 import discord
 from discord.ext import commands
-import os
-import sys
-sys.path.append(os.path.realpath('.'))
 import config
 import globalconfig
 class Help(commands.Cog):
@@ -65,7 +62,7 @@ class Help(commands.Cog):
 
     @help.command(name="purge")
     async def _purge(self, ctx):
-        em = discord.Embed(title = "Moderation: Purge", description = config.prefix + "purge <number of messages to purge> \n\nPurge messages, default amount is 10.", color = discord.Color.orange())
+        em = discord.Embed(title = "Moderation: Purge", description = config.prefix + "purge <number of messages to purge> \n\nPurge messages, default amount is 10.\n\nOther usages:\n" + config.prefix + "purge <user> <how many messages to look back for message sent by user>", color = discord.Color.orange())
         await ctx.send(embed = em)
 
     @help.command(name="unban")
