@@ -50,6 +50,8 @@ async def on_message(msg):
     #             em = discord.Embed(title = "User Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
     #             await msg.channel.send(embed = em, delete_after=10.0)
     #             return
+    
+    # check for bad words
     for word in config.bad_words:
         if word in msg.content.lower():
             await msg.delete()
@@ -59,6 +61,7 @@ async def on_message(msg):
 
     await bot.process_commands(msg)
 
+# error handling
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
@@ -78,6 +81,7 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 
+# multi-instances prevention
 def bind():
     host = "127.0.0.1"
     port = 18265
