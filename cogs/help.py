@@ -21,7 +21,7 @@ class Help(commands.Cog):
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
             em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
-            em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, lockdownbot, reloadcog, restartbot, servers, shutdownbot, unloadcog")
+            em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
             if config.latest_version > globalconfig.version:
                 em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
