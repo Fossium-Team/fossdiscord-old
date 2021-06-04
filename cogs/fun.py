@@ -19,13 +19,13 @@ class Fun(commands.Cog):
         if "@everyone" in choices:
             em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
             await ctx.send(embed = em)
-        elif:
-            "@here" in choices:
-            em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
-            await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = random.choice(choices), color = discord.Color.green())
-            await ctx.send(embed = em)
+            if "@here" in choices:
+                em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
+                await ctx.send(embed = em)
+            else:
+                em = discord.Embed(title = random.choice(choices), color = discord.Color.orange())
+                await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
