@@ -13,6 +13,7 @@ from shutil import copyfile
 import config
 import globalconfig
 import importlib
+import socket
 
 def close_port():
         message = 'disconnect'

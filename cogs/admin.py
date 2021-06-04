@@ -8,6 +8,7 @@ import globalconfig
 import importlib
 import subprocess
 import os
+import socket
 
 #If this not working, just comment out this, I will improve it tomorrow.
 def close_port():
