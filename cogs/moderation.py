@@ -53,11 +53,11 @@ class Moderation(commands.Cog):
         args = " ".join(reason[:])
         if not reason:
             await user.ban()
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.red())
             await ctx.send(embed = em)
         else:
             await user.ban()
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.red())
             await ctx.send(embed = em)
 
 
@@ -79,7 +79,7 @@ class Moderation(commands.Cog):
                 role = discord.utils.get(user.guild.roles, name="Muted")
                 await user.add_roles(role)
             except Exception:
-                em = discord.Embed(title = "User already muted, mute him again is not necessary.", color = discord.Color.orange())
+                em = discord.Embed(title = "User already muted, mute him again is not necessary.", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
             em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
@@ -87,7 +87,7 @@ class Moderation(commands.Cog):
             await asyncio.sleep(timeconvertion(mutetime))
             await user.remove_roles(role)
         elif timeconvertion(mutetime) == False:
-            em = discord.Embed(title = "The time format doesn't seem right.")
+            em = discord.Embed(title = "The time format doesn't seem right.", color = discord.Color.red())
             await ctx.send(embed = em)
 
 
@@ -134,7 +134,7 @@ class Moderation(commands.Cog):
             os.makedirs('warns')
         try:
             if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
-                await ctx.send("Successfully warned that member.")
+                em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write("\n")
@@ -142,13 +142,13 @@ class Moderation(commands.Cog):
                 warns.close()
 
             elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
-                await ctx.send("Successfully warned that member.")
+                em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write(writeReasonTemplate)
                 warns.close()
         except:
-            await ctx.send("Successfully warned that member.")
+            em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
             writeReasonTemplate = str(args)
             warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
             warns.write(writeReasonTemplate)
@@ -194,7 +194,7 @@ class Moderation(commands.Cog):
         f = open(fn, 'w')
         f.writelines(output)
         f.close()
-        await ctx.send("Successfully removed that warning.", delete_after=10.0)
+        em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.orange())
 
     
     @commands.command(pass_context=True)
@@ -205,7 +205,7 @@ class Moderation(commands.Cog):
         newnickname = f"ModdedNick{result_str}"
         await user.edit(nick=newnickname)
         await ctx.message.delete()
-        await ctx.send(f'Nickname was moderated for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)
+        await ctx.send(f'Nickname was moderated for {user.mention} ({user.name}#{user.discriminator}).', delete_after=10.0, color = discord.Color.orange())
 
 
     @commands.command(pass_context=True)
@@ -213,7 +213,7 @@ class Moderation(commands.Cog):
     async def changenick(self, ctx, user: discord.Member, nick):
         await user.edit(nick=nick)
         await ctx.message.delete()
-        await ctx.send(f'Nickname was changed for {user.mention} ({user.name}#{user.discriminator}).', delete_after=5.0)
+        await ctx.send(f'Nickname was changed for {user.mention} ({user.name}#{user.discriminator}).', delete_after=10.0, color = discord.Color.orange())
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

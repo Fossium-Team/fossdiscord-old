@@ -83,7 +83,7 @@ class Admin(commands.Cog):
     async def servers(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
             servers = list(self.bot.guilds)
-            embed = discord.Embed(title = f"Connected on {str(len(servers))} servers:", color = discord.Color.orange())
+            embed = discord.Embed(title = f"Connected on {str(len(servers))} servers:", color = discord.Color.green())
             embed.add_field(name = "Servers", value = '\n'.join(guild.name for guild in self.bot.guilds))
             embed.add_field(name = "Server IDs", value = '\n'.join(str(guild.id) for guild in self.bot.guilds))
             #embed.add_field(name = "Server Invites", value = '\n'.join(for guild in self.bot.guilds: server = self.bot.get_guild(int(guild.id)); for channel in server.channels: invite = await channel.create_invite() if channel.name == "general"))
@@ -103,7 +103,7 @@ class Admin(commands.Cog):
                 channelQuery = "general"
             server = self.bot.get_guild(int(serverID))
             #await ctx.send(server)
-            embed = discord.Embed(title = f"Generated invite for '{server.name}'", color = discord.Color.orange())
+            embed = discord.Embed(title = f"Generated invite for '{server.name}'", color = discord.Color.green())
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
             for channel in server.channels:
@@ -133,7 +133,7 @@ class Admin(commands.Cog):
             #await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
             #await ctx.send(channel)
-            embed = discord.Embed(title = f"List of channels for the server '{server.name}'", color = discord.Color.orange())
+            embed = discord.Embed(title = f"List of channels for the server '{server.name}'", color = discord.Color.green())
             for channel in server.channels:
                 #channelsList.append(channel.name)
                 embed.add_field(name = channel.name, value = channel.type)

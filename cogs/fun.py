@@ -19,13 +19,13 @@ class Fun(commands.Cog):
         if "@everyone" in choices:
             em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
             await ctx.send(embed = em)
+        elif:
+            "@here" in choices:
+            em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
+            await ctx.send(embed = em)
         else:
-            if "@here" in choices:
-                em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
-                await ctx.send(embed = em)
-            else:
-                em = discord.Embed(title = random.choice(choices), color = discord.Color.orange())
-                await ctx.send(embed = em)
+            em = discord.Embed(title = random.choice(choices), color = discord.Color.green())
+            await ctx.send(embed = em)
     
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
@@ -36,7 +36,7 @@ class Fun(commands.Cog):
             return
         else:
             try:
-                em = discord.Embed(timestamp=emote.created_at, color = discord.Color.orange())
+                em = discord.Embed(timestamp=emote.created_at, color = discord.Color.green())
                 em.set_author(name=emote.name, icon_url=emote.url)
                 em.set_thumbnail(url=emote.url)
                 em.set_footer(text="Created on")
@@ -61,7 +61,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def f(self, ctx, *, message2):
-        em = discord.Embed(title = f"F in the chat to: **{message2}**", color=discord.Color.orange())
+        em = discord.Embed(title = f"F in the chat to: **{message2}**", color=discord.Color.green())
         msg = await ctx.send(embed = em)
         await msg.add_reaction('🇫')
 

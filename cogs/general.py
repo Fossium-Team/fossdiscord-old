@@ -16,7 +16,7 @@ class General(commands.Cog):
 
     @commands.command(description='Shows information about bot instance.')
     async def about(self, ctx):
-        em = discord.Embed(title = "About this instance", color = discord.Color.orange())
+        em = discord.Embed(title = "About this instance", color = discord.Color.green())
         em.add_field(name = "Project URL", value = "https://github.com/FOSS-Devs/freediscord/")
         em.add_field(name = "Support server", value = "https://discord.gg/myzbqnVUFN")
         em.add_field(name = "Main bot invite link", value = "Coming soon")

@@ -34,7 +34,7 @@ class Caesarcrypt(commands.Cog):
             else:
                 # for lowercase z
                 encrypt = encrypt + chr((ord(char) + rounds - 97) % 26 + 97)
-        em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt), color = discord.Color.orange())
+        em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt), color = discord.Color.green())
         await ctx.send(embed = em)
 
 
@@ -63,7 +63,7 @@ class Caesarcrypt(commands.Cog):
                 # for lowercase z
                 decrypt = decrypt + chr((ord(char) - rounds - 97) % 26 + 97)
 
-        em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt), color = discord.Color.orange())
+        em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt), color = discord.Color.green())
         await ctx.send(embed = em)
 
 

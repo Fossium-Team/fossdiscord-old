@@ -36,14 +36,11 @@ class Settings(commands.Cog):
     @commands.command()
     async def botstatusrepeat(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
-            em = discord.Embed(title = "Status loop initiated.", color = discord.Color.orange())
+            em = discord.Embed(title = "Status loop initiated.", color = discord.Color.green())
             await ctx.send(embed = em)
 
             while True:
-                #Here is the template for setting changing FreeDiscord now playing status automatically:
-                #await self.bot.change_presence(activity=discord.Game("made by the FreeTechnologies team"))
-                #await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Made by the FreeTechnologies team! | https://discord.gg/QhhUVy92ZK"))
+                await self.bot.change_presence(activity=discord.Game("Made by the FOSS-Devs team!"))
                 await asyncio.sleep(10)
                 await self.bot.change_presence(activity=discord.Game("Visual Studio Code"))
                 await asyncio.sleep(10)
@@ -53,10 +50,10 @@ class Settings(commands.Cog):
                 await asyncio.sleep(10)
                 await self.bot.change_presence(activity=discord.Game("Publishing Releases..."))
                 await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("v0.6 | " + config.prefix + "help"))
+                await self.bot.change_presence(activity=discord.Game("v3.0 | " + config.prefix + "help"))
                 await asyncio.sleep(10)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only!")
+            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
 
 
