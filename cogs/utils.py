@@ -25,9 +25,13 @@ class Utils(commands.Cog):
         """Get a link to somebody's avatar."""
         if user is None:
             user = ctx.author
-            await ctx.send(user.avatar_url)
+            em = discord.Embed(title = f"Avatar of {user.name}", color = discord.Color.green())
+            em.set_image(url=user.avatar_url)
+            await ctx.send(embed = em)
         else:
-            await ctx.send(user.avatar_url)
+            em = discord.Embed(title = f"Avatar of {user.name}", color = discord.Color.green())
+            em.set_image(url=user.avatar_url)
+            await ctx.send(embed = em)
 
 
     @commands.command()
