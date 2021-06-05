@@ -15,14 +15,14 @@ import globalconfig
 import importlib
 import socket
 
-def close_port():
+'''def close_port():
         message = 'disconnect'
         host = '127.0.0.1'
         port = 18265
         _socket = socket.socket()
         _socket.connect((host,port))
         _socket.send(message.encode())
-        _socket.close()
+        _socket.close()'''
 
 # Thanks for reoccurcat btw for this amazing update command
 class Update(commands.Cog):
@@ -126,7 +126,7 @@ class Update(commands.Cog):
                 em.add_field(name = "Note", value = "The bot will now restart. If it doesn't, start it up manually. If it won't start, open an issue in FreeDiscord's GitHub repository.")
                 await ctx.send(embed = em)
                 dir_path = os.getcwd()
-                close_port()
+                #close_port()
                 subprocess.Popen(['python3', dir_path + '/bot.py'])
                 await ctx.bot.close()
            elif sys.platform == "win32":

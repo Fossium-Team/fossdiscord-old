@@ -93,14 +93,14 @@ def start():
         print('Bind port failed, probably another instance running.')
         quit()
     bot.run(config.bot_token)
-    _socket.listen(1)
+    '''_socket.listen(1)
     conn, addr = _socket.accept()
     while True:
             data = conn.recv(1024).decode()
             if str(data) == 'disconnect':
                     print('Disconnect signal received, disconnecting...')
                     _socket.close()
-                    break
+                    break'''
 
 
 start()

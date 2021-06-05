@@ -11,14 +11,14 @@ import os
 import socket
 
 #If this not working, just comment out this, I will improve it tomorrow.
-def close_port():
+'''def close_port():
         message = 'disconnect'
         host = '127.0.0.1'
         port = 18265
         _socket = socket.socket()
         _socket.connect((host,port))
         _socket.send(message.encode())
-        _socket.close()
+        _socket.close()'''
 
 class Admin(commands.Cog):
     def __init__(self, bot):
@@ -83,7 +83,7 @@ class Admin(commands.Cog):
             first_embed = discord.Embed(title = "Shutting down bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
             new_embed = discord.Embed(title = "The bot is shut down!", description = "Check your console, as it may still be running a subprocess. If it is, press `ctrl + c` on your keyboard to end the process.", color = discord.Color.green())
-            close_port()
+            #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
         else:
