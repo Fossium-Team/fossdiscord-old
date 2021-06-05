@@ -98,8 +98,9 @@ def bind():
 
 try:
     bind()
-except Exception:
+except Exception as e:
     print('Something went wrong, probably there is another instance running.')
+    print(e)
     quit()
 try:
     bot.run(config.bot_token)
@@ -111,5 +112,5 @@ except Exception as e:
     _socket.connect((host,port))
     _socket.send(message.encode())
     _socket.close()
-    print('e')
+    print(e)
     quit()
