@@ -88,13 +88,13 @@ def start():
     _socket = socket.socket()
     try:
         _socket.bind((host,port))
-        _socket.listen(1)
     except Exception as e:
         print(e)
         print('Bind port failed, probably another instance running.')
         quit()
-    conn, addr = _socket.accept()
     bot.run(config.bot_token)
+    _socket.listen(1)
+    conn, addr = _socket.accept()
     while True:
             data = conn.recv(1024).decode()
             if str(data) == 'disconnect':
