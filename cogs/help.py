@@ -20,13 +20,13 @@ class Help(commands.Cog):
             em.add_field(name = "Fun", value = "choose, f, emote")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scan_url, vt_hash")
-            em.add_field(name = "Update", value = "updatecheck, updatebot, updatecogs")
+            em.add_field(name = "Update", value = "updatecheck, updatebot")
             em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
-            if config.latest_version > globalconfig.version:
-                em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-            elif config.latest_version < globalconfig.version:
-                em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+            # if config.latest_version > globalconfig.version:
+            #     em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
+            # elif config.latest_version < globalconfig.version:
+            #     em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
             await ctx.send(embed = em)
 
     # Moderation commands
@@ -162,18 +162,18 @@ class Help(commands.Cog):
     # Update commands
     @help.command(name="updatebot")
     async def _updatebot(self, ctx):
-        em = discord.Embed(title = "Update: UpdateBot", description = config.prefix + "updatebot \n\nUpdates/downgrades the bot, replacing all of the bot files, except for the warns folder and the config.py file, with the newest files directly from the GitHub repository. Owner only.", color = discord.Color.green())
+        em = discord.Embed(title = "Update: UpdateBot", description = config.prefix + "updatebot \n\nUpdates the bot. Owner only.", color = discord.Color.green())
         await ctx.send(embed = em)
 
     @help.command(name="updatecheck")
     async def _updatecheck(self, ctx):
-        em = discord.Embed(title = "Update: UpdateCheck", description = config.prefix + "updatecheck \n\nChecks for updates/downgrades for the bot. Owner only.", color = discord.Color.green())
+        em = discord.Embed(title = "Update: UpdateCheck", description = config.prefix + "updatecheck \n\nChecks for updates for the bot. Owner only.", color = discord.Color.green())
         await ctx.send(embed = em)
 
-    @help.command(name="updatecogs")
-    async def _updatecogs(self, ctx):
-        em = discord.Embed(title = "Update: UpdateCogs", description = config.prefix + "updatecogs \n\nUpdates the bot's cogs, replacing all of the cog files with the newest files directly from the GitHub repository. Owner only.", color = discord.Color.green())
-        await ctx.send(embed = em)
+    # @help.command(name="updatecogs")
+    # async def _updatecogs(self, ctx):
+    #     em = discord.Embed(title = "Update: UpdateCogs", description = config.prefix + "updatecogs \n\nUpdates the bot's cogs, replacing all of the cog files with the newest files directly from the GitHub repository. Owner only.", color = discord.Color.green())
+    #     await ctx.send(embed = em)
 
     # VirusTotal commands
     @help.command(name="scan_url")
