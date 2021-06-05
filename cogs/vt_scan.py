@@ -25,7 +25,7 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, hash: str):
         """VirusTotal Integration"""
         await ctx.message.delete()
@@ -36,6 +36,7 @@ class VT(commands.Cog):
         parsed = vt_json_parsing(response)
         if parsed == -1:
             em = discord.Embed(title = "Something went wrong, could be the hash not in the VirusTotal database.", color = discord.Color.red())
+            em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em)
             return
         else:
