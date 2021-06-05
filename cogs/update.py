@@ -30,7 +30,7 @@ from datetime import datetime
         _socket.send(message.encode())
         _socket.close()'''
 
-# Thanks for reoccurcat btw for this amazing update command
+# Cross-platform updater
 class Update(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
