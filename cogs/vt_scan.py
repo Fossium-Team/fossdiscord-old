@@ -82,7 +82,7 @@ class VT(commands.Cog):
             await msg.edit(embed=new_embed)(embed = em)
             return
         generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
-        if int(detection) >= 1:
+        if detection >= 1:
             new_embed = discord.Embed(title = f"Detections: {detection}", color = discord.Color.red())
         else:
             new_embed = discord.Embed(title = f"Detections: {detection}", color = discord.Color.green())
