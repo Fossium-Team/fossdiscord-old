@@ -25,30 +25,30 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['hashcheck', 'checkhash'])
+    '''@commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, hash: str):
         """VirusTotal Integration"""
         await ctx.message.delete()
         header = {'x-apikey': '{}'.format(apikey)}
         vturl = "https://www.virustotal.com/api/v3/files/{}".format(hash)
         response = requests.get(vturl, headers = header).json()
-        response = str(response).split(",")
-        parsed = vt_json_parsing(response)
-        if parsed == -1:
-            em = discord.Embed(title = "Something went wrong, could be the hash not in the VirusTotal database.", color = discord.Color.red())
+        try:
+            result_id = str(response['data']['id']).split('-')[1]
+        except Exception:
+            response = str(response['error']['code'])
+            em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em)
             return
-        else:
-            generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
-            if int(parsed) == 0 :
-                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.green())
-            elif int(parsed) >= 1 :
-                em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
-            em.set_author(name="VirusTotal", icon_url=iconurl)
-            em.add_field(name="Link:", value=generated_link)
-            await ctx.send(embed = em)
-            return
+        generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
+        if int(parsed) == 0 :
+            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.green())
+        elif int(parsed) >= 1 :
+            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
+        em.set_author(name="VirusTotal", icon_url=iconurl)
+        em.add_field(name="Link:", value=generated_link)
+        await ctx.send(embed = em)
+        return'''
 
 
     @commands.command(alias=['checkurl','urlcheck','scanurl'])
