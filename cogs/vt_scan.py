@@ -16,7 +16,7 @@ def vt_json_parsing(detections):
         return -1
     for m in detections:
         if 'malicious' in str(m) and any(d.isdigit() for d in m):
-            detections = m
+            #detections = m
             detections = "".join(filter(str.isdigit, m))
             break
     return detections
