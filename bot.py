@@ -86,8 +86,13 @@ def start():
     host = "127.0.0.1"
     port = 18265
     _socket = socket.socket()
-    _socket.bind((host,port))
-    _socket.listen(1)
+    try:
+        _socket.bind((host,port))
+        _socket.listen(1)
+    except Exception as e:
+        print(e)
+        print('Bind port failed, probably another instance running.')
+        quit()
     conn, addr = _socket.accept()
     bot.run(config.bot_token)
     while True:
@@ -97,22 +102,5 @@ def start():
                     _socket.close()
                     break
 
-try:
-    start()
-except Exception as e:
-    print('\nSomething went wrong, probably there is another instance running.')
-    print(e)
-    print('\nPress any key to exit...')
-    quit()
-'''try:
-    bot.run(config.bot_token)
-except Exception as e:
-    message = 'disconnect'
-    host = '127.0.0.1'
-    port = 18265
-    _socket = socket.socket()
-    _socket.connect((host,port))
-    _socket.send(message.encode())
-    _socket.close()
-    print(e)
-    quit()'''
+
+start()
