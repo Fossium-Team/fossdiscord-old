@@ -51,7 +51,7 @@ class VT(commands.Cog):
         return'''
 
 
-    @commands.command(alias=['checkurl','urlcheck','scanurl'])
+    @commands.command(aliases=['checkurl','urlcheck','scanurl'])
     async def scan_url(self, ctx, url: str):
         #Need to import base64 module to work
         await ctx.message.delete()
