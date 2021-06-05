@@ -88,7 +88,6 @@ class VT(commands.Cog):
             new_embed = discord.Embed(title = f"Detections: {detection}", color = discord.Color.green())
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
         new_embed.add_field(name="Link:", value=generated_link)
-        #await ctx.send(embed = em)
         await msg.edit(embed=new_embed)
 
 
