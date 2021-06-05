@@ -12,7 +12,7 @@ from shutil import copyfile
 import config
 import globalconfig
 import importlib
-import socket
+#import socket
 import wget 
 
 '''def close_port():
