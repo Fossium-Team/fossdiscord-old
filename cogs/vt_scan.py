@@ -90,8 +90,8 @@ class VT(commands.Cog):
         elif suspicious >= 2:
             new_embed = discord.Embed(title = f"Detections: `{detection}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+            new_embed.add_field(title = f"Suspicious: `{suspicious}`")
             new_embed.add_field(name="Link:", value=generated_link)
-            new_embed.add_field(title = f"Suspicious: `{suspicious}`", color = discord.Color.red())
         else:
             new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
         await msg.edit(embed=new_embed)
