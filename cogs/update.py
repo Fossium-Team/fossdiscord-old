@@ -44,16 +44,16 @@ class Update(commands.Cog):
             latestversionget = latestversionresponse.json()["name"]
             latestversion = latestversionget.split(' ', 1)[1]
             if versionfile.currentversion == latestversion:
-                secondem = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
                 secondem.add_field(name = "Checking for updates succeeded!", value = "There are no updates available.")
                 await embedmsg.edit(embed=secondem)
             elif versionfile.currentversion > latestversion:
-                secondem = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
                 secondem.add_field(name = "Invalid version in the versionfile.")
                 secondem.add_field(name = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.", color = discord.Color.green())
                 await embedmsg.edit(embed=secondem)
             else:
-                secondem = discord.Embed(title = f"\n \n", color = discord.Color.green())
+                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
                 secondem.add_field(name = "Checking for updates succeeded!")
                 secondem.add_field(name = f"You can update the bot from {versionfile.currentversion} to {latestversion}.")
                 secondem.add_field(name = f"You can update the bot with {config.prefix}updatebot.")
@@ -66,12 +66,15 @@ class Update(commands.Cog):
     async def updatebot(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
            if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "win32":
+                latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+                latestversionget = latestversionresponse.json()["name"]
+                latestversion = latestversionget.split(' ', 1)[1]
                 if versionfile.currentversion == latestversion:
-                    em = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                    em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
                     em.add_field(name = 'Already the latest version.', value = "There are no updates available.")
                     await ctx.send(embed=em)
                 elif versionfile.currentversion > latestversion:
-                    em = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                    em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
                     em.add_field(name = 'Invalid version in the versionfile.', value = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.")
                     await ctx.send(embed=em)
                 else:
