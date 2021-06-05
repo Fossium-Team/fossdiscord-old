@@ -3,7 +3,6 @@
 
 import discord
 from discord.ext import commands
-from git import Repo
 import os
 import shutil
 import sys
@@ -14,6 +13,7 @@ import config
 import globalconfig
 import importlib
 import socket
+import wget 
 
 '''def close_port():
         message = 'disconnect'
