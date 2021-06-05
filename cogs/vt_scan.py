@@ -93,7 +93,7 @@ class VT(commands.Cog):
             new_embed.add_field(name="Link:", value=generated_link)
             new_embed.add_field(title = f"Suspicious: `{suspicious}`", color = discord.Color.red())
         else:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`', the website should be clean.", color = discord.Color.green())
+            new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
         await msg.edit(embed=new_embed)
 
 
