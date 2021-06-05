@@ -102,7 +102,7 @@ except Exception as e:
     print('Something went wrong, probably there is another instance running.')
     print(e)
     quit()
-try:
+'''try:
     bot.run(config.bot_token)
 except Exception as e:
     message = 'disconnect'
@@ -113,4 +113,6 @@ except Exception as e:
     _socket.send(message.encode())
     _socket.close()
     print(e)
-    quit()
+    quit()'''
+
+bot.run(config.bot_token)
