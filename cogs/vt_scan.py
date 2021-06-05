@@ -1,7 +1,7 @@
 # Copyright (c) 2021 SKBotNL (and the members of the FOSS-Devs)
 # See LICENSE in the project root for license information.
 
-import discord, json, base64, requests, asyncio
+import discord, time, json, base64, requests, asyncio
 from discord.ext import commands
 import config
 
@@ -59,47 +59,37 @@ class VT(commands.Cog):
         data = {'url': url}
         vturl = "https://www.virustotal.com/api/v3/urls"
         response = requests.post(vturl, data = data, headers = header).json()
-        response = str(response).split(",")
-        keyword = "'id': '"
-        for i in response:
-            if keyword in str(i):
-                response = i.replace(keyword, "").replace("}", "").replace("'", "").replace(" ", "").split("-")
-                try:
-                    result_id = str(response[1])
-                except Exception:
-                    em = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.", color = discord.Color.red())
-                    em.set_author(name="VirusTotal", icon_url=iconurl)
-                    await ctx.send(embed = em)
-                    return
-                break
         try:
-            vturl = "https://www.virustotal.com/api/v3/urls/{}".format(result_id)
+            result_id = str(response['data']['id']).split('-')[1]
         except Exception:
-            em = discord.Embed(title = "Something went wrong.", color = discord.Color.red())
+            response = str(response['error']['code'])
+            em = discord.Embed(title = f"Error: '{response}'", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em)
             return
+        vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
         em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
         await asyncio.sleep(15)
         response = requests.get(vturl, headers=header).json()
-        response = str(response).split(",")
-        parsed = vt_json_parsing(response)
-        if parsed == -1:
-            new_embed = discord.Embed(title = "Something went wrong. Could be that you did not add the http/https prefix at the beginning of the webpage.", color = discord.Color.red())
-            #await ctx.send(embed = em)
-            await msg.edit(embed=new_embed)
-        else:
-            generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
-            if int(parsed) >= 1:
-                new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.red())
-            else:
-                new_embed = discord.Embed(title = "Detections: {}".format(str(parsed)), color = discord.Color.green())
+        try:
+            detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+        except Exception:
+            response = str(response['error']['code'])
+            new_embed = discord.Embed(title = f"Error: '{response}'", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            new_embed.add_field(name="Link:", value=generated_link)
-            #await ctx.send(embed = em)
-            await msg.edit(embed=new_embed)
+            await msg.edit(embed=new_embed)(embed = em)
+            return
+        generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
+        if int(detection) >= 1:
+            new_embed = discord.Embed(title = f"Detections: {detection}", color = discord.Color.red())
+        else:
+            new_embed = discord.Embed(title = f"Detections: {detection}", color = discord.Color.green())
+        new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+        new_embed.add_field(name="Link:", value=generated_link)
+        #await ctx.send(embed = em)
+        await msg.edit(embed=new_embed)
 
 
 def setup(bot):
