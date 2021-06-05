@@ -82,13 +82,14 @@ async def on_command_error(ctx, error):
         await ctx.send(embed = em)
 
 # multi-instances prevention
-def bind():
+def start():
     host = "127.0.0.1"
     port = 18265
     _socket = socket.socket()
     _socket.bind((host,port))
     _socket.listen(1)
     conn, addr = _socket.accept()
+    bot.run(config.bot_token)
     while True:
             data = conn.recv(1024).decode()
             if str(data) == 'disconnect':
@@ -97,10 +98,11 @@ def bind():
                     break
 
 try:
-    bind()
+    start()
 except Exception as e:
-    print('Something went wrong, probably there is another instance running.')
+    print('\nSomething went wrong, probably there is another instance running.')
     print(e)
+    print('\nPress any key to exit...')
     quit()
 '''try:
     bot.run(config.bot_token)
@@ -114,5 +116,3 @@ except Exception as e:
     _socket.close()
     print(e)
     quit()'''
-
-bot.run(config.bot_token)
