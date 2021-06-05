@@ -8,7 +8,7 @@ import config
 apikey = config.virustotal_api
 iconurl = "https://raw.githubusercontent.com/FOSS-Devs/fossdiscord/main/src/vt_logo.png"
 
-def vt_json_parsing(detections):
+'''def vt_json_parsing(detections):
     try:
         detections = str(detections).split("last_analysis_stats")
         detections = str(detections[1]).split('"')
@@ -19,7 +19,7 @@ def vt_json_parsing(detections):
             #detections = m
             detections = "".join(filter(str.isdigit, m))
             break
-    return detections
+    return detections'''
 
 class VT(commands.Cog):
     def __init__(self, bot):
