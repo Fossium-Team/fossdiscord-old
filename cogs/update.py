@@ -67,12 +67,12 @@ class Update(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
            if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "win32":
                 if versionfile.currentversion == latestversion:
-                    em = discord.Embed(title = "Already the latest version", color = discord.Color.green())
-                    em.add_field(name = '', value = "There are no updates available.")
+                    em = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                    em.add_field(name = 'Already the latest version.', value = "There are no updates available.")
                     await ctx.send(embed=em)
                 elif versionfile.currentversion > latestversion:
-                    em = discord.Embed(title = "Invalid version in the versionfile.", color = discord.Color.green())
-                    em.add_field(name = '', value = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.")
+                    em = discord.Embed(title = "`Updatecheck`", color = discord.Color.green())
+                    em.add_field(name = 'Invalid version in the versionfile.', value = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.")
                     await ctx.send(embed=em)
                 else:
                     datetimenow = datetime.now()
