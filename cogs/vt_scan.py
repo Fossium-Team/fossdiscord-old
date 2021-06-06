@@ -43,8 +43,7 @@ class VT(commands.Cog):
             return
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
         if detections >= 1 or suspicious >= 1:
-            em = discord.Embed(title = f"Detections: {detections}", color = discord.Color.red())
-            em.add_field(name = f"Suspicious:", value=f'`{suspicious}`')
+            new_embed = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
         else:
             em = discord.Embed(title = f"The file looks clean, detections: {detections}", color = discord.Color.green())
         em.set_author(name="VirusTotal", icon_url=iconurl)
@@ -85,9 +84,8 @@ class VT(commands.Cog):
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         if detection >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`", color = discord.Color.red())
+            new_embed = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            em.add_field(name = f"Suspicious:", value=f'`{suspicious}`')
             new_embed.add_field(name="Link:", value=generated_link)
         else:
             new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
