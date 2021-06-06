@@ -55,7 +55,7 @@ class VT(commands.Cog):
     async def scan_url(self, ctx, url: str):
         #Need to import base64 module to work
         await ctx.message.delete()
-        header = {'x-apikey': '{}'.format(apikey)}
+        header = {'x-apikey': f'{apikey}'}
         data = {'url': url}
         vturl = "https://www.virustotal.com/api/v3/urls"
         response = requests.post(vturl, data = data, headers = header).json()
@@ -81,7 +81,7 @@ class VT(commands.Cog):
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             await msg.edit(embed=new_embed)(embed = em)
             return
-        generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
+        generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Detections: `{detection}`", color = discord.Color.red())
