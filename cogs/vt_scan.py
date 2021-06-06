@@ -50,7 +50,6 @@ class VT(commands.Cog):
         em.set_author(name="VirusTotal", icon_url=iconurl)
         em.add_field(name="Link:", value=generated_link)
         await ctx.send(embed = em)
-        return
 
 
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
