@@ -43,7 +43,7 @@ class VT(commands.Cog):
             return
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
         if detections >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
+            em = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
         else:
             em = discord.Embed(title = f"The file looks clean, detections: {detections}", color = discord.Color.green())
         em.set_author(name="VirusTotal", icon_url=iconurl)
