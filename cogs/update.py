@@ -71,7 +71,7 @@ class Update(commands.Cog):
                 latestversion = latestversionget.split(' ', 1)[1]
                 if globalconfig.currentversion == latestversion:
                     em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    em.add_field(name = 'Already the latest version.', value = "There are no updates available.")
+                    em.add_field(name = 'Already the latest version.', value = "There is no need to update.")
                     await ctx.send(embed=em)
                 elif globalconfig.currentversion > latestversion:
                     em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
