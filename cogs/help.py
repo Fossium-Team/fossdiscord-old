@@ -19,7 +19,7 @@ class Help(commands.Cog):
             em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
             em.add_field(name = "Fun", value = "choose, f, emote")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-            em.add_field(name = "VirusTotal", value = "scanurl")
+            em.add_field(name = "VirusTotal", value = "scanurl, checkhash")
             em.add_field(name = "Update", value = "updatecheck, updatebot")
             em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
@@ -181,10 +181,10 @@ class Help(commands.Cog):
         em = discord.Embed(title = "VirusTotal: Scan URL", description = config.prefix + "scanurl <link> with https or http at the begining \n\nScans a URL link using a VirusTotal API key.", color = discord.Color.green())
         await ctx.send(embed = em)
 
-    '''@help.command(name="vt_hash")
+    @help.command(name="checkhash")
     async def _vt_hash(self, ctx):
-        em = discord.Embed(title = "VirusTotal: VT_Hash", description = config.prefix + "vt_hash <file hash> SHA-256 SHA-1 or MD5 \n\nScans a file hash using a VirusTotal API key.", color = discord.Color.green())
-        await ctx.send(embed = em)'''
+        em = discord.Embed(title = "VirusTotal: VT_Hash", description = config.prefix + "checkhash <file hash> SHA-256 SHA-1 or MD5 \n\nScans a file hash using a VirusTotal API key.", color = discord.Color.green())
+        await ctx.send(embed = em)
 
     # Owner commands
     @help.command(name="loadcog")
