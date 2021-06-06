@@ -25,7 +25,7 @@ async def on_ready():
     print("REMEMBER: YOU MUST RUN THE COMMAND '" + config.prefix + "shutdownbot' TO SHUTDOWN THE BOT!!!!")
     print('------')
     # Changes bot status to the default status when the bot starts up
-    await bot.change_presence(activity=discord.Game(name=f'v3.9 | {config.prefix}help'))
+    await bot.change_presence(activity=discord.Game(name=f'v{globalconfig.currentversion} | {config.prefix}help'))
     botowner = bot.get_user(int(config.ownerID))
     em = discord.Embed(title = "The bot is back online", color = discord.Color.green())
     await botowner.send(embed = em)

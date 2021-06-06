@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import config
 import globalconfig
+import requests
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -23,6 +24,15 @@ class Help(commands.Cog):
             em.add_field(name = "Update", value = "updatecheck, updatebot")
             em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
+            latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+            latestversionget = latestversionresponse.json()["name"]
+            latestversion = latestversionget.split(' ', 1)[1]
+            if globalconfig.currentversion == latestversion:
+                em.add_field(name = "Updates", value = "There are no updates available.")
+            elif globalconfig.currentversion > latestversion:
+                em.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.")
+            else:
+                em.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
             # if config.latest_version > globalconfig.version:
             #     em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
             # elif config.latest_version < globalconfig.version:
