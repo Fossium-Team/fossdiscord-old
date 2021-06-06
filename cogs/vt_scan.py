@@ -25,30 +25,32 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    '''@commands.command(aliases=['hashcheck', 'checkhash'])
+    @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, hash: str):
         """VirusTotal Integration"""
         await ctx.message.delete()
-        header = {'x-apikey': '{}'.format(apikey)}
-        vturl = "https://www.virustotal.com/api/v3/files/{}".format(hash)
+        header = {'x-apikey': f'{apikey}'}
+        vturl = f"https://www.virustotal.com/api/v3/files/{hash}"
         response = requests.get(vturl, headers = header).json()
         try:
-            result_id = str(response['data']['id']).split('-')[1]
+            detections = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+            suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         except Exception:
             response = str(response['error']['code'])
             em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em)
             return
-        generated_link = "https://www.virustotal.com/gui/file/{}/detection".format(hash)
-        if int(parsed) == 0 :
-            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.green())
-        elif int(parsed) >= 1 :
-            em = discord.Embed(title = "Detections: {}".format(parsed), color = discord.Color.red())
+        generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
+        if detections >= 1 or suspicious >= 1:
+            em = discord.Embed(title = f"Detections: {detections}", color = discord.Color.red())
+            em.add_field(title = f"Suspicious: `{suspicious}`")
+        else:
+            em = discord.Embed(title = f"The file looks clean, detections: {detections}", color = discord.Color.green())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         em.add_field(name="Link:", value=generated_link)
         await ctx.send(embed = em)
-        return'''
+        return
 
 
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
@@ -91,6 +93,7 @@ class VT(commands.Cog):
         else:
             new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+            new_embed.add_field(name="Link:", value=generated_link)
         await msg.edit(embed=new_embed)
 
 
