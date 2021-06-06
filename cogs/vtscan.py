@@ -12,75 +12,75 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['hashcheck', 'checkhash'])
-    async def vt_hash(self, ctx, *, hash: str):
-        """VirusTotal Integration"""
-        await ctx.message.delete()
-        hash = hash.replace(' ', '')
-        header = {'x-apikey': f'{apikey}'}
-        vturl = f"https://www.virustotal.com/api/v3/files/{hash}"
-        response = requests.get(vturl, headers = header).json()
-        try:
-            detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+        @commands.command(aliases=['hashcheck', 'checkhash'])
+        async def vt_hash(self, ctx, *, hash: str):
+            """VirusTotal Integration"""
+            await ctx.message.delete()
+            hash = hash.replace(' ', '')
+            header = {'x-apikey': f'{apikey}'}
+            vturl = f"https://www.virustotal.com/api/v3/files/{hash}"
+            response = requests.get(vturl, headers = header).json()
+            try:
+                detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+                suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
+            except Exception:
+                response = str(response['error']['code'])
+                em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
+                em.set_author(name="VirusTotal", icon_url=iconurl)
+                await ctx.send(embed = em)
+                return
+            generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
+            if detection >= 1 or suspicious >= 1:
+                em = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
+            else:
+                em = discord.Embed(title = f"The file looks clean, detections: {detection}", color = discord.Color.green())
+            em.set_author(name="VirusTotal", icon_url=iconurl)
+            em.add_field(name="Link:", value=generated_link)
+            await ctx.send(embed = em)
+
+
+        @commands.command(aliases=['checkurl','urlcheck','scanurl'])
+        async def scan_url(self, ctx, *, url: str):
+            #Need to import base64 module to work
+            await ctx.message.delete()
+            url = url.replace(' ', '')
+            header = {'x-apikey': f'{apikey}'}
+            data = {'url': url}
+            vturl = "https://www.virustotal.com/api/v3/urls"
+            response = requests.post(vturl, data = data, headers = header).json()
+            try:
+                result_id = str(response['data']['id']).split('-')[1]
+            except Exception:
+                response = str(response['error']['code'])
+                em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
+                em.set_author(name="VirusTotal", icon_url=iconurl)
+                await ctx.send(embed = em)
+                return
+            vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
+            em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
+            em.set_author(name="VirusTotal", icon_url=iconurl)
+            msg = await ctx.send(embed = em)
+            await asyncio.sleep(15)
+            response = requests.get(vturl, headers=header).json()
+            try:
+                detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+            except Exception:
+                response = str(response['error']['code'])
+                new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
+                new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+                await msg.edit(embed=new_embed)(embed = em)
+                return
+            generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
             suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
-        except Exception:
-            response = str(response['error']['code'])
-            em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
-            em.set_author(name="VirusTotal", icon_url=iconurl)
-            await ctx.send(embed = em)
-            return
-        generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
-        if detection >= 1 or suspicious >= 1:
-            em = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
-        else:
-            em = discord.Embed(title = f"The file looks clean, detections: {detection}", color = discord.Color.green())
-        em.set_author(name="VirusTotal", icon_url=iconurl)
-        em.add_field(name="Link:", value=generated_link)
-        await ctx.send(embed = em)
-
-
-    @commands.command(aliases=['checkurl','urlcheck','scanurl'])
-    async def scan_url(self, ctx, *, url: str):
-        #Need to import base64 module to work
-        await ctx.message.delete()
-        url = url.replace(' ', '')
-        header = {'x-apikey': f'{apikey}'}
-        data = {'url': url}
-        vturl = "https://www.virustotal.com/api/v3/urls"
-        response = requests.post(vturl, data = data, headers = header).json()
-        try:
-            result_id = str(response['data']['id']).split('-')[1]
-        except Exception:
-            response = str(response['error']['code'])
-            em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
-            em.set_author(name="VirusTotal", icon_url=iconurl)
-            await ctx.send(embed = em)
-            return
-        vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
-        em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
-        em.set_author(name="VirusTotal", icon_url=iconurl)
-        msg = await ctx.send(embed = em)
-        await asyncio.sleep(15)
-        response = requests.get(vturl, headers=header).json()
-        try:
-            detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
-        except Exception:
-            response = str(response['error']['code'])
-            new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
-            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            await msg.edit(embed=new_embed)(embed = em)
-            return
-        generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
-        suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
-        if detection >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
-            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            new_embed.add_field(name="Link:", value=generated_link)
-        else:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
-            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            new_embed.add_field(name="Link:", value=generated_link)
-        await msg.edit(embed=new_embed)
+            if detection >= 1 or suspicious >= 1:
+                new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
+                new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+                new_embed.add_field(name="Link:", value=generated_link)
+            else:
+                new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
+                new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+                new_embed.add_field(name="Link:", value=generated_link)
+            await msg.edit(embed=new_embed)
 
 
 def setup(bot):

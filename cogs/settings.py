@@ -13,48 +13,48 @@ class Settings(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def botstatus(self, ctx, *args):
-        """Sets the status of the bot. Owner only. 'botstatus' to reset"""
-        args = " ".join(args[:])
-        if str(ctx.message.author.id) == config.ownerID:
-            if args == '':
-                await self.bot.change_presence(activity=discord.Game(name=''))
+        @commands.command()
+        async def botstatus(self, ctx, *args):
+            """Sets the status of the bot. Owner only. 'botstatus' to reset"""
+            args = " ".join(args[:])
+            if str(ctx.message.author.id) == config.ownerID:
+                if args == '':
+                    await self.bot.change_presence(activity=discord.Game(name=''))
 
-                em = discord.Embed(title = "Bot status successfully reset!", color = discord.Color.green())
-                await ctx.send(embed = em)
+                    em = discord.Embed(title = "Bot status successfully reset!", color = discord.Color.green())
+                    await ctx.send(embed = em)
+                else:
+                    await self.bot.change_presence(activity=discord.Game(name=args))
+
+                    em = discord.Embed(title = "Bot status successfully changed to `" + args + "`!", color = discord.Color.green())
+                    await ctx.send(embed = em)
             else:
-                await self.bot.change_presence(activity=discord.Game(name=args))
-
-                em = discord.Embed(title = "Bot status successfully changed to `" + args + "`!", color = discord.Color.green())
+                em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
                 await ctx.send(embed = em)
-        else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
-            await ctx.send(embed = em)
 
 
-    @commands.command()
-    async def botstatusrepeat(self, ctx):
-        if str(ctx.message.author.id) == config.ownerID:
-            em = discord.Embed(title = "Status loop initiated.", color = discord.Color.green())
-            await ctx.send(embed = em)
+        @commands.command()
+        async def botstatusrepeat(self, ctx):
+            if str(ctx.message.author.id) == config.ownerID:
+                em = discord.Embed(title = "Status loop initiated.", color = discord.Color.green())
+                await ctx.send(embed = em)
 
-            while True:
-                await self.bot.change_presence(activity=discord.Game("Made by the FOSS-Devs team!"))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Visual Studio Code"))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Atom Editor"))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Fixing Bugs..."))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Publishing Releases..."))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("v3.0 | " + config.prefix + "help"))
-                await asyncio.sleep(10)
-        else:
-            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
-            await ctx.send(embed = em)
+                while True:
+                    await self.bot.change_presence(activity=discord.Game("Made by the FOSS-Devs team!"))
+                    await asyncio.sleep(10)
+                    await self.bot.change_presence(activity=discord.Game("Visual Studio Code"))
+                    await asyncio.sleep(10)
+                    await self.bot.change_presence(activity=discord.Game("Atom Editor"))
+                    await asyncio.sleep(10)
+                    await self.bot.change_presence(activity=discord.Game("Fixing Bugs..."))
+                    await asyncio.sleep(10)
+                    await self.bot.change_presence(activity=discord.Game("Publishing Releases..."))
+                    await asyncio.sleep(10)
+                    await self.bot.change_presence(activity=discord.Game("v3.0 | " + config.prefix + "help"))
+                    await asyncio.sleep(10)
+            else:
+                em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
+                await ctx.send(embed = em)
 
 
 def setup(bot):

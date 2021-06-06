@@ -11,60 +11,60 @@ class Caesarcrypt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
-    async def twisted_msg(self, ctx, rounds = None, *, message: str):
-        """Encrypt a message."""
-        await ctx.message.delete()
-        if rounds == None:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
-            return await ctx.send(embed = em)
-        try:
-            rounds = int(rounds)
-        except Exception:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
-            return await ctx.send(embed = em)
-        encrypt = ""
-        message = str(message)
-        for char in message:
-            if not char.isalpha():
-                encrypt = encrypt + char
-            elif char.isupper():
-                # for uppercase Z
-                encrypt = encrypt + chr((ord(char) + rounds - 65) % 26 + 65)
-            else:
-                # for lowercase z
-                encrypt = encrypt + chr((ord(char) + rounds - 97) % 26 + 97)
-        em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt), color = discord.Color.green())
-        await ctx.send(embed = em)
+        @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
+        async def twisted_msg(self, ctx, rounds = None, *, message: str):
+            """Encrypt a message."""
+            await ctx.message.delete()
+            if rounds == None:
+                em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
+                return await ctx.send(embed = em)
+            try:
+                rounds = int(rounds)
+            except Exception:
+                em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
+                return await ctx.send(embed = em)
+            encrypt = ""
+            message = str(message)
+            for char in message:
+                if not char.isalpha():
+                    encrypt = encrypt + char
+                elif char.isupper():
+                    # for uppercase Z
+                    encrypt = encrypt + chr((ord(char) + rounds - 65) % 26 + 65)
+                else:
+                    # for lowercase z
+                    encrypt = encrypt + chr((ord(char) + rounds - 97) % 26 + 97)
+            em = discord.Embed(title = 'Your encrypted message is: {}'.format(encrypt), color = discord.Color.green())
+            await ctx.send(embed = em)
 
 
 
-    @commands.command(description="Untwisted the message with caesarcrypt. @bot rounds(numbers) message")
-    async def untwisted_msg(self, ctx, rounds: int, *, message: str):
-        """Decrypt a message."""
-        await ctx.message.delete()
-        if rounds == None:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
-            return await ctx.send(embed = em)
-        try:
-            rounds = int(rounds)
-        except Exception:
-            em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
-            return await ctx.send(embed = em)
-        decrypt = ""
-        message = str(message)
-        for char in message:
-            if not char.isalpha():
-                decrypt = decrypt + char
-            elif char.isupper():
-                # for uppercase Z
-                decrypt = decrypt + chr((ord(char) - rounds - 65) % 26 + 65)
-            else:
-                # for lowercase z
-                decrypt = decrypt + chr((ord(char) - rounds - 97) % 26 + 97)
+        @commands.command(description="Untwisted the message with caesarcrypt. @bot rounds(numbers) message")
+        async def untwisted_msg(self, ctx, rounds: int, *, message: str):
+            """Decrypt a message."""
+            await ctx.message.delete()
+            if rounds == None:
+                em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
+                return await ctx.send(embed = em)
+            try:
+                rounds = int(rounds)
+            except Exception:
+                em = discord.Embed(title = "Wrong syntax.", description = rounds_error, color = discord.Color.red())
+                return await ctx.send(embed = em)
+            decrypt = ""
+            message = str(message)
+            for char in message:
+                if not char.isalpha():
+                    decrypt = decrypt + char
+                elif char.isupper():
+                    # for uppercase Z
+                    decrypt = decrypt + chr((ord(char) - rounds - 65) % 26 + 65)
+                else:
+                    # for lowercase z
+                    decrypt = decrypt + chr((ord(char) - rounds - 97) % 26 + 97)
 
-        em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt), color = discord.Color.green())
-        await ctx.send(embed = em)
+            em = discord.Embed(title = 'Your decrypted message is: {}'.format(decrypt), color = discord.Color.green())
+            await ctx.send(embed = em)
 
 
 
