@@ -137,6 +137,7 @@ class Moderation(commands.Cog):
         try:
             if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
                 em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+                await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write("\n")
@@ -145,12 +146,14 @@ class Moderation(commands.Cog):
 
             elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
                 em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+                await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
                 warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
                 warns.write(writeReasonTemplate)
                 warns.close()
         except:
             em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+            await ctx.send(embed=em)
             writeReasonTemplate = str(args)
             warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
             warns.write(writeReasonTemplate)
@@ -197,6 +200,7 @@ class Moderation(commands.Cog):
         f.writelines(output)
         f.close()
         em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.green())
+        await ctx.send(embed=em)
 
     
     @commands.command(pass_context=True)
