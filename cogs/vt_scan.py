@@ -83,17 +83,14 @@ class VT(commands.Cog):
             return
         generated_link = "https://www.virustotal.com/gui/url/{}/detection".format(result_id)
         suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
-        if detection >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`", color = discord.Color.red())
-            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            new_embed.add_field(name="Link:", value=generated_link)
-        elif suspicious >= 2:
+        if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Detections: `{detection}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             new_embed.add_field(title = f"Suspicious: `{suspicious}`")
             new_embed.add_field(name="Link:", value=generated_link)
         else:
             new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
+            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
         await msg.edit(embed=new_embed)
 
 
