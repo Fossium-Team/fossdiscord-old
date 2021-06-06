@@ -38,7 +38,7 @@ bot.load_extension("cogs.caesarcrypt")
 bot.load_extension("cogs.help")
 bot.load_extension("cogs.update")
 bot.load_extension("cogs.admin")
-bot.load_extension("cogs.vt_scan")
+bot.load_extension("cogs.vtscan")
 bot.load_extension("cogs.fun")
 
 @bot.event
