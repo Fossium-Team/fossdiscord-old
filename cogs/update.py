@@ -17,7 +17,7 @@ import wget
 import time
 import re
 from zipfile import ZipFile
-import versionfile
+import globalconfig
 import requests
 from datetime import datetime
 
@@ -43,19 +43,19 @@ class Update(commands.Cog):
             latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
             latestversionget = latestversionresponse.json()["name"]
             latestversion = latestversionget.split(' ', 1)[1]
-            if versionfile.currentversion == latestversion:
+            if globalconfig.currentversion == latestversion:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
                 secondem.add_field(name = "Checking for updates succeeded!", value = "There are no updates available.")
                 await embedmsg.edit(embed=secondem)
-            elif versionfile.currentversion > latestversion:
+            elif globalconfig.currentversion > latestversion:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
-                secondem.add_field(name = "Invalid version in the versionfile.")
-                secondem.add_field(name = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.", color = discord.Color.green())
+                secondem.add_field(name = "Invalid version in the globalconfig.")
+                secondem.add_field(name = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.", color = discord.Color.green())
                 await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
                 secondem.add_field(name = "Checking for updates succeeded!")
-                secondem.add_field(name = f"You can update the bot from {versionfile.currentversion} to {latestversion}.")
+                secondem.add_field(name = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.")
                 secondem.add_field(name = f"You can update the bot with {config.prefix}updatebot.")
                 await embedmsg.edit(embed=secondem)
         else:
@@ -69,13 +69,13 @@ class Update(commands.Cog):
                 latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
                 latestversionget = latestversionresponse.json()["name"]
                 latestversion = latestversionget.split(' ', 1)[1]
-                if versionfile.currentversion == latestversion:
+                if globalconfig.currentversion == latestversion:
                     em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
                     em.add_field(name = 'Already the latest version.', value = "There are no updates available.")
                     await ctx.send(embed=em)
-                elif versionfile.currentversion > latestversion:
+                elif globalconfig.currentversion > latestversion:
                     em = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    em.add_field(name = 'Invalid version in the versionfile.', value = "There is an invalid version in the versionfile, try downloading a fresh copy of FOSSDiscord.")
+                    em.add_field(name = 'Invalid version in the globalconfig.', value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
                     await ctx.send(embed=em)
                 else:
                     datetimenow = datetime.now()
@@ -110,7 +110,7 @@ class Update(commands.Cog):
                     shutil.rmtree("updatertemp")
                     print("Done! Restart the bot to apply the changes!")
                     em = discord.Embed(title = "Updated!", description = "FOSSDiscord updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
-                    em.add_field(name = "Note", value = "You have to start the bot again manually. If it won't start, open an issue in FOSSDiscord's GitHub repository.")
+                    em.add_field(name = "Note", value = "You have to start the bot again manually. If the bot errors while starting, open an issue in FOSSDiscord's GitHub repository.")
                     await ctx.send(embed = em)
                     #close_port()
                     await ctx.bot.close()
