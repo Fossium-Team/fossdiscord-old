@@ -135,27 +135,27 @@ class Moderation(commands.Cog):
         if not os.path.exists('warns'):
             os.makedirs('warns')
         try:
-            if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
+            if os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size > 0:
                 em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
                 await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
-                warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
+                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
                 warns.write("\n")
                 warns.write(writeReasonTemplate)
                 warns.close()
 
-            elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
+            elif os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size == 0:
                 em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
                 await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
-                warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
+                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
                 warns.write(writeReasonTemplate)
                 warns.close()
         except:
             em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
             await ctx.send(embed=em)
             writeReasonTemplate = str(args)
-            warns = open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py", 'a')
+            warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
             warns.write(writeReasonTemplate)
             warns.close()
 
