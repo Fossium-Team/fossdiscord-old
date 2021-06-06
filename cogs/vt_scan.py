@@ -20,7 +20,7 @@ class VT(commands.Cog):
         vturl = f"https://www.virustotal.com/api/v3/files/{hash}"
         response = requests.get(vturl, headers = header).json()
         try:
-            detections = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+            detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
             suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         except Exception:
             response = str(response['error']['code'])
@@ -29,10 +29,10 @@ class VT(commands.Cog):
             await ctx.send(embed = em)
             return
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
-        if detections >= 1 or suspicious >= 1:
-            em = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
+        if detection >= 1 or suspicious >= 1:
+            em = discord.Embed(title = f"Detections: `{detection}`\nSuspicious: `{suspicious}`", color = discord.Color.red())
         else:
-            em = discord.Embed(title = f"The file looks clean, detections: {detections}", color = discord.Color.green())
+            em = discord.Embed(title = f"The file looks clean, detections: {detection}", color = discord.Color.green())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         em.add_field(name="Link:", value=generated_link)
         await ctx.send(embed = em)
@@ -71,7 +71,7 @@ class VT(commands.Cog):
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         if detection >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`, Suspicious: `{suspicious}`", color = discord.Color.red())
+            new_embed = discord.Embed(title = f"Detections: `{detection}`\nSuspicious: `{suspicious}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             new_embed.add_field(name="Link:", value=generated_link)
         else:
