@@ -13,9 +13,10 @@ class VT(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['hashcheck', 'checkhash'])
-    async def vt_hash(self, ctx, hash: str):
+    async def vt_hash(self, ctx, *, hash: str):
         """VirusTotal Integration"""
         await ctx.message.delete()
+        hash = hash.replace(' ', '')
         header = {'x-apikey': f'{apikey}'}
         vturl = f"https://www.virustotal.com/api/v3/files/{hash}"
         response = requests.get(vturl, headers = header).json()
@@ -39,9 +40,10 @@ class VT(commands.Cog):
 
 
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
-    async def scan_url(self, ctx, url: str):
+    async def scan_url(self, ctx, *, url: str):
         #Need to import base64 module to work
         await ctx.message.delete()
+        url = url.replace(' ', '')
         header = {'x-apikey': f'{apikey}'}
         data = {'url': url}
         vturl = "https://www.virustotal.com/api/v3/urls"
