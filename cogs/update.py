@@ -49,14 +49,11 @@ class Update(commands.Cog):
                 await embedmsg.edit(embed=secondem)
             elif globalconfig.currentversion > latestversion:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
-                secondem.add_field(name = "Invalid version in the globalconfig.")
-                secondem.add_field(name = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.", color = discord.Color.green())
+                secondem.add_field(name = "Invalid version in the globalconfig.", value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
                 await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
-                secondem.add_field(name = "Checking for updates succeeded!")
-                secondem.add_field(name = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.")
-                secondem.add_field(name = f"You can update the bot with {config.prefix}updatebot.")
+                secondem.add_field(name = "Checking for updates succeeded!", value = f"The bot can be updated from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
                 await embedmsg.edit(embed=secondem)
         else:
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
