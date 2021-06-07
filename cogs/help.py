@@ -189,12 +189,12 @@ class Help(commands.Cog):
     # VirusTotal commands
     @help.command(name="scanurl")
     async def _scan_url(self, ctx):
-        em = discord.Embed(title = "VirusTotal: Scan URL", description = config.prefix + "scanurl <link> with https or http at the begining \n\nScans a URL link using a VirusTotal API key.", color = discord.Color.blue())
+        em = discord.Embed(title = "VirusTotal: Scan URL", description = config.prefix + "scanurl <link> \n\nScans a URL through VirusTotal.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="checkhash")
     async def _vt_hash(self, ctx):
-        em = discord.Embed(title = "VirusTotal: checkhash", description = config.prefix + "checkhash <file hash> SHA-256 SHA-1 or MD5 \n\nScans a file hash using a VirusTotal API key.", color = discord.Color.blue())
+        em = discord.Embed(title = "VirusTotal: checkhash", description = config.prefix + "checkhash <file hash> SHA-256 SHA-1 or MD5 \n\nCheck known files' hash through VirusTotal.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Owner commands
