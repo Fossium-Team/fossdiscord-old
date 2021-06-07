@@ -76,6 +76,9 @@ async def on_command_error(ctx, error):
         em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
+    elif isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slowdown!",description=f"Try again in {error.retry_after:.2f}s.", color = discord.Color.red())
+        await ctx.send(embed=em)
     else:
         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
