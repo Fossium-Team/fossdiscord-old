@@ -6,6 +6,9 @@ from discord.ext import commands
 import config
 import globalconfig
 import socket
+import os
+import json
+import re
 
 intents = discord.Intents.default()
 intents.members = True
@@ -43,13 +46,23 @@ bot.load_extension("cogs.fun")
 
 @bot.event
 async def on_message(msg):
-    # if str(msg.author.id) in config.blacklist:
-    #     for command in globalconfig.commands:
-    #         if msg.content.__contains__(str(command)):
-    #             BotOwner = await bot.fetch_user(config.ownerID)
-    #             em = discord.Embed(title = "User Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-    #             await msg.channel.send(embed = em, delete_after=10.0)
-    #             return
+    if not os.path.exists('settings'):
+        os.makedirs('settings')
+    if os.path.isfile(f"settings/blacklist.json"):
+        with open(f"settings/blacklist.json") as file:
+            blacklistjson = json.load(file)
+        blacklisted = blacklistjson['blacklist']
+        if re.search(str(msg.author.id), str(blacklisted)):
+            for command in globalconfig.commands:
+                if msg.content.__contains__(str(command)):
+                        BotOwner = await bot.fetch_user(config.ownerID)
+                        em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                        await msg.channel.send(embed = em, delete_after=10.0)
+                        return
+        else:
+            await bot.process_commands(msg)
+    else:
+        await bot.process_commands(msg)
     
     # check for bad words
     for word in config.bad_words:
@@ -58,8 +71,6 @@ async def on_message(msg):
             await msg.channel.send("Please don't use that word", delete_after=5.0, color = discord.Color.orange())
         else:
             await bot.process_commands(msg)
-
-    await bot.process_commands(msg)
 
 # error handling
 @bot.event

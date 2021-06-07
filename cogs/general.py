@@ -8,6 +8,8 @@ import config
 import bot
 import datetime
 import time
+import json
+import os
 start_time = time.time()
 
 class General(commands.Cog):
@@ -19,7 +21,6 @@ class General(commands.Cog):
         em = discord.Embed(title = "About this instance", color = discord.Color.green())
         em.add_field(name = "Project URL", value = "https://github.com/FOSS-Devs/freediscord/")
         em.add_field(name = "Support server", value = "https://discord.gg/myzbqnVUFN")
-        em.add_field(name = "Main bot invite link", value = "Coming soon")
         servers = list(self.bot.guilds)
         serverNumber = len(servers)
         em.add_field(name = "Number of servers this instance is in", value = serverNumber)
@@ -31,6 +32,19 @@ class General(commands.Cog):
         text = str(datetime.timedelta(seconds=difference))
         em.add_field(name="Uptime", value=text)
         await ctx.send(embed = em)
+
+    # welcomer
+    @commands.Cog.listener()
+    async def on_member_join(self, member: discord.Member):
+        if os.path.isfile(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json"):
+            with open(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json") as file:
+                welcomersettings = json.load(file)
+            if welcomersettings['enabled'] == 'true':
+                await self.bot.get_channel(848464385710358549).send(f" Welcome!{member.mention}.")
+            else:
+                return
+        else:
+            return
 
 def setup(bot):
     bot.add_cog(General(bot))

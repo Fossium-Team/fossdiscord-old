@@ -49,7 +49,7 @@ class Utils(commands.Cog):
             embed.set_thumbnail(url=user.avatar_url)
             embed.add_field(name="ID", value=user.id)
             embed.add_field(name="Nickname", value=usernickname)
-            embed.add_field(name="Joined", value=user.joined_at.strftime(date_format), inline=False)
+            embed.add_field(name="Joined Server", value=user.joined_at.strftime(date_format), inline=False)
             members = sorted(ctx.guild.members, key=lambda m: m.joined_at)
             embed.add_field(name="Registered", value=user.created_at.strftime(date_format), inline=True)
             perm_string = ', '.join([str(p[0]).replace("_", " ").title() for p in user.guild_permissions if p[1]])
