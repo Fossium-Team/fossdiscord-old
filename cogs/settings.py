@@ -80,9 +80,10 @@ class Settings(commands.Cog):
                 with open("settings/blacklist.json") as file:
                     blacklistjson = json.load(file)
                 blacklisted = blacklistjson['blacklist']
+                blacklisted.append(userid)
                 print(blacklisted)
-                blacklistadd = [f"'{userid}'"]
-                writeblacklist = 
+                writeblacklist = ({"blacklist": f'{blacklisted}'})
+                print(writeblacklist)
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
             
