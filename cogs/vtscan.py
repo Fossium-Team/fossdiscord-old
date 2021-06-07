@@ -13,7 +13,7 @@ class VT(commands.Cog):
         self.bot = bot
 
     @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
-    @commands.cooldown(1, 30, commands.BucketType.user)
+    @commands.cooldown(1, 45, commands.BucketType.user)
     @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, *, hash: str):
         """VirusTotal Integration"""
@@ -41,7 +41,7 @@ class VT(commands.Cog):
         await ctx.send(embed = em)
 
     @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
-    @commands.cooldown(1, 30, commands.BucketType.user)
+    @commands.cooldown(1, 45, commands.BucketType.user)
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
     async def scan_url(self, ctx, *, url: str):
         #Need to import base64 module to work
