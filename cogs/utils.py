@@ -11,6 +11,7 @@ class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def ping(self, ctx):
         '''
@@ -19,7 +20,7 @@ class Utils(commands.Cog):
         em = discord.Embed(title = "Pong! `"f"{round(self.bot.latency*1000)} ms`.", color = discord.Color.green())
         await ctx.send(embed = em)
 
-
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def avatar(self, ctx, *, user: discord.Member = None):
         """Get a link to somebody's avatar."""
@@ -33,7 +34,7 @@ class Utils(commands.Cog):
             em.set_image(url=user.avatar_url)
             await ctx.send(embed = em)
 
-
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def userinfo(self, ctx, *, user: discord.Member = None):
         """Gives information about a user."""
@@ -75,7 +76,7 @@ class Utils(commands.Cog):
         if isinstance(ctx.channel, discord.DMChannel):
             return
 
-
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def joined(self, ctx, member: discord.Member):
         """Says when a member joined."""
@@ -83,7 +84,7 @@ class Utils(commands.Cog):
         await ctx.send(embed = em)
 
 
-
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def serverinfo(self, ctx):
         """Gives some information about the server."""
@@ -110,7 +111,7 @@ class Utils(commands.Cog):
 
         await ctx.send(embed=embed)
 
-
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command()
     async def quickpoll(self, ctx, *poll):
         await ctx.message.delete()
@@ -119,7 +120,8 @@ class Utils(commands.Cog):
         msg = await ctx.send(embed = em)
         await msg.add_reaction('👍')
         await msg.add_reaction('👎')
-
+    
+    @commands.cooldown(5, 15, commands.BucketType.user)
     @commands.command(pass_context=True)
     async def uptime(self, ctx):
         current_time = time.time()
