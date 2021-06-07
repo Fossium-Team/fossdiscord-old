@@ -88,7 +88,10 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
     elif isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slowdown!",description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
+        em = discord.Embed(title=f"Slowdown!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
+        await ctx.send(embed=em)
+    elif isinstance(error, commands.MaxConcurrencyReached):
+        em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
         await ctx.send(embed=em)
     else:
         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())

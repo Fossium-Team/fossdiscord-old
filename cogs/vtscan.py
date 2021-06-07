@@ -12,6 +12,7 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
     @commands.cooldown(1, 30, commands.BucketType.user)
     @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, *, hash: str):
@@ -39,7 +40,7 @@ class VT(commands.Cog):
         em.add_field(name="Link:", value=generated_link)
         await ctx.send(embed = em)
 
-
+    @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
     @commands.cooldown(1, 30, commands.BucketType.user)
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
     async def scan_url(self, ctx, *, url: str):
