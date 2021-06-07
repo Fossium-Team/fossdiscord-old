@@ -14,7 +14,7 @@ class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    #@commands.cooldown(10, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(description='Shows information about bot instance.')
     async def about(self, ctx):
         em = discord.Embed(title = "About this instance", color = discord.Color.green())

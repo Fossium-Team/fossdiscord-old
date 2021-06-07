@@ -12,7 +12,7 @@ import random
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    @commands.cooldown(10, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(description='For when you wanna settle the score some other way')
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
@@ -27,7 +27,7 @@ class Fun(commands.Cog):
                 em = discord.Embed(title = random.choice(choices), color = discord.Color.orange())
                 await ctx.send(embed = em)
     
-    @commands.cooldown(10, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
         """emote command"""
@@ -59,7 +59,7 @@ class Fun(commands.Cog):
                 await ctx.send(str(e))
                 return
         '''
-    @commands.cooldown(10, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     async def f(self, ctx, *, message2):
         em = discord.Embed(title = f"F in the chat to: **{message2}**", color=discord.Color.green())

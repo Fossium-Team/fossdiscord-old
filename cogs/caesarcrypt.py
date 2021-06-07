@@ -11,7 +11,7 @@ class Caesarcrypt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.cooldown(2, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
     async def twisted_msg(self, ctx, rounds = None, *, message: str):
         """Encrypt a message."""
@@ -39,7 +39,7 @@ class Caesarcrypt(commands.Cog):
         await ctx.send(embed = em)
 
 
-    @commands.cooldown(2, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(description="Untwisted the message with caesarcrypt. @bot rounds(numbers) message")
     async def untwisted_msg(self, ctx, rounds: int, *, message: str):
         """Decrypt a message."""
