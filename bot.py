@@ -93,7 +93,7 @@ def start():
         _socket.bind((host,port))
     except Exception as e:
         print(e)
-        print('Bind port failed, probably another instance running.')
+        print('Bind port failed, probably another instance is running.')
         quit()
     bot.run(config.bot_token)
 
