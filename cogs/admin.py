@@ -8,7 +8,6 @@ import globalconfig
 import importlib
 import subprocess
 import os
-#import socket
 
 class Admin(commands.Cog):
     def __init__(self, bot):
