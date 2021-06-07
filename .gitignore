@@ -141,5 +141,9 @@ cython_debug/
 # Bot configuration
 config.py
 
+# Bot saved files
+warns/
+settings/
+
 # VSCode Settings
 .vscode/
