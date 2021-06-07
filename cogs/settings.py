@@ -57,32 +57,6 @@ class Settings(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def welcomer(self, ctx, onoff):
-        if onoff == 'on':
-            if not os.path.exists('settings'):
-                os.makedirs('settings')
-            if not os.path.exists('settings/welcomer'):
-                os.makedirs('settings/welcomer')
-            em = discord.Embed(title = 'Enabled the welcomer', color = discord.Color.green())
-            await ctx.send(embed=em)
-            writewelcomer = {'enabled': 'true'}
-            with open(f"settings/welcomer/{str(ctx.message.guild.id)}_welcomerenabled.json", 'w') as file:
-                json.dump(writewelcomer, file)
-        elif onoff == 'off':
-            if not os.path.exists('settings'):
-                os.makedirs('settings')
-            em = discord.Embed(title = 'Disabled the welcomer', color = discord.Color.red())
-            await ctx.send(embed=em)
-            writewelcomer = {'enabled': 'false'}
-            with open(f"settings/welcomer/{str(ctx.message.guild.id)}_welcomerenabled.json", 'w') as file:
-                json.dump(writewelcomer, file)
-
-        else:
-            em = discord.Embed(title = 'Wrong argument', color = discord.Color.red())
-            await ctx.send(embed=em)
-
     @commands.group(invoke_without_command=True)
     async def blacklist(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
