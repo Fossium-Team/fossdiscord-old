@@ -40,12 +40,14 @@ class VT(commands.Cog):
         em.add_field(name="Link:", value=generated_link)
         await ctx.send(embed = em)
 
-    @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
-    @commands.cooldown(1, 45, commands.BucketType.user)
+    #@commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
+    #@commands.cooldown(1, 45, commands.BucketType.user)
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
     async def scan_url(self, ctx, *, url: str):
         #Need to import base64 module to work
         await ctx.message.delete()
+        @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
+        @commands.cooldown(1, 45, commands.BucketType.user)
         url = url.replace(' ', '')
         header = {'x-apikey': f'{apikey}'}
         data = {'url': url}
