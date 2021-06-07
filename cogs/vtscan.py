@@ -28,7 +28,7 @@ class VT(commands.Cog):
             response = str(response['error']['code'])
             em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
-            await ctx.send(embed = em)
+            await ctx.send(embed = em, delete_after=5.0)
             return
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
         if detection >= 1 or suspicious >= 1:
@@ -56,7 +56,7 @@ class VT(commands.Cog):
             response = str(response['error']['code'])
             em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
-            await ctx.send(embed = em)
+            await ctx.send(embed = em, delete_after=5.0)
             return
         vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
         em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
@@ -70,7 +70,7 @@ class VT(commands.Cog):
             response = str(response['error']['code'])
             new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-            await msg.edit(embed=new_embed)(embed = em)
+            await msg.edit(embed=new_embed, delete_after=5.0)
             return
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
