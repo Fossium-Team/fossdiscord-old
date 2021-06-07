@@ -87,6 +87,9 @@ async def on_command_error(ctx, error):
         em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
+    elif isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slowdown!",description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
+        await ctx.send(embed=em)
     else:
         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
@@ -101,17 +104,9 @@ def start():
         _socket.bind((host,port))
     except Exception as e:
         print(e)
-        print('Bind port failed, probably another instance running.')
+        print('Bind port failed, probably another instance is running.')
         quit()
     bot.run(config.bot_token)
-    '''_socket.listen(1)
-    conn, addr = _socket.accept()
-    while True:
-            data = conn.recv(1024).decode()
-            if str(data) == 'disconnect':
-                    print('Disconnect signal received, disconnecting...')
-                    _socket.close()
-                    break'''
 
 
 start()

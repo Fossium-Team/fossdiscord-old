@@ -12,7 +12,6 @@ from shutil import copyfile
 import config
 import globalconfig
 import importlib
-#import socket
 import wget
 import time
 import re
@@ -20,15 +19,6 @@ from zipfile import ZipFile
 import globalconfig
 import requests
 from datetime import datetime
-
-'''def close_port():
-        message = 'disconnect'
-        host = '127.0.0.1'
-        port = 18265
-        _socket = socket.socket()
-        _socket.connect((host,port))
-        _socket.send(message.encode())
-        _socket.close()'''
 
 # Cross-platform updater
 class Update(commands.Cog):

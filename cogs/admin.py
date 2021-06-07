@@ -8,17 +8,6 @@ import globalconfig
 import importlib
 import subprocess
 import os
-#import socket
-
-#If this not working, just comment out this, I will improve it tomorrow.
-'''def close_port():
-        message = 'disconnect'
-        host = '127.0.0.1'
-        port = 18265
-        _socket = socket.socket()
-        _socket.connect((host,port))
-        _socket.send(message.encode())
-        _socket.close()'''
 
 class Admin(commands.Cog):
     def __init__(self, bot):
