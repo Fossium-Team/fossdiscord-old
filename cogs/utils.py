@@ -11,7 +11,7 @@ class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     @commands.command()
     async def ping(self, ctx):
         '''
@@ -84,7 +84,7 @@ class Utils(commands.Cog):
         await ctx.send(embed = em)
 
 
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     @commands.command()
     async def serverinfo(self, ctx):
         """Gives some information about the server."""
@@ -111,7 +111,7 @@ class Utils(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.channel)
     @commands.command()
     async def quickpoll(self, ctx, *poll):
         await ctx.message.delete()
