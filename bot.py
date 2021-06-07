@@ -9,6 +9,7 @@ import socket
 import os
 import json
 import re
+import time
 
 intents = discord.Intents.default()
 intents.members = True
@@ -78,21 +79,22 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.MissingRequiredArgument):
         em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandNotFound):
         em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"Slowdown!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
-        await ctx.send(embed=em)
+        await ctx.send(embed=em, delete_after=10.0)
     elif isinstance(error, commands.MaxConcurrencyReached):
+        await ctx.send(embed=em, delete_after=10.0)
         em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
-        await ctx.send(embed=em)
+        await ctx.message.delete()
     else:
         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
