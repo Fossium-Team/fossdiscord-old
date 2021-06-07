@@ -10,6 +10,7 @@ class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.cooldown(1, 15, commands.BucketType.channel)
     @commands.group(invoke_without_command=True, aliases=['commands'])
     async def help(self, ctx):
         if ctx.invoked_subcommand is None:
