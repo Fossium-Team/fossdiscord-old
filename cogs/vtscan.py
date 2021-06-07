@@ -12,6 +12,7 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.cooldown(1, 30, commands.BucketType.user)
     @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, *, hash: str):
         """VirusTotal Integration"""
@@ -39,6 +40,7 @@ class VT(commands.Cog):
         await ctx.send(embed = em)
 
 
+    @commands.cooldown(1, 30, commands.BucketType.user)
     @commands.command(aliases=['checkurl','urlcheck','scanurl'])
     async def scan_url(self, ctx, *, url: str):
         #Need to import base64 module to work

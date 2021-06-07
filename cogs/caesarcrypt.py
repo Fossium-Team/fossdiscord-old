@@ -11,6 +11,7 @@ class Caesarcrypt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    #@commands.cooldown(1, 30, commands.BucketType.user)
     @commands.command(description="Twisted your message with caesarcrypt. @bot rounds(numbers) message")
     async def twisted_msg(self, ctx, rounds = None, *, message: str):
         """Encrypt a message."""
