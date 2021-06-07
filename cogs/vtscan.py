@@ -12,8 +12,7 @@ class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.max_concurrency(1, per=commands.BucketType.guild, wait=True)
-    @commands.cooldown(1, 45, commands.BucketType.user)
+    @commands.cooldown(1, 45, commands.BucketType.guild)
     @commands.command(aliases=['hashcheck', 'checkhash'])
     async def vt_hash(self, ctx, *, hash: str):
         """VirusTotal Integration"""
