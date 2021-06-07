@@ -8,6 +8,7 @@ import sys
 import asyncio
 sys.path.append(os.path.realpath('.'))
 import config
+import json
 
 class Settings(commands.Cog):
     def __init__(self, bot):
@@ -56,6 +57,78 @@ class Settings(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
 
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def welcomer(self, ctx, onoff):
+        if onoff == 'on':
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            if not os.path.exists('settings/welcomer'):
+                os.makedirs('settings/welcomer')
+            em = discord.Embed(title = 'Enabled the welcomer', color = discord.Color.green())
+            await ctx.send(embed=em)
+            writewelcomer = {'enabled': 'true'}
+            with open(f"settings/welcomer/{str(ctx.message.guild.id)}_welcomerenabled.json", 'w') as file:
+                json.dump(writewelcomer, file)
+        elif onoff == 'off':
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            em = discord.Embed(title = 'Disabled the welcomer', color = discord.Color.red())
+            await ctx.send(embed=em)
+            writewelcomer = {'enabled': 'false'}
+            with open(f"settings/welcomer/{str(ctx.message.guild.id)}_welcomerenabled.json", 'w') as file:
+                json.dump(writewelcomer, file)
+
+        else:
+            em = discord.Embed(title = 'Wrong argument', color = discord.Color.red())
+            await ctx.send(embed=em)
+
+    @commands.group(invoke_without_command=True)
+    async def blacklist(self, ctx):
+        if str(ctx.message.author.id) == config.ownerID:
+            em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
+            em.add_field(name = f"{config.prefix}blacklist add (userid)", value="Add a user to the blacklist.")
+            em.add_field(name = f"{config.prefix}blacklist remove (userid)", value="Remove a user from the blacklist.")
+            await ctx.send(embed=em)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
+            await ctx.send(embed = em)
+
+    @blacklist.command(name="add")
+    async def _add(self, ctx, userid):
+        if str(ctx.message.author.id) == config.ownerID:
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+        try:
+            if os.stat("settings/blacklist.json").st_size > 0:
+                em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
+                await ctx.send(embed=em)
+                with open("settings/blacklist.json") as file:
+                    blacklistjson = json.load(file)
+                blacklisted = blacklistjson['blacklist']
+                print(blacklisted)
+                blacklistadd = [f"'{userid}'"]
+                writeblacklist = 
+                with open("settings/blacklist.json", 'w') as file:
+                    json.dump(writeblacklist, file)
+            
+            elif os.stat("settings/blacklist.json").st_size == 0:
+                em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
+                await ctx.send(embed=em)
+                writeblacklist = {"blacklist": f'["{userid}"]'}
+                with open("settings/blacklist.json", 'w') as file:
+                    json.dump(writeblacklist, file)
+
+        except:
+            em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
+            await ctx.send(embed=em)
+            writeblacklist = {"blacklist": f"['{userid}']"}
+            with open("settings/blacklist.json", 'w') as file:
+                json.dump(writeblacklist, file)
+
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
+            await ctx.send(embed = em)
 
 def setup(bot):
     bot.add_cog(Settings(bot))
