@@ -107,15 +107,20 @@ class Moderation(commands.Cog):
             await ctx.send(embed = em)
 
 
-    @commands.command()
+    '''@commands.command()
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, id: int):
         """Unban a member."""
         userToUnban = await self.bot.fetch_user(id)
         await ctx.guild.unban(userToUnban)
         em = discord.Embed(title = "Successfully unbanned `" + userToUnban.name + "`.", color = discord.Color.green())
-        await ctx.send(embed = em)
+        await ctx.send(embed = em)'''
 
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def unban(self, ctx, user: discord.Member):
+        await ctx.guild.unban(user)
+        em = discord.Embed(title = f"**{user}** has been unbanned", color = discord.Color.green())
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
