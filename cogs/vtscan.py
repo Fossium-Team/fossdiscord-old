@@ -78,7 +78,7 @@ class VT(commands.Cog):
             new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
             category = response['data']['attributes']["categories"]
             for attr, value in category.items():
-                new_embed.add_field(title = f"{attr}", value = f"`{value}`")
+                new_embed.add_field(name = f"{attr}", value = f"`{value}`")
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             new_embed.add_field(name="Link:", value=generated_link)
         else:
