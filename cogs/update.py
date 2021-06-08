@@ -16,7 +16,6 @@ import wget
 import time
 import re
 from zipfile import ZipFile
-import globalconfig
 import requests
 from datetime import datetime
 
