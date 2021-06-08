@@ -76,7 +76,7 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "A role named 'Muted' does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
             await guildowner.send(embed = em)
             return
-        if timeconvertion(mutetime) != False:
+        if timeconvertion(mutetime) is False:
             try:
                 role = discord.utils.get(user.guild.roles, name="Muted")
                 await user.add_roles(role)
