@@ -66,6 +66,7 @@ class VT(commands.Cog):
         response = requests.get(vturl, headers=header).json()
         try:
             detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
+            suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         except Exception:
             response = str(response['error']['code'])
             new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
@@ -73,9 +74,11 @@ class VT(commands.Cog):
             await msg.edit(embed=new_embed, delete_after=5.0)
             return
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
-        suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
+            category = response['data']['attributes']["categories"]
+            for attr, value in category.items():
+                new_embed.add_field(title = f"{attr}", value = f"`{value}`")
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             new_embed.add_field(name="Link:", value=generated_link)
         else:
