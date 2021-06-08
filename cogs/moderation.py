@@ -11,9 +11,12 @@ def timeconvertion(time):# Time convertion
     letters_inside = ''.join(filter(str.isalpha, time))
     lettercount = len(letters_inside)
     to_convert = ''.join(filter(str.isdigit, time))
-    #if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
-        #timeconverted = int(to_convert) * convertion[time[-1]]
-    return int(int(to_convert) * convertion[time[-1]]) if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() is True else False
+    if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
+        try:
+            timeconverted = int(to_convert) * convertion[time[-1]]
+            return int(timeconverted)
+        except Exception:
+            return False
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
