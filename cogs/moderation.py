@@ -119,6 +119,7 @@ class Moderation(commands.Cog):
     async def unban(self, ctx, user: discord.Member):
         await ctx.guild.unban(user)
         em = discord.Embed(title = f"**{user}** has been unbanned", color = discord.Color.green())
+        await ctx.send(embed = em)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
