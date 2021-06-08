@@ -14,8 +14,6 @@ def timeconvertion(time):# Time convertion
     if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
         timeconverted = int(to_convert) * convertion[time[-1]]
         return int(timeconverted)
-    else:
-        return False
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
