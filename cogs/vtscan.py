@@ -29,10 +29,10 @@ class VT(commands.Cog):
             em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em, delete_after=5.0)
             return
-        em = discord.Embed(title = "Re-analyzing file...", description = "Please wait for 25 seconds.", color = discord.Color.blue())
+        em = discord.Embed(title = "Re-analyzing file...", description = "Please wait for 80 seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
-        await asyncio.sleep(25)
+        await asyncio.sleep(80)
         vturl = f'https://www.virustotal.com/api/v3/analyses/{result_id}'
         response = requests.get(vturl, headers=header).json()
         try:
