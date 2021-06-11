@@ -21,7 +21,7 @@ class Help(commands.Cog):
             em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
             em.add_field(name = "Fun", value = "choose, f, emote")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-            em.add_field(name = "VirusTotal", value = "scanurl, checkhash")
+            em.add_field(name = "VirusTotal", value = "scanurl, rescan")
             em.add_field(name = "Update", value = "updatecheck, updatebot")
             em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
@@ -192,9 +192,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "VirusTotal: Scan URL", description = config.prefix + "scanurl <link> \n\nScans a URL through VirusTotal.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="checkhash")
+    @help.command(name="rescan")
     async def _vt_hash(self, ctx):
-        em = discord.Embed(title = "VirusTotal: checkhash", description = config.prefix + "checkhash <file hash> SHA-256 SHA-1 or MD5 \n\nCheck known files' hash through VirusTotal.", color = discord.Color.blue())
+        em = discord.Embed(title = "VirusTotal: Re-analyzing File", description = config.prefix + "rescan <file hash> SHA-256 SHA-1 or MD5 \n\nRe-analyzing a known file through VirusTotal.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Owner commands
