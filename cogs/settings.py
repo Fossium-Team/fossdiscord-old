@@ -92,7 +92,7 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    writeblacklist = {"blacklist": userid}
+                    writeblacklist = {"user0": userid}
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(writeblacklist, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
