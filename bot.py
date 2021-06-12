@@ -52,18 +52,18 @@ async def on_message(msg):
     if os.path.isfile(f"settings/blacklist.json"):
         with open(f"settings/blacklist.json") as file:
             blacklistjson = json.load(file)
-        blacklisted = blacklistjson['blacklist']
-        if re.search(str(msg.author.id), str(blacklisted)):
-            for command in globalconfig.commands:
-                if msg.content.__contains__(str(command)):
-                        BotOwner = await bot.fetch_user(config.ownerID)
-                        em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-                        await msg.channel.send(embed = em, delete_after=10.0)
-                        return
+        for attr,value in blacklistjson["data"]:
+            if re.search(str(msg.author.id), str(value)):
+                for command in globalconfig.commands:
+                    if msg.content.__contains__(str(command)):
+                            BotOwner = await bot.fetch_user(config.ownerID)
+                            em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                            await msg.channel.send(embed = em, delete_after=10.0)
+                            return
+            else:
+                await bot.process_commands(msg)
         else:
             await bot.process_commands(msg)
-    else:
-        await bot.process_commands(msg)
     
     # check for bad words
     for word in config.bad_words:
