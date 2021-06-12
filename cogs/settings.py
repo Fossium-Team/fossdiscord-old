@@ -75,11 +75,17 @@ class Settings(commands.Cog):
                 os.makedirs('settings')
             try:
                 if os.stat("settings/blacklist.json").st_size > 0:
+                    lst = []
                     with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
-                    blacklisted = blacklistjson['blacklist']
-                    blacklist = f'{blacklisted}, {userid}'
-                    writeblacklist = ({"blacklist": f'{blacklist}'})
+                    for attr, value in blacklistjson['data']:
+                        lst.append(attr)
+                    usernum = str(lst[-1])
+                    usernum = int(''.join(filter(str.isdigit, str(usernum)))) + 1
+                    writeblacklist = blacklistjson.update({f'user{usernum}': f'{userid}'})
+                    #blacklisted = blacklistjson['blacklist']
+                    #blacklist = f'{blacklisted}, {userid}'
+                    #riteblacklist = ({"blacklist": f'{blacklist}'})
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(writeblacklist, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
@@ -93,7 +99,7 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
 
             except:
-                writeblacklist = {"blacklist": userid}
+                writeblacklist = {"user0": userid}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
@@ -113,6 +119,9 @@ class Settings(commands.Cog):
     #                 with open("settings/blacklist.json") as file:
     #                     blacklistjson = json.load(file)
     #                 blacklisted = blacklistjson['blacklist']
+    #                 
+    #                 blacklistjson.pop('hours', None)
+    #                 
     #                 blacklist = blacklisted.replace(f'{userid}, ')
     #                 writeblacklist = {"blacklist": blacklist}
     #                 with open("settings/blacklist.json", 'w') as file:
