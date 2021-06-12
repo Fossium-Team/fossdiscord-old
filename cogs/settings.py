@@ -73,7 +73,7 @@ class Settings(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
-            #try:
+            try:
                 if os.stat("settings/blacklist.json").st_size > 0:
                     lst = []
                     with open("settings/blacklist.json") as file:
@@ -99,12 +99,12 @@ class Settings(commands.Cog):
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
-            '''except:
+            except:
                 writeblacklist = {"data": {"user0": f'{userid}'}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
-                await ctx.send(embed=em)'''
+                await ctx.send(embed=em)
 
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
