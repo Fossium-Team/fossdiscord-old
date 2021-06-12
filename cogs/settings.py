@@ -82,7 +82,7 @@ class Settings(commands.Cog):
                         lst.append(attr)
                     usernum = str(lst[-1])
                     usernum = int(''.join(filter(str.isdigit, str(usernum)))) + 1
-                    writeblacklist = blacklistjson.update({"data":{f'user{usernum}': f'{userid}'}})
+                    writeblacklist = blacklistjson.update({"data":{f"user{usernum}": f'{userid}'}})
                     #blacklisted = blacklistjson['blacklist']
                     #blacklist = f'{blacklisted}, {userid}'
                     #riteblacklist = ({"blacklist": f'{blacklist}'})
@@ -92,14 +92,14 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    writeblacklist = {"data": {"user0": userid}}
+                    writeblacklist = {"data": {"user0": f'{userid}'}}
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(writeblacklist, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
             except:
-                writeblacklist = {"data": {"user0": userid}}
+                writeblacklist = {"data": {"user0": f'{userid}'}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
