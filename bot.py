@@ -62,8 +62,8 @@ async def on_message(msg):
                             return
             else:
                 await bot.process_commands(msg)
-        else:
-            await bot.process_commands(msg)
+    else:
+        await bot.process_commands(msg)
     
     # check for bad words
     for word in config.bad_words:
