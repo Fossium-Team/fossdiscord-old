@@ -81,7 +81,7 @@ class Settings(commands.Cog):
                     for attr, value in blacklistjson['data']:
                         lst.append(attr)
                     usernum = str(lst[-1])
-                    usernum = int(''.join(filter(str.isdigit, str(usernum)))) + 1
+                    usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
                     blacklistjson["data"][f"user{usernum}"] = f'{userid}'
                     #writeblacklist = blacklistjson.update({"data":{f"user{usernum}": f'{userid}'}})
                     #blacklisted = blacklistjson['blacklist']
