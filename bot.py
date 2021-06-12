@@ -52,7 +52,8 @@ async def on_message(msg):
     if os.path.isfile(f"settings/blacklist.json"):
         with open(f"settings/blacklist.json") as file:
             blacklistjson = json.load(file)
-        for attr,value in blacklistjson["data"]:
+        blacklist = blacklistjson["data"]
+        for attr,value in blacklist.items():
             if re.search(str(msg.author.id), str(value)):
                 for command in globalconfig.commands:
                     if msg.content.__contains__(str(command)):
