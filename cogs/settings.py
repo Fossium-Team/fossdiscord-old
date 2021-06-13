@@ -78,17 +78,17 @@ class Settings(commands.Cog):
                     lst = []
                     with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
-                    for attr, value in blacklistjson['data']:
+                    blacklistitem = blacklistjson['data']
+                    for attr, value in blacklistitem.items():
                         lst.append(attr)
                     usernum = str(lst[-1])
                     usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
                     blacklistjson["data"][f"user{usernum}"] = f'{userid}'
-                    #writeblacklist = blacklistjson.update({"data":{f"user{usernum}": f'{userid}'}})
+                    with open("settings/blacklist.json", 'w') as file:
+                        json.dump(blacklistjson, file)
                     #blacklisted = blacklistjson['blacklist']
                     #blacklist = f'{blacklisted}, {userid}'
                     #riteblacklist = ({"blacklist": f'{blacklist}'})
-                    with open("settings/blacklist.json", 'w') as file:
-                        json.dump(blacklistjson, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
                 
@@ -99,7 +99,7 @@ class Settings(commands.Cog):
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
-            except:
+            except FileNotFoundError:
                 writeblacklist = {"data": {"user0": f'{userid}'}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
