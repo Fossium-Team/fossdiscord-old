@@ -75,15 +75,15 @@ class Settings(commands.Cog):
                 os.makedirs('settings')
             try:
                 if os.stat("settings/blacklist.json").st_size > 0:
-                    #lst = []
+                    lst = []
                     with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
                     blacklistitem = blacklistjson['data']
-                    #for attr, value in blacklistitem.items():
-                        #lst.append(attr)
-                    #usernum = str(lst[-1])
-                    #usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
-                    blacklistjson["data"]["user"] = f'{userid}'
+                    for attr, value in blacklistitem.items():
+                        lst.append(attr)
+                    usernum = str(lst[-1])
+                    usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
+                    blacklistjson["data"][f"user{usernum}"] = f'{userid}'
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     #blacklisted = blacklistjson['blacklist']
@@ -93,14 +93,14 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    blacklistjson = {"data": {"user": f'{userid}'}}
+                    blacklistjson = {"data": {"user0": f'{userid}'}}
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
             except FileNotFoundError:
-                writeblacklist = {"data": {"user": f'{userid}'}}
+                writeblacklist = {"data": {"user0": f'{userid}'}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
