@@ -64,7 +64,7 @@ async def on_message(msg):
                         await msg.channel.send(embed = em, delete_after=10.0)
                         return
                     else:
-                        return
+                        pass
                 else:
                     await bot.process_commands(msg)
     else:
