@@ -23,7 +23,7 @@ class Help(commands.Cog):
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scanurl, rescan")
             em.add_field(name = "Update", value = "updatecheck, updatebot")
-            em.add_field(name = "Admin", value = "getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
+            em.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
             em.add_field(name = "Help", value = "help - Shows this message")
             latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
             latestversionget = latestversionresponse.json()["name"]
@@ -73,7 +73,7 @@ class Help(commands.Cog):
 
     @help.command(name="purge")
     async def _purge(self, ctx):
-        em = discord.Embed(title = "Moderation: Purge", description = config.prefix + "purge <number of messages to purge> \n\nPurge messages, default amount is 10.\n\nOther usages:\n" + config.prefix + "purge <user> <how many messages to look back for message sent by user>", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: Purge", description = config.prefix + "purge <number of messages to purge> \n\nPurge messages.\n\nOther usages:\n" + config.prefix + "purge <user> <how many messages to look back for message sent by user>", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="unban")

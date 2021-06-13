@@ -24,9 +24,14 @@ class Moderation(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount=10):
-        """Purge messages, default amount is 10."""
-        await ctx.channel.purge(limit=amount+1)
+    async def purge(self, ctx, amount):
+        if amount is None:
+            em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
+            em.add_field(name = f"{config.prefix}purge <number of messages to purge>", value="Purge certain amount of messages.")
+            em.add_field(name = f"{config.prefix}purge <user> <how many messages to look back for message sent by user>", value="Purge certain amount of messages sent by a certain user.")
+            await ctx.send(embed=em)
+        else:
+            await ctx.channel.purge(limit=amount+1)
     
     @purge.command(name="user")
     async def _user(self, ctx, user: discord.Member, amount=10):
