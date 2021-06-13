@@ -135,15 +135,15 @@ class Settings(commands.Cog):
                         with open("settings/blacklist.json", 'w') as file:
                             json.dump(blacklistjson, file)
                     except Exception:
-                        em = discord.Embed(title = 'User not in blacklist yet.', color = discord.Color.red())
+                        em = discord.Embed(title = 'User not in blacklist.', color = discord.Color.red())
                         await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                    em = discord.Embed(title = 'Nobody is blacklisted.', color = discord.Color.red())
                     await ctx.send(embed=em)
 
             except FileNotFoundError:
-                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                em = discord.Embed(title = 'Nobody is blacklisted.', color = discord.Color.red())
                 await ctx.send(embed=em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
