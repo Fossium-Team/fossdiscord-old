@@ -54,7 +54,7 @@ async def on_message(msg):
             blacklistjson = json.load(file)
         blacklist = blacklistjson["data"]
         if blacklist == {}:
-            pass
+            await bot.process_commands(msg)
         else:
             for attr, value in blacklist.items():
                 if re.search(str(msg.author.id), blacklist[attr]["id"]):
@@ -64,7 +64,7 @@ async def on_message(msg):
                         await msg.channel.send(embed = em, delete_after=10.0)
                         return
                     else:
-                        pass
+                        await bot.process_commands(msg)
                 else:
                     await bot.process_commands(msg)
     else:
