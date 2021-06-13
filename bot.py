@@ -58,8 +58,8 @@ async def on_message(msg):
             pass
         else:
             pass
-        for attr,value in blacklist.items():
-            if re.search(str(msg.author.id), str(value)):
+        for attr, value in blacklist.items():
+            if re.search(str(msg.author.id), blacklistjson[attr]["id"]):
                 if re.match(f'{config.prefix}', msg.content):
                     BotOwner = await bot.fetch_user(config.ownerID)
                     em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")

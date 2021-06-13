@@ -69,7 +69,7 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @blacklist.command(name="add")
-    async def _add(self, ctx, userid):
+    async def _add(self, ctx, userid: str):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
@@ -80,7 +80,7 @@ class Settings(commands.Cog):
                         blacklistjson = json.load(file)
                     blacklistitem = blacklistjson['data']
                     for attr, value in blacklistitem.items():
-                        if str(userid) == value:
+                        if str(userid) == blacklistitem[attr]["id"]:
                             em = discord.Embed(title = 'User is already in the blacklist.', color = discord.Color.red())
                             await ctx.send(embed=em)
                             return
@@ -90,21 +90,21 @@ class Settings(commands.Cog):
                         lst.append(attr)
                     usernum = str(lst[-1])
                     usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
-                    blacklistjson["data"][f"user{usernum}"] = f'{userid}'
+                    blacklistjson["data"].update({f"user{usernum}": {"id": f'{userid}'}})
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    blacklistjson = {"data": {"user0": f'{userid}'}}
+                    blacklistjson = {"data": {"user0": {"id":f'{userid}'}}}
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
             except FileNotFoundError:
-                writeblacklist = {"data": {"user0": f'{userid}'}}
+                writeblacklist = {"data": {"user0": {"id":f'{userid}'}}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
@@ -115,7 +115,7 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @blacklist.command(name="remove")
-    async def _remove(self, ctx, userid):
+    async def _remove(self, ctx, userid: str):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
@@ -124,16 +124,16 @@ class Settings(commands.Cog):
                     with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
                     blacklistitem = blacklistjson["data"]
-                    for key, value in blacklistitem.items():
-                        if value == userid:
-                            remove = key
+                    for attr, value in blacklistitem.items():
+                        if blacklistitem[attr]["id"] == userid:
+                            key_to_remove = attr
                             break
                     try:
-                        blacklistitem.pop(remove)
-                        em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
-                        await ctx.send(embed=em)
+                        del blacklistitem[key_to_remove]
                         with open("settings/blacklist.json", 'w') as file:
                             json.dump(blacklistjson, file)
+                        em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
+                        await ctx.send(embed=em)
                     except Exception:
                         em = discord.Embed(title = 'User not in blacklist.', color = discord.Color.red())
                         await ctx.send(embed=em)
