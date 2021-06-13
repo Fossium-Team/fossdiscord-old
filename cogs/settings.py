@@ -123,18 +123,19 @@ class Settings(commands.Cog):
                     for key, value in blacklistitem.items():
                         if value == userid:
                             blacklistitem.pop(key)
+                            em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
+                            await ctx.send(embed=em)
                             break
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
-                    em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
-                    await ctx.send(embed=em)
+                    
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
                     em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                     await ctx.send(embed=em)
 
-            except:
-                em = discord.Embed(title = 'The person is not blacklisted yet.', color = discord.Color.red())
+            except FileNotFoundError:
+                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                 await ctx.send(embed=em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())

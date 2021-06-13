@@ -53,6 +53,11 @@ async def on_message(msg):
         with open(f"settings/blacklist.json") as file:
             blacklistjson = json.load(file)
         blacklist = blacklistjson["data"]
+        if blacklist == {}:
+            os.remove("settings/blacklist.json")
+            pass
+        else:
+            pass
         for attr,value in blacklist.items():
             if re.search(str(msg.author.id), str(value)):
                 if re.match(f'{config.prefix}', msg.content):
