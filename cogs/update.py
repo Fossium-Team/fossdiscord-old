@@ -65,7 +65,7 @@ class Update(commands.Cog):
                     await ctx.send(embed=em)
                 else:
                     datetimenow = datetime.now()
-                    currentdate = datetime.strftime(datetimenow, '%a %b %y %I%M%p')
+                    currentdate = datetime.strftime(datetimenow, '%a %b %y %I:%M%p')
 
                     latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
                     latestversionget = latestversionresponse.json()["name"]
