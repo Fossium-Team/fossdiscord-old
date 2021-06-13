@@ -83,7 +83,7 @@ class Update(commands.Cog):
 
                     os.mkdir(f'{currentdir}/backup-{currentdate}')
 
-                    allfiles = ["bot.py", "setup.py", "cogs", "docs", "src", "README.md", ".gitignore", "LICENSE", "globalconfig.py"]
+                    allfiles = ["bot.py", "setup.py", "cogs", "src", "README.md", ".gitignore", "LICENSE", "globalconfig.py"]
 
                     for f in allfiles:
                         shutil.move(f'{currentdir}/' + f, f'{currentdir}/backup-{currentdate}')
