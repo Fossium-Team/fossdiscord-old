@@ -80,15 +80,19 @@ class Settings(commands.Cog):
                         blacklistjson = json.load(file)
                     blacklistitem = blacklistjson['data']
                     for attr, value in blacklistitem.items():
+                        if str(userid) == value:
+                            em = discord.Embed(title = 'User is already in the blacklist.', color = discord.Color.red())
+                            await ctx.send(embed=em)
+                            return
+                        else:
+                            pass
+                    for attr, value in blacklistitem.items():
                         lst.append(attr)
                     usernum = str(lst[-1])
                     usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
                     blacklistjson["data"][f"user{usernum}"] = f'{userid}'
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
-                    #blacklisted = blacklistjson['blacklist']
-                    #blacklist = f'{blacklisted}, {userid}'
-                    #riteblacklist = ({"blacklist": f'{blacklist}'})
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
                 
@@ -122,13 +126,17 @@ class Settings(commands.Cog):
                     blacklistitem = blacklistjson["data"]
                     for key, value in blacklistitem.items():
                         if value == userid:
-                            blacklistitem.pop(key)
-                            em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
-                            await ctx.send(embed=em)
+                            remove = key
                             break
-                    with open("settings/blacklist.json", 'w') as file:
-                        json.dump(blacklistjson, file)
-                    
+                    try:
+                        blacklistitem.pop(remove)
+                        em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
+                        await ctx.send(embed=em)
+                        with open("settings/blacklist.json", 'w') as file:
+                            json.dump(blacklistjson, file)
+                    except Exception:
+                        em = discord.Embed(title = 'User not in blacklist yet.', color = discord.Color.red())
+                        await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
                     em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
