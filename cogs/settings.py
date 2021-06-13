@@ -61,8 +61,8 @@ class Settings(commands.Cog):
     async def blacklist(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
             em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
-            em.add_field(name = f"{config.prefix}blacklist add <userid>", value="Add a user to the blacklist.")
-            em.add_field(name = f"{config.prefix}blacklist remove <userid>", value="Remove a user from the blacklist.")
+            em.add_field(name = f"{config.prefix}blacklist add (userid)", value="Add a user to the blacklist.")
+            em.add_field(name = f"{config.prefix}blacklist remove (userid)", value="Remove a user from the blacklist.")
             await ctx.send(embed=em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
@@ -75,15 +75,15 @@ class Settings(commands.Cog):
                 os.makedirs('settings')
             try:
                 if os.stat("settings/blacklist.json").st_size > 0:
-                    #lst = []
+                    lst = []
                     with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
                     blacklistitem = blacklistjson['data']
-                    #for attr, value in blacklistitem.items():
-                        #lst.append(attr)
-                    #usernum = str(lst[-1])
-                    #usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
-                    blacklistjson["data"]["user"] = f'{userid}'
+                    for attr, value in blacklistitem.items():
+                        lst.append(attr)
+                    usernum = str(lst[-1])
+                    usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
+                    blacklistjson["data"][f"user{usernum}"] = f'{userid}'
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     #blacklisted = blacklistjson['blacklist']
@@ -93,14 +93,14 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
-                    blacklistjson = {"data": {"user": f'{userid}'}}
+                    blacklistjson = {"data": {"user0": f'{userid}'}}
                     with open("settings/blacklist.json", 'w') as file:
                         json.dump(blacklistjson, file)
                     em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
             except FileNotFoundError:
-                writeblacklist = {"data": {"user": f'{userid}'}}
+                writeblacklist = {"data": {"user0": f'{userid}'}}
                 with open("settings/blacklist.json", 'w') as file:
                     json.dump(writeblacklist, file)
                 em = discord.Embed(title = 'Blacklisted that user.', color = discord.Color.green())
@@ -110,36 +110,35 @@ class Settings(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    # @blacklist.command(name="remove")
-    # async def _remove(self, ctx, userid):
-    #     if str(ctx.message.author.id) == config.ownerID:
-    #         if not os.path.exists('settings'):
-    #             os.makedirs('settings')
-    #         try:
-    #             if os.stat("settings/blacklist.json").st_size > 0:
-    #                 with open("settings/blacklist.json") as file:
-    #                     blacklistjson = json.load(file)
-    #                 blacklisted = blacklistjson['blacklist']
-    #                 
-    #                 blacklistjson.pop('hours', None)
-    #                 
-    #                 blacklist = blacklisted.replace(f'{userid}, ')
-    #                 writeblacklist = {"blacklist": blacklist}
-    #                 with open("settings/blacklist.json", 'w') as file:
-    #                     json.dump(writeblacklist, file)
-    #                 em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
-    #                 await ctx.send(embed=em)
+    @blacklist.command(name="remove")
+    async def _remove(self, ctx, userid):
+        if str(ctx.message.author.id) == config.ownerID:
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            try:
+                if os.stat("settings/blacklist.json").st_size > 0:
+                    with open("settings/blacklist.json") as file:
+                        blacklistjson = json.load(file)
+                    blacklistitem = blacklistjson["data"]
+                    for key, value in blacklistitem.items():
+                        if value == userid:
+                            blacklistitem.pop(key)
+                            break
+                    with open("settings/blacklist.json", 'w') as file:
+                        json.dump(blacklistjson, file)
+                    em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
+                    await ctx.send(embed=em)
                 
-    #             elif os.stat("settings/blacklist.json").st_size == 0:
-    #                 em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
-    #                 await ctx.send(embed=em)
+                elif os.stat("settings/blacklist.json").st_size == 0:
+                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                    await ctx.send(embed=em)
 
-    #         except:
-    #             em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
-    #             await ctx.send(embed=em)
-    #     else:
-    #         em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
-    #         await ctx.send(embed = em)
+            except:
+                em = discord.Embed(title = 'The person is not blacklisted yet.', color = discord.Color.red())
+                await ctx.send(embed=em)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
+            await ctx.send(embed = em)
 
 def setup(bot):
     bot.add_cog(Settings(bot))
