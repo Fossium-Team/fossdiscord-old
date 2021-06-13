@@ -73,8 +73,9 @@ class Help(commands.Cog):
 
     @help.command(name="purge")
     async def _purge(self, ctx):
-        em = discord.Embed(title = "Moderation: Purge", description = config.prefix + "purge <number of messages to purge> \n\nPurge messages.\n\nOther usages:\n" + config.prefix + "purge <user> <how many messages to look back for message sent by user>", color = discord.Color.blue())
-        await ctx.send(embed = em)
+        em = discord.Embed(title = 'Moderation: Purge:', color = discord.Color.blue())
+        em.add_field(name = f"{config.prefix}purge <number of messages to purge>", value="Purge certain amount of messages.")
+        em.add_field(name = f"{config.prefix}purge <user> <how many messages to look back for message sent by user>", value="Purge certain amount of messages sent by a certain user.")
 
     @help.command(name="unban")
     async def _unban(self, ctx):
@@ -114,13 +115,20 @@ class Help(commands.Cog):
 
     @help.command(name="emote")
     async def _emote(self, ctx):
-        em = discord.Embed(title = "Fun: emote", description = config.prefix + "emote \n\nEmote command.", color = discord.Color.blue())
+        em = discord.Embed(title = "Fun: Emote", description = config.prefix + "emote \n\nEmote command.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Settings commands
     @help.command(name="botstatus")
     async def _botstatus(self, ctx):
-        em = discord.Embed(title = "Settings: BotStatus", description = config.prefix + "botstatus <status> \n\nSets the status of the bot. Owner only. '" + config.prefix + "botstatus' to reset", color = discord.Color.blue())
+        em = discord.Embed(title = "Settings: Botstatus", description = config.prefix + "botstatus <status> \n\nSets the status of the bot. Owner only. '" + config.prefix + "botstatus' to reset", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="blacklist")
+    async def _blacklist(self, ctx):
+        em = discord.Embed(title = 'Settings: Blacklist', color = discord.Color.blue())
+        em.add_field(name = f"{config.prefix}blacklist add <userid>", value="Add a user to the blacklist. Owner only.")
+        em.add_field(name = f"{config.prefix}blacklist remove <userid>", value="Remove a user from the blacklist. Owner only.")
         await ctx.send(embed = em)
 
     @help.command(name="botstatusrepeat")
@@ -180,11 +188,6 @@ class Help(commands.Cog):
     async def _updatecheck(self, ctx):
         em = discord.Embed(title = "Update: UpdateCheck", description = config.prefix + "updatecheck \n\nChecks for updates for the bot. Owner only.", color = discord.Color.blue())
         await ctx.send(embed = em)
-
-    # @help.command(name="updatecogs")
-    # async def _updatecogs(self, ctx):
-    #     em = discord.Embed(title = "Update: UpdateCogs", description = config.prefix + "updatecogs \n\nUpdates the bot's cogs, replacing all of the cog files with the newest files directly from the GitHub repository. Owner only.", color = discord.Color.blue())
-    #     await ctx.send(embed = em)
 
     # VirusTotal commands
     @help.command(name="scanurl")

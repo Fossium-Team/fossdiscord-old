@@ -61,8 +61,8 @@ class Settings(commands.Cog):
     async def blacklist(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
             em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
-            em.add_field(name = f"{config.prefix}blacklist add <userid>", value="Add a user to the blacklist.")
-            em.add_field(name = f"{config.prefix}blacklist remove <userid>", value="Remove a user from the blacklist.")
+            em.add_field(name = f"{config.prefix}blacklist add <userid>", value="Add a user to the blacklist. Owner only.")
+            em.add_field(name = f"{config.prefix}blacklist remove <userid>", value="Remove a user from the blacklist. Owner only.")
             await ctx.send(embed=em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
