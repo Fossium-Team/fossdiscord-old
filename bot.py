@@ -54,7 +54,7 @@ async def on_message(msg):
             blacklistjson = json.load(file)
         blacklist = blacklistjson["data"]
         if blacklist == {}:
-            await bot.process_commands(msg)
+            pass
         else:
             for attr, value in blacklist.items():
                 if re.search(str(msg.author.id), blacklist[attr]["id"]):
@@ -64,12 +64,12 @@ async def on_message(msg):
                         await msg.channel.send(embed = em, delete_after=10.0)
                         return
                     else:
-                        await bot.process_commands(msg)
+                        pass
                 else:
-                    await bot.process_commands(msg)
+                    pass
     else:
-        await bot.process_commands(msg)
-    
+        pass
+    await bot.process_commands(msg)
     # check for bad words
     for word in config.bad_words:
         if word in msg.content.lower():
