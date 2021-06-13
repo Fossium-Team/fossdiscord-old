@@ -55,12 +55,13 @@ async def on_message(msg):
         blacklist = blacklistjson["data"]
         for attr,value in blacklist.items():
             if re.search(str(msg.author.id), str(value)):
-                for command in globalconfig.commands:
-                    if msg.content.__contains__(str(command)):
-                            BotOwner = await bot.fetch_user(config.ownerID)
-                            em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-                            await msg.channel.send(embed = em, delete_after=10.0)
-                            return
+                if re.match(f'{config.prefix}', msg.content):
+                    BotOwner = await bot.fetch_user(config.ownerID)
+                    em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                    await msg.channel.send(embed = em, delete_after=10.0)
+                    return
+                else:
+                    return
             else:
                 await bot.process_commands(msg)
     else:
