@@ -54,21 +54,19 @@ async def on_message(msg):
             blacklistjson = json.load(file)
         blacklist = blacklistjson["data"]
         if blacklist == {}:
-            os.remove("settings/blacklist.json")
             pass
         else:
-            pass
-        for attr, value in blacklist.items():
-            if re.search(str(msg.author.id), blacklistjson[attr]["id"]):
-                if re.match(f'{config.prefix}', msg.content):
-                    BotOwner = await bot.fetch_user(config.ownerID)
-                    em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-                    await msg.channel.send(embed = em, delete_after=10.0)
-                    return
+            for attr, value in blacklist.items():
+                if re.search(str(msg.author.id), blacklistjson[attr]["id"]):
+                    if re.match(f'{config.prefix}', msg.content):
+                        BotOwner = await bot.fetch_user(config.ownerID)
+                        em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                        await msg.channel.send(embed = em, delete_after=10.0)
+                        return
+                    else:
+                        return
                 else:
-                    return
-            else:
-                await bot.process_commands(msg)
+                    await bot.process_commands(msg)
     else:
         await bot.process_commands(msg)
     
