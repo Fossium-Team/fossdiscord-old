@@ -117,22 +117,21 @@ class Settings(commands.Cog):
     @blacklist.command(name="remove")
     async def _remove(self, ctx, userid: str):
         if str(ctx.message.author.id) == config.ownerID:
+            em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
             if not os.path.exists('settings'):
                 os.makedirs('settings')
             if not os.path.isfile(f"settings/blacklist.json"):
-                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                 await ctx.send(embed=em)
                 return
             if os.stat("settings/blacklist.json").st_size > 0:
                 with open("settings/blacklist.json") as file:
-                        blacklistjson = json.load(file)
+                    blacklistjson = json.load(file)
                 try:
                     blacklistitem = blacklistjson["data"]
                 except NameError:
-                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                    await ctx.send(embed=em)
                     return 
                 if blacklistitem == {}:
-                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                     await ctx.send(embed=em)
                     return
                 else:
@@ -151,7 +150,6 @@ class Settings(commands.Cog):
                         await ctx.send(embed=em)
                 
             elif os.stat("settings/blacklist.json").st_size == 0:
-                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                 await ctx.send(embed=em)
 
 
