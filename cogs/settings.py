@@ -119,11 +119,23 @@ class Settings(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
-            try:
-                if os.stat("settings/blacklist.json").st_size > 0:
-                    with open("settings/blacklist.json") as file:
+            if not os.path.isfile(f"settings/blacklist.json"):
+                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                await ctx.send(embed=em)
+                return
+            if os.stat("settings/blacklist.json").st_size > 0:
+                with open("settings/blacklist.json") as file:
                         blacklistjson = json.load(file)
+                try:
                     blacklistitem = blacklistjson["data"]
+                except NameError:
+                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                    return 
+                if blacklistitem == {}:
+                    em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
+                    await ctx.send(embed=em)
+                    return
+                else:
                     for attr, value in blacklistitem.items():
                         if blacklistitem[attr]["id"] == userid:
                             key_to_remove = attr
@@ -134,17 +146,15 @@ class Settings(commands.Cog):
                             json.dump(blacklistjson, file)
                         em = discord.Embed(title = 'Removed that user from the blacklist.', color = discord.Color.green())
                         await ctx.send(embed=em)
-                    except Exception:
-                        em = discord.Embed(title = 'User not in blacklist.', color = discord.Color.red())
+                    except NameError:
+                        em = discord.Embed(title = 'User is not in blacklist.', color = discord.Color.red())
                         await ctx.send(embed=em)
                 
-                elif os.stat("settings/blacklist.json").st_size == 0:
-                    em = discord.Embed(title = 'Nobody is blacklisted.', color = discord.Color.red())
-                    await ctx.send(embed=em)
-
-            except FileNotFoundError:
-                em = discord.Embed(title = 'Nobody is blacklisted.', color = discord.Color.red())
+            elif os.stat("settings/blacklist.json").st_size == 0:
+                em = discord.Embed(title = 'Nobody is blacklisted yet.', color = discord.Color.red())
                 await ctx.send(embed=em)
+
+
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
