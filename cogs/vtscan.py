@@ -103,10 +103,16 @@ class VT(commands.Cog):
             await ctx.send(embed = em, delete_after=5.0)
             return
         vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
-        em = discord.Embed(title = "Analyzing URL...", description = "Please wait for 15 seconds.", color = discord.Color.blue())
+        timer = 25
+        em = discord.Embed(title = "Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
-        await asyncio.sleep(15)
+        while timer != 0:
+            new_embed = discord.Embed(title = "Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+            await msg.edit(embed=new_embed)
+            timer -= 1
+            await asyncio.sleep(1)
         response = requests.get(vturl, headers=header).json()
         try:
             detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
