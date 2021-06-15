@@ -24,7 +24,7 @@ class VT(commands.Cog):
         response = requests.post(vturl, headers = header).json()
         try:
             result_id = str(response['data']['id'])
-        except Exception:
+        except KeyError:
             response = str(response['error']['code'])
             em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
@@ -39,7 +39,7 @@ class VT(commands.Cog):
         try:
             detection = int(response['data']['attributes']['stats']['malicious'])
             suspicious = int(response['data']['attributes']['stats']['suspicious'])
-        except Exception:
+        except KeyError:
             response = str(response['error']['code'])
             new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
@@ -69,7 +69,7 @@ class VT(commands.Cog):
         response = requests.post(vturl, data = data, headers = header).json()
         try:
             result_id = str(response['data']['id']).split('-')[1]
-        except Exception:
+        except KeyError:
             response = str(response['error']['code'])
             em = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             em.set_author(name="VirusTotal", icon_url=iconurl)
@@ -84,7 +84,7 @@ class VT(commands.Cog):
         try:
             detection = int(response['data']['attributes']['last_analysis_stats']['malicious'])
             suspicious = int(response['data']['attributes']['last_analysis_stats']['suspicious'])
-        except Exception:
+        except KeyError:
             response = str(response['error']['code'])
             new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
