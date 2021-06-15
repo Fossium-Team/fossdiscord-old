@@ -30,19 +30,28 @@ class VT(commands.Cog):
             em.set_author(name="VirusTotal", icon_url=iconurl)
             await ctx.send(embed = em, delete_after=5.0)
             return
-        em = discord.Embed(title = "Re-analyzing file...", description = "Please wait for 80 seconds.", color = discord.Color.blue())
+        timer = 80
+        em = discord.Embed(title = "Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
-        await asyncio.sleep(80)
+        while timer != 0:
+            new_embed = discord.Embed(title = "Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+            await msg.edit(embed=new_embed)
+            timer -= 1
+            await asyncio.sleep(1)
         vturl = f'https://www.virustotal.com/api/v3/analyses/{result_id}'
         response = requests.get(vturl, headers=header).json()
         try:
             qstatus = response["data"]["attributes"]["status"]
             if qstatus == "queued":
-                new_embed = discord.Embed(title = f"The task still in queue.", description ="Please wait 30 more seconds.", color = discord.Color.orange())
-                new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-                msg.edit(embed=new_embed)
-                await asyncio.sleep(30)
+                timer = 30
+                while timer != 0:
+                    new_embed = discord.Embed(title = f"The task still in queue.", description =f"Please wait {timer} more seconds.", color = discord.Color.orange())
+                    new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+                    await msg.edit(embed=new_embed)
+                    timer -= 1
+                    await asyncio.sleep(1)
                 response = requests.get(vturl, headers=header).json()
             else:
                 pass
