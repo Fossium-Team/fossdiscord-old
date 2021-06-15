@@ -103,6 +103,7 @@ class VT(commands.Cog):
         category = response['data']['attributes']["categories"]
         for attr, value in category.items():
             new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
+        new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
         new_embed.add_field(name="Link:", value=generated_link, inline=False)
         await msg.edit(embed=new_embed)
