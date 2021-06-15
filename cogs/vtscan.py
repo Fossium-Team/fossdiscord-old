@@ -94,8 +94,8 @@ class VT(commands.Cog):
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Scan Result:", color = discord.Color.red())
             #category = response['data']['attributes']["categories"]
-            new_embed.add_field(name="Detected As Malicious:", value=f"{detection}", inline=False)
-            new_embed.add_field(name="Detected As Suspicious:", value=f"{suspicious}", inline=False)
+            new_embed.add_field(name="Detections As Malicious:", value=f"{detection}", inline=False)
+            new_embed.add_field(name="Detections As Suspicious:", value=f"{suspicious}", inline=False)
             #for attr, value in category.items():
             #    new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
         else:
