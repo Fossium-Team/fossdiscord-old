@@ -93,6 +93,7 @@ class VT(commands.Cog):
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Scan Result:", color = discord.Color.red())
+            new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
             #category = response['data']['attributes']["categories"]
             new_embed.add_field(name="Detected As Malicious:", value=f"{detection}", inline=False)
             new_embed.add_field(name="Detected As Suspicious:", value=f"{suspicious}", inline=False)
@@ -100,6 +101,7 @@ class VT(commands.Cog):
             #    new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
         else:
             new_embed = discord.Embed(title = "The website should be clean.", color = discord.Color.green())
+            new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
         category = response['data']['attributes']["categories"]
         for attr, value in category.items():
             new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
