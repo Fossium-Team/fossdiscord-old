@@ -48,12 +48,12 @@ class VT(commands.Cog):
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = "Scan Result:", color = discord.Color.red())
-            new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
+            #new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
             new_embed.add_field(name="Number of Detections as Malicious:", value=f"{detection}", inline=False)
             new_embed.add_field(name="Number of Detections as Suspicious:", value=f"{suspicious}", inline=False)
         else:
             new_embed = discord.Embed(title = "The file should be clean.", color = discord.Color.green())
-        new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
+        #new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
         new_embed.add_field(name="Link:", value=generated_link, inline=False)
         await msg.edit(embed=new_embed)
@@ -95,19 +95,21 @@ class VT(commands.Cog):
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         if detection >= 1 or suspicious >= 1:
             new_embed = discord.Embed(title = f"Scan Result:", color = discord.Color.red())
-            new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
-            #category = response['data']['attributes']["categories"]
+            #new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
             new_embed.add_field(name="Number of Detections as Malicious:", value=f"{detection}", inline=False)
             new_embed.add_field(name="Number of Detections as Suspicious:", value=f"{suspicious}", inline=False)
-            #for attr, value in category.items():
-            #    new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
         else:
             new_embed = discord.Embed(title = "The website should be clean.", color = discord.Color.green())
-            new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
+            #new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
         category = response['data']['attributes']["categories"]
+        count = 0
         for attr, value in category.items():
-            new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
-        new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
+            count += 1
+            if count == len(category):
+                new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=False)
+            else:
+                new_embed.add_field(name = f"{attr}", value = f"`{value}`", inline=True)
+        #new_embed.add_field(name= '\u200B', value= '\u200B', inline = False)
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
         new_embed.add_field(name="Link:", value=generated_link, inline=False)
         await msg.edit(embed=new_embed)
