@@ -45,7 +45,7 @@ class VT(commands.Cog):
         try:
             qstatus = response["data"]["attributes"]["status"]
             if qstatus == "queued":
-                timer = 30
+                timer = 80
                 while timer != 0:
                     new_embed = discord.Embed(title = f"The task still in queue.", description =f"Please wait {timer} more seconds.", color = discord.Color.orange())
                     new_embed.set_author(name="VirusTotal", icon_url=iconurl)
