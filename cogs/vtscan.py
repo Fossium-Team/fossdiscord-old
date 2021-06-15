@@ -37,6 +37,22 @@ class VT(commands.Cog):
         vturl = f'https://www.virustotal.com/api/v3/analyses/{result_id}'
         response = requests.get(vturl, headers=header).json()
         try:
+            qstatus = response["data"]["attributes"]["status"]
+            if qstatus == "queued":
+                new_embed = discord.Embed(title = f"The task still in queue.", description ="Please wait 30 more seconds.", color = discord.Color.orange())
+                new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+                msg.edit(embed=new_embed)
+                await asyncio.sleep(30)
+                response = requests.get(vturl, headers=header).json()
+            else:
+                pass
+        except KeyError:
+            response = str(response['error']['code'])
+            new_embed = discord.Embed(title = f"Error: `{response}`", color = discord.Color.red())
+            new_embed.set_author(name="VirusTotal", icon_url=iconurl)
+            await msg.edit(embed=new_embed, delete_after=5.0)
+            return
+        try:
             detection = int(response['data']['attributes']['stats']['malicious'])
             suspicious = int(response['data']['attributes']['stats']['suspicious'])
         except KeyError:
