@@ -47,11 +47,11 @@ class VT(commands.Cog):
             return
         generated_link = f"https://www.virustotal.com/gui/file/{hash}/detection"
         if detection >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
+            new_embed = discord.Embed(title = f"Link: {generated_link}\nDetections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
         else:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`, the file should be clean.", color = discord.Color.green())
+            new_embed = discord.Embed(title = f"Link: {generated_link}\n`{detection}`, the file should be clean.", color = discord.Color.green())
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-        new_embed.add_field(name="Link:", value=generated_link)
+        #new_embed.add_field(name="Link:", value=generated_link)
         await msg.edit(embed=new_embed)
 
     @commands.max_concurrency(1, per=commands.BucketType.guild, wait=False)
@@ -90,14 +90,14 @@ class VT(commands.Cog):
             return
         generated_link = f"https://www.virustotal.com/gui/url/{result_id}/detection"
         if detection >= 1 or suspicious >= 1:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
+            new_embed = discord.Embed(title = f"Link: {generated_link}\nDetections: `{detection}`\nDetected as suspicious: `{suspicious}`", color = discord.Color.red())
             category = response['data']['attributes']["categories"]
             for attr, value in category.items():
                 new_embed.add_field(name = f"{attr}", value = f"`{value}`")
         else:
-            new_embed = discord.Embed(title = f"Detections: `{detection}`, the website should be clean.", color = discord.Color.green())
+            new_embed = discord.Embed(title = f"Link: {generated_link}\nDetections: `{detection}`, the website should be clean.", color = discord.Color.green())
         new_embed.set_author(name="VirusTotal", icon_url=iconurl)
-        new_embed.add_field(name="Link:", value=generated_link)
+        #new_embed.add_field(name="Link:", value=generated_link)
         await msg.edit(embed=new_embed)
 
 
