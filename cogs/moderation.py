@@ -31,12 +31,12 @@ class Moderation(commands.Cog):
             em.add_field(name = f"{config.prefix}purge <user> <how many messages to look back for message sent by user>", value="Purge certain amount of messages sent by a certain user.")
             await ctx.send(embed=em)
         else:
-            await ctx.channel.purge(limit=amount+1)
+            await ctx.channel.purge(limit=int(amount)+1)
     
     @purge.command(name="user")
     async def _user(self, ctx, user: discord.Member, amount=10):
         await ctx.message.delete()
-        await ctx.channel.purge(limit=amount, check=lambda message: message.author == user)
+        await ctx.channel.purge(limit=int(amount), check=lambda message: message.author == user)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
