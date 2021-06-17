@@ -24,7 +24,7 @@ class Moderation(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount):
+    async def purge(self, ctx, amount = None):
         if amount is None:
             em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
             em.add_field(name = f"{config.prefix}purge <number of messages to purge>", value="Purge certain amount of messages.")
