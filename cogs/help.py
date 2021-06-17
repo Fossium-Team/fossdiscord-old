@@ -34,10 +34,6 @@ class Help(commands.Cog):
                 em.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.")
             else:
                 em.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
-            # if config.latest_version > globalconfig.version:
-            #     em.add_field(name = "Notice", value = "This bot has an available update that will update it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
-            # elif config.latest_version < globalconfig.version:
-            #     em.add_field(name = "Notice", value = "This bot has an available downgrade that will downgrade it from version `" + globalconfig.version + "` to version `" + config.latest_version + "`. Please use `" + config.prefix + "updatecheck` for more details.")
             await ctx.send(embed = em)
 
     # Moderation commands
