@@ -64,7 +64,7 @@ class Help(commands.Cog):
 
     @help.command(name="mute")
     async def _mute(self, ctx):
-        em = discord.Embed(title = "Moderation: Mute", description = config.prefix + "mtue <user> <mutetime> \n\nMute a member.", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: Mute", description = config.prefix + "mute <user> <mutetime> \n\nMute a member.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="purge")
