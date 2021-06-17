@@ -9,6 +9,8 @@ import datetime
 import time
 import json
 import os
+import requests
+import globalconfig
 start_time = time.time()
 
 class General(commands.Cog):
