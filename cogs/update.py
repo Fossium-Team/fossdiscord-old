@@ -65,7 +65,7 @@ class Update(commands.Cog):
                     await ctx.send(embed=em)
                 else:
                     datetimenow = datetime.now()
-                    currentdate = datetime.strftime(datetimenow, '%a %b %y %I:%M%p')
+                    currentdate = datetime.strftime(datetimenow, '%a %b %y %I-%M-%S%p')
 
                     latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
                     latestversionget = latestversionresponse.json()["name"]
@@ -96,10 +96,11 @@ class Update(commands.Cog):
                     shutil.rmtree("updatertemp")
                     print("Done! Restart the bot to apply the changes!")
                     em = discord.Embed(title = "Updated!", description = "FOSSDiscord updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
-                    em.add_field(name = "Note", value = "You have to start the bot again manually. If the bot errors while starting, open an issue in FOSSDiscord's GitHub repository.")
+                    em.add_field(name = "Note", value = "The bot should start up again. If it doesn't, try to start the bot manually. If the bot errors while starting, please open an issue in FOSSDiscord's GitHub repository.")
                     await ctx.send(embed = em)
                     #close_port()
                     await ctx.bot.close()
+                    os.execl(sys.executable, os.path.abspath(__file__), *sys.argv) 
         elif sys.platform == "darwin":
                 em = discord.Embed(title = "We are still testing `updatebot` for macOS.", color = discord.Color.red())
                 await ctx.send(embed = em)
