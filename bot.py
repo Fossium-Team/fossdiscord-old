@@ -75,7 +75,7 @@ async def on_message(msg):
     for word in config.bad_words:
         if word in msg.content.lower():
             await msg.delete()
-            await msg.channel.send("Please don't use that word", delete_after=10.0, color = discord.Color.orange())
+            await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
         else:
             await bot.process_commands(msg)
 
@@ -93,7 +93,7 @@ async def on_command_error(ctx, error):
         await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandNotFound):
         await ctx.message.delete()
-        em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
+        em = discord.Embed(title = "Error", description = "Command not found.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandOnCooldown):
