@@ -12,11 +12,9 @@ def timeconvertion(time):# Time convertion
     lettercount = len(letters_inside)
     to_convert = ''.join(filter(str.isdigit, time))
     if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
-        try:
             timeconverted = int(to_convert) * convertion[time[-1]]
             return int(timeconverted)
-        except Exception:
-            return False
+    return False
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -82,7 +80,7 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "A role named 'Muted' does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
             await guildowner.send(embed = em)
             return
-        if timeconvertion(mutetime) is False:
+        if timeconvertion(mutetime) is not False:
             try:
                 role = discord.utils.get(user.guild.roles, name="Muted")
                 await user.add_roles(role)
@@ -94,7 +92,7 @@ class Moderation(commands.Cog):
             await ctx.send(embed = em)
             await asyncio.sleep(timeconvertion(mutetime))
             await user.remove_roles(role)
-        elif timeconvertion(mutetime) == False:
+        elif timeconvertion(mutetime) is False:
             em = discord.Embed(title = "The time format doesn't seem right.", color = discord.Color.red())
             await ctx.send(embed = em)
 
