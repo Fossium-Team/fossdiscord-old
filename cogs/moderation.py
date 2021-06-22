@@ -214,10 +214,12 @@ class Moderation(commands.Cog):
     async def modnick(self, ctx, *, user: discord.Member):
         source = string.ascii_letters + string.digits
         result_str = ''.join((random.choice(source) for i in range(8)))
-        newnickname = f"ModdedNick{result_str}"
+        newnickname = f"ModdedNick-{result_str}"
         await user.edit(nick=newnickname)
         await ctx.message.delete()
-        await ctx.send(f'Nickname was moderated for {user.mention} ({user.name}#{user.discriminator}).', delete_after=10.0, color = discord.Color.orange())
+        em = discord.Embed(title = f'Nickname was moderated.', color = discord.Color.orange())
+        em.add_field(name=f"{user.name}#{user.discriminator}", value=user.mention)
+        await ctx.send(embed=em, delete_after=10.0)
 
 
     @commands.command(pass_context=True)
@@ -225,7 +227,9 @@ class Moderation(commands.Cog):
     async def changenick(self, ctx, user: discord.Member, nick):
         await user.edit(nick=nick)
         await ctx.message.delete()
-        await ctx.send(f'Nickname was changed for {user.mention} ({user.name}#{user.discriminator}).', delete_after=10.0, color = discord.Color.orange())
+        em = discord.Embed(title = f'Nickname was changed.', color = discord.Color.orange())
+        em.add_field(name=f"{user.name}#{user.discriminator}", value=user.mention)
+        await ctx.send(embed=em, delete_after=10.0)
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
