@@ -44,7 +44,7 @@ class Help(commands.Cog):
     
     @help.command(name="changenick")
     async def _changenick(self, ctx):
-        em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname> \n\nChanges the nickname of a user or a bot.", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname (if not given the nickname will be reset) \n\nChanges the nickname of a user or a bot.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="delwarn")
@@ -59,7 +59,7 @@ class Help(commands.Cog):
     
     @help.command(name="modnick")
     async def _modnick(self, ctx):
-        em = discord.Embed(title = "Moderation: ModNick", description = config.prefix + "modnick <user ID or mention>\n\nModerates the nickname of a user or a bot (sets the nickname to 'ModdedNick' plus a random string of letters or numbers).", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: ModNick", description = config.prefix + 'modnick <user ID or mention>\n\nModerates the nickname of a user or a bot (sets the nickname to "ModdedNick-(random letters and numbers)".', color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="mute")

@@ -26,9 +26,9 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, amount = None):
         if amount is None:
-            em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
+            em = discord.Embed(title = 'Usages:', color = discord.Color.blue())
             em.add_field(name = f"{config.prefix}purge <number of messages to purge>", value="Purge certain amount of messages.")
-            em.add_field(name = f"{config.prefix}purge <user> <how many messages to look back for message sent by user>", value="Purge certain amount of messages sent by a certain user.")
+            em.add_field(name = f"{config.prefix}purge <mention> <how many messages to look back for message sent by user>", value="Purge certain amount of messages sent by a certain user.")
             await ctx.send(embed=em)
         else:
             await ctx.channel.purge(limit=int(amount)+1)
@@ -211,21 +211,30 @@ class Moderation(commands.Cog):
     
     @commands.command(pass_context=True)
     @commands.has_permissions(manage_nicknames=True)
-    async def modnick(self, ctx, *, user: discord.Member):
-        source = string.ascii_letters + string.digits
-        result_str = ''.join((random.choice(source) for i in range(8)))
-        newnickname = f"ModdedNick-{result_str}"
-        await user.edit(nick=newnickname)
-        await ctx.message.delete()
-        em = discord.Embed(title = f'Nickname was moderated.', color = discord.Color.orange())
-        em.add_field(name=f"{user.name}#{user.discriminator}", value=user.mention)
-        await ctx.send(embed=em, delete_after=10.0)
-
+    async def modnick(self, ctx, *, user: discord.Member = None):
+        if user is None:
+            em = discord.Embed(title = 'Usage:', color = discord.Color.blue())
+            em.add_field(name = f"{config.prefix}modnick <user ID or mention>", value='Moderates the nickname of a user or a bot (sets the nickname to "ModdedNick-(random letters and numbers)".')
+            await ctx.send(embed=em)
+        else:
+            source = string.ascii_letters + string.digits
+            result_str = ''.join((random.choice(source) for i in range(8)))
+            newnickname = f"ModdedNick-{result_str}"
+            await user.edit(nick=newnickname)
+            await ctx.message.delete()
+            em = discord.Embed(title = f'Nickname was moderated.', color = discord.Color.orange())
+            em.add_field(name=f"{user.name}#{user.discriminator}", value=user.mention)
+            await ctx.send(embed=em, delete_after=10.0)
 
     @commands.command(pass_context=True)
     @commands.has_permissions(manage_nicknames=True)
-    async def changenick(self, ctx, user: discord.Member, nick):
-        await user.edit(nick=nick)
+    async def changenick(self, ctx, user: discord.Member = None, *nick):
+        args = " ".join(nick[:])
+        if user is None:
+            em = discord.Embed(title = 'Usage:', color = discord.Color.blue())
+            em.add_field(name = f"{config.prefix}changenick <user ID or mention> <new nickname (if not given the nickname will be reset)>", value="Changes the nickname of a user or a bot.")
+            await ctx.send(embed=em)
+        await user.edit(nick=args)
         await ctx.message.delete()
         em = discord.Embed(title = f'Nickname was changed.', color = discord.Color.orange())
         em.add_field(name=f"{user.name}#{user.discriminator}", value=user.mention)

@@ -75,7 +75,7 @@ async def on_message(msg):
     for word in config.bad_words:
         if word in msg.content.lower():
             await msg.delete()
-            await msg.channel.send("Please don't use that word", delete_after=5.0, color = discord.Color.orange())
+            await msg.channel.send("Please don't use that word", delete_after=10.0, color = discord.Color.orange())
         else:
             await bot.process_commands(msg)
 
@@ -83,25 +83,27 @@ async def on_message(msg):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
+        await ctx.message.delete()
         em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em, delete_after=5.0)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.MissingRequiredArgument):
         em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em, delete_after=5.0)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandNotFound):
+        await ctx.message.delete()
         em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em, delete_after=5.0)
+        await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandOnCooldown):
         await ctx.message.delete()
         em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
-        await ctx.send(embed=em, delete_after=5.0)
+        await ctx.send(embed=em, delete_after=10.0)
     elif isinstance(error, commands.MaxConcurrencyReached):
         await ctx.message.delete()
         em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
-        await ctx.send(embed=em, delete_after=5.0)
+        await ctx.send(embed=em, delete_after=10.0)
     else:
         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
