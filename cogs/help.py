@@ -14,27 +14,40 @@ class Help(commands.Cog):
     @commands.group(invoke_without_command=True, aliases=['commands'])
     async def help(self, ctx):
         if ctx.invoked_subcommand is None:
-            em = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-            em.add_field(name = "General", value = "about")
-            em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
-            em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-            em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            em.add_field(name = "Fun", value = "choose, f, emote, cat")
-            em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-            em.add_field(name = "VirusTotal", value = "scanurl, rescan")
-            em.add_field(name = "Update", value = "updatecheck, updatebot")
-            em.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
-            em.add_field(name = "Help", value = "help - Shows this message")
+            firstem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+            firstem.add_field(name = "General", value = "about")
+            firstem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
+            firstem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
+            firstem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
+            firstem.add_field(name = "Fun", value = "choose, f, emote, cat")
+            firstem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
+            firstem.add_field(name = "VirusTotal", value = "scanurl, rescan")
+            firstem.add_field(name = "Update", value = "updatecheck, updatebot")
+            firstem.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
+            firstem.add_field(name = "Help", value = "help - Shows this message")
+            embedmsg = await ctx.send(embed = firstem)
+            secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+            secondem.add_field(name = "General", value = "about")
+            secondem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
+            secondem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
+            secondem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
+            secondem.add_field(name = "Fun", value = "choose, f, emote, cat")
+            secondem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
+            secondem.add_field(name = "VirusTotal", value = "scanurl, rescan")
+            secondem.add_field(name = "Update", value = "updatecheck, updatebot")
+            secondem.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
+            secondem.add_field(name = "Help", value = "help - Shows this message")
             latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
             latestversionget = latestversionresponse.json()["name"]
             latestversion = latestversionget.split(' ', 1)[1]
             if globalconfig.currentversion == latestversion:
-                em.add_field(name = "Updates", value = "There are no updates available.")
+                secondem.add_field(name = "Updates", value = "There are no updates available.")
             elif globalconfig.currentversion > latestversion:
-                em.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.")
+                secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.")
             else:
-                em.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
-            await ctx.send(embed = em)
+                secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
+            await embedmsg.edit(embed=secondem)
+            
 
     # Moderation commands
     @help.command(name="ban")

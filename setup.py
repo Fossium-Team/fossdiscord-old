@@ -84,25 +84,27 @@ def vtapiWrite() :
         print("Invalid response, please rerun the script.")
         exit()
 
-def flickrapipublicWrite() :
-    print("If you don't have a Flickr API key, or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\n")
-    vtapiToken = input("Enter your Flickr Public API key: ")
-    verificationFour = input("Is this correct? (y/n/s): '" + vtapiToken + "'")
+def flickrapiWrite() :
+    print("If you don't have a Flickr API key, or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct. (Needed for the cat command)\nThe format is ")
+    print('Flickr Public Key, Flickr Secret Key \n')
+    flickrapiToken = input("Enter your Flickr Public Key and your Flickr Secret Key (don't forget the comma): ")
+    verificationFour = input("Is this correct? (y/n/s): '" + flickrapiToken + "'")
     if verificationFour == "y":
+        flickrapisplit = flickrapiToken.split(", ")
         print("Writing...")
         config = open('config.py', 'a')
-        writePrefixTemplate = "flickr_public = '" + vtapiToken + "'\n"
+        writePrefixTemplate = "flickr_public = '" + flickrapisplit[0] + "'\nflickr_secret = '" + flickrapisplit[1] + "'\n"
         config.write(writePrefixTemplate)
         config.close()
         print("Written!")
         print()
     elif verificationFour == "n":
-        print("Please rerun the file and input your VirusTotal API key.")
+        print("Please rerun the file and input your Flickr API key.")
         exit()
     elif verificationFour == "s":
         print("Writing...")
         config = open('config.py', 'a')
-        writePrefixTemplate = "flickr_public = ''\n"
+        writePrefixTemplate = "flickr_public = ''\nflickr_private = ''\n"
         config.write(writePrefixTemplate)
         config.close()
         print("Written!")
@@ -114,7 +116,7 @@ def flickrapipublicWrite() :
 
 def badwordWrite() :
     print("Please put in bad words that you want to be filtered by the bot.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
-    print('["badword1", "badword2", "badword3"]')
+    print('["badword1", "badword2", "badword3"]\n')
     badwords = input("Enter the bad words (make sure to use the format): ")
     verificationFour = input("Is this correct? (y/n/s): '" + badwords + "'")
     if verificationFour == "y":
@@ -217,11 +219,12 @@ tokenWrite()
 prefixWrite()
 ownerIDWrite()
 vtapiWrite()
+flickrapiWrite()
 badwordWrite()
 dateformatWrite()
 #blacklistWrite()
 
 print("Your config file should be written now!")
-print("To start your bot, run 'python3 bot.py'")
+print("To start your bot, run 'python (or python3) bot.py'")
 print("Have a nice day! :)")
 exit()

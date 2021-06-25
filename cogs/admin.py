@@ -8,6 +8,7 @@ import globalconfig
 import importlib
 import subprocess
 import os
+import sys
 
 class Admin(commands.Cog):
     def __init__(self, bot):
@@ -50,21 +51,6 @@ class Admin(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    # @commands.command()
-    # async def restartbot(self, ctx):
-    #     """Restarts the bot"""
-    #     if str(ctx.message.author.id) == config.ownerID:
-    #         first_embed = discord.Embed(title = "Restarting bot...", color = discord.Color.orange())
-    #         msg = await ctx.send(embed=first_embed)
-    #         dir_path = os.getcwd()
-    #         subprocess.Popen(['python3', dir_path + '/bot.py'])
-    #         new_embed = discord.Embed(title = "Restarted bot!", color = discord.Color.green())
-    #         await msg.edit(embed=new_embed)
-    #         await ctx.bot.close()
-    #     else:
-    #         em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
-    #         await ctx.send(embed = em)
-
     @commands.command()
     async def shutdownbot(self, ctx):
         """Shuts down the bot"""
@@ -78,7 +64,20 @@ class Admin(commands.Cog):
         else:
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
-        
+
+    @commands.command()
+    async def restartbot(self, ctx):
+        if str(ctx.message.author.id) == config.ownerID:
+            first_embed = discord.Embed(title = "Reloading bot...", color = discord.Color.orange())
+            msg = await ctx.send(embed=first_embed)
+            new_embed = discord.Embed(title = "The bot is reloaded!", color = discord.Color.green())
+            #close_port()
+            await msg.edit(embed=new_embed)
+            await ctx.bot.close()
+            os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
+        else:
+            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            await ctx.send(embed = em)
 
     @commands.command()
     async def servers(self, ctx):

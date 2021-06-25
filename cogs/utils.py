@@ -6,6 +6,7 @@ from discord.ext import commands
 import config
 import datetime
 import time
+import requests
 start_time = time.time()
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -132,6 +133,26 @@ class Utils(commands.Cog):
             await ctx.send(embed=embed)
         except discord.HTTPException:
             await ctx.send("Current uptime: " + text)
+
+# going to change this when the Down for Everyone or Just Me API is released
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.command()
+    async def isitdown(self, ctx, website):
+        firstem = discord.Embed(title = f"Checking if {website} is down... This may take a few seconds...", color = discord.Color.orange())
+        embedmsg = await ctx.send(embed = firstem)
+        try:
+            websiteresponse = requests.get(website)
+        except:
+            secondem = discord.Embed(title = f"An error occured, it is most likely that {website} doesn't exist or it is down", color = discord.Color.red())
+            await embedmsg.edit(embed=secondem)
+            return
+        if websiteresponse.ok:
+            secondem = discord.Embed(title = f"{website} is online", color = discord.Color.green())
+            await embedmsg.edit(embed=secondem)
+        else:
+            secondem = discord.Embed(title = f"{website} is down", color = discord.Color.red())
+            await embedmsg.edit(embed=secondem)
+        
 
 def setup(bot):
     bot.add_cog(Utils(bot))

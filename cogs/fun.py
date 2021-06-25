@@ -68,19 +68,30 @@ class Fun(commands.Cog):
         await msg.add_reaction('🇫')
 
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(aliases=['aww','kat','cats'])
+    @commands.command(aliases=['kat','cats', 'kitten'])
     async def cat(self, ctx):
         firstem = discord.Embed(title = "Getting cat picture...", color = discord.Color.orange())
         embedmsg = await ctx.send(embed=firstem)
-        flickr = FlickrAPI(flickr_public, flickr_secret, format='parsed-json')
-        response = flickr.photos.search(text='cat', per_page=10, extras='url_c', safe_search=3, privacy_filter=1)
+        flickr = FlickrAPI(config.flickr_public, config.flickr_secret, format='parsed-json')
+        response = flickr.photos.search(text='cat, kitten', per_page=10, extras='url_c', safe_search=2, privacy_filter=1)
         index = random.randint(0,9)
         url = response['photos']['photo'][index]['url_c']
         secondem = discord.Embed(title = "Cat Picture:", color = discord.Color.blue())
         secondem.set_image(url=url)
         await embedmsg.edit(embed=secondem)
-        
 
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.command(aliases=['puppy','doggo'])
+    async def dog(self, ctx):
+        firstem = discord.Embed(title = "Getting dog picture...", color = discord.Color.orange())
+        embedmsg = await ctx.send(embed=firstem)
+        flickr = FlickrAPI(config.flickr_public, config.flickr_secret, format='parsed-json')
+        response = flickr.photos.search(text='dog, puppy', per_page=10, extras='url_c', safe_search=2, privacy_filter=1)
+        index = random.randint(0,9)
+        url = response['photos']['photo'][index]['url_c']
+        secondem = discord.Embed(title = "Dog Picture:", color = discord.Color.blue())
+        secondem.set_image(url=url)
+        await embedmsg.edit(embed=secondem)
         
 def setup(bot):
     bot.add_cog(Fun(bot))
