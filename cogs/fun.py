@@ -8,6 +8,10 @@ import psutil
 import config
 import bot
 import random
+from flickrapi import FlickrAPI
+
+FLICKR_PUBLIC = ''
+FLICKR_SECRET = ''
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -66,6 +70,18 @@ class Fun(commands.Cog):
         msg = await ctx.send(embed = em)
         await msg.add_reaction('🇫')
 
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.command(description='cat')
+    @commands.command(aliases=['aww','kat','cats'])
+    async def cat(self, ctx):
+        flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format='parsed-json')
+        response = flickr.photos.search(text='cats', per_page=10, extras = 'url_c', safe_search=1, privacy_filter = 1)
+        index = random.randint(0,9)
+        url = response['photos']['photo'][index]['url_c']
+        em = discord.Embed(title = "Cat Picture:", color = discord.Color.blue())
+        em.set_thumbnail(url=url)
+        await ctx.send(embed=em)
+        
 
         
 def setup(bot):
