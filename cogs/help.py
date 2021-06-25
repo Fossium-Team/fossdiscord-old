@@ -19,7 +19,7 @@ class Help(commands.Cog):
             em.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             em.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             em.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            em.add_field(name = "Fun", value = "choose, f, emote")
+            em.add_field(name = "Fun", value = "choose, f, emote, cat")
             em.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             em.add_field(name = "VirusTotal", value = "scanurl, rescan")
             em.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -112,6 +112,11 @@ class Help(commands.Cog):
     @help.command(name="emote")
     async def _emote(self, ctx):
         em = discord.Embed(title = "Fun: Emote", description = config.prefix + "emote \n\nEmote command.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="cat")
+    async def _cat(self, ctx):
+        em = discord.Embed(title = "Fun: Cat", description = config.prefix + "cat \n\nGet a cat picture.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Settings commands
