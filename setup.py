@@ -84,6 +84,34 @@ def vtapiWrite() :
         print("Invalid response, please rerun the script.")
         exit()
 
+def flickrapipublicWrite() :
+    print("If you don't have a Flickr API key, or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\n")
+    vtapiToken = input("Enter your Flickr Public API key: ")
+    verificationFour = input("Is this correct? (y/n/s): '" + vtapiToken + "'")
+    if verificationFour == "y":
+        print("Writing...")
+        config = open('config.py', 'a')
+        writePrefixTemplate = "flickr_public = '" + vtapiToken + "'\n"
+        config.write(writePrefixTemplate)
+        config.close()
+        print("Written!")
+        print()
+    elif verificationFour == "n":
+        print("Please rerun the file and input your VirusTotal API key.")
+        exit()
+    elif verificationFour == "s":
+        print("Writing...")
+        config = open('config.py', 'a')
+        writePrefixTemplate = "flickr_public = ''\n"
+        config.write(writePrefixTemplate)
+        config.close()
+        print("Written!")
+        print()
+        print("You have chosen not to input a Flickr API key. You may add one by editing the config.py file later.")
+    elif verificationFour != "n" or "y" or "s":
+        print("Invalid response, please rerun the script.")
+        exit()
+
 def badwordWrite() :
     print("Please put in bad words that you want to be filtered by the bot.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
     print('["badword1", "badword2", "badword3"]')
