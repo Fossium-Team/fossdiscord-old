@@ -10,8 +10,8 @@ import bot
 import random
 from flickrapi import FlickrAPI
 
-FLICKR_PUBLIC = 'd3e304b312d84e902c5bdf82311f79d7'
-FLICKR_SECRET = '345887508fbfc557'
+FLICKR_PUBLIC = ''
+FLICKR_SECRET = ''
 
 class Fun(commands.Cog):
     def __init__(self, bot):
