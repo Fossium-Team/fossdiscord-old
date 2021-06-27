@@ -7,6 +7,7 @@ import config
 import datetime
 import time
 import requests
+import re
 start_time = time.time()
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -138,6 +139,10 @@ class Utils(commands.Cog):
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     async def isitdown(self, ctx, website):
+        if re.search("https://", website):
+            pass
+        else:
+            website = f"https://{website}"
         firstem = discord.Embed(title = f"Checking if {website} is down... This may take a few seconds...", color = discord.Color.orange())
         embedmsg = await ctx.send(embed = firstem)
         try:
@@ -152,6 +157,7 @@ class Utils(commands.Cog):
         else:
             secondem = discord.Embed(title = f"{website} is down", color = discord.Color.red())
             await embedmsg.edit(embed=secondem)
+
         
 
 def setup(bot):
