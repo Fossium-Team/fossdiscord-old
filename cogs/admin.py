@@ -68,9 +68,9 @@ class Admin(commands.Cog):
     @commands.command()
     async def restartbot(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
-            first_embed = discord.Embed(title = "Reloading bot...", color = discord.Color.orange())
+            first_embed = discord.Embed(title = "Restarting bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
-            new_embed = discord.Embed(title = "The bot is reloaded!", color = discord.Color.green())
+            new_embed = discord.Embed(title = "The bot has restarted!", color = discord.Color.green())
             #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()

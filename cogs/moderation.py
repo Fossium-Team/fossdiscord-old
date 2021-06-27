@@ -77,25 +77,38 @@ class Moderation(commands.Cog):
             #permission = discord.Permissions(send_messages=False, read_messages=False)
             #await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permissions = permission)
             guildowner = ctx.bot.get_user(int(ctx.guild.owner_id))
-            em = discord.Embed(title = "A role named 'Muted' does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
+            em = discord.Embed(title = "A role named `Muted` does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
             await guildowner.send(embed = em)
             return
         if timeconvertion(mutetime) is not False:
-            try:
-                role = discord.utils.get(user.guild.roles, name="Muted")
-                await user.add_roles(role)
-            except Exception:
-                em = discord.Embed(title = "User already muted, mute him again is not necessary.", color = discord.Color.red())
+            role = discord.utils.get(user.guild.roles, name="Muted")
+            if role in user.roles:
+                em = discord.Embed(title = f"`{user.display_name}` is already muted.", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
-            em = discord.Embed(title = "User has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
+            else:
+                await user.add_roles(role)
+            em = discord.Embed(title = f"`{user.display_name}` has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
             await ctx.send(embed = em)
             await asyncio.sleep(timeconvertion(mutetime))
             await user.remove_roles(role)
         elif timeconvertion(mutetime) is False:
             em = discord.Embed(title = "The time format doesn't seem right.", color = discord.Color.red())
             await ctx.send(embed = em)
-
+            
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def unmute(self, ctx, user: discord.Member):
+        """Unmute a member."""
+        role = discord.utils.get(user.guild.roles, name="Muted")
+        if role not in user.roles:
+            em = discord.Embed(title = f"`{user.display_name}` is not muted.", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        else:
+            await user.remove_roles(role)
+        em = discord.Embed(title = f"Unmuted `{user.display_name}`", color = discord.Color.green())
+        await ctx.send(embed = em)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -116,16 +129,6 @@ class Moderation(commands.Cog):
         await ctx.guild.unban(user)
         em = discord.Embed(title = f"**{user}** has been unbanned", color = discord.Color.green())
         await ctx.send(embed = em)
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def unmute(self, ctx, user: discord.Member):
-        """Unmute a member."""
-        role = discord.utils.get(user.guild.roles, name="Muted")
-        await user.remove_roles(role)
-        em = discord.Embed(title = "Successfully unmuted `" + user.name + "`", color = discord.Color.green())
-        await ctx.send(embed = em)
-
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
