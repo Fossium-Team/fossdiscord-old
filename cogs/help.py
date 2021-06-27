@@ -19,7 +19,7 @@ class Help(commands.Cog):
             firstem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             firstem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             firstem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            firstem.add_field(name = "Fun", value = "choose, f, emote, cat")
+            firstem.add_field(name = "Fun", value = "choose, f, emote, cat, dog")
             firstem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             firstem.add_field(name = "VirusTotal", value = "scanurl, rescan")
             firstem.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -130,6 +130,11 @@ class Help(commands.Cog):
     @help.command(name="cat")
     async def _cat(self, ctx):
         em = discord.Embed(title = "Fun: Cat", description = config.prefix + "cat \n\nGet a cat picture.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+    
+    @help.command(name="dog")
+    async def _dog(self, ctx):
+        em = discord.Embed(title = "Fun: Dog", description = config.prefix + "dog \n\nGet a dog picture.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Settings commands

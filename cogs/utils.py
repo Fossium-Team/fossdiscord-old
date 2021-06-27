@@ -158,7 +158,5 @@ class Utils(commands.Cog):
             secondem = discord.Embed(title = f"{website} is down", color = discord.Color.red())
             await embedmsg.edit(embed=secondem)
 
-        
-
 def setup(bot):
     bot.add_cog(Utils(bot))
