@@ -43,17 +43,17 @@ class General(commands.Cog):
         await ctx.send(embed = em)
 
     # welcomer
-    @commands.Cog.listener()
-    async def on_member_join(self, member: discord.Member):
-        if os.path.isfile(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json"):
-            with open(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json") as file:
-                welcomersettings = json.load(file)
-            if welcomersettings['enabled'] == 'true':
-                await self.bot.get_channel(848464385710358549).send(f" Welcome!{member.mention}.")
-            else:
-                return
-        else:
-            return
+    #@commands.Cog.listener()
+    #async def on_member_join(self, member: discord.Member):
+        #if os.path.isfile(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json"):
+            #with open(f"settings/welcomer/{str(member.guild)}_welcomerenabled.json") as file:
+                #welcomersettings = json.load(file)
+            #if welcomersettings['enabled'] == 'true':
+                #await self.bot.get_channel(848464385710358549).send(f" Welcome!{member.mention}.")
+            #else:
+                #return
+        #else:
+            #return
 
 def setup(bot):
     bot.add_cog(General(bot))
