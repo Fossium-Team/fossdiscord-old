@@ -17,14 +17,14 @@ FOSSDiscord is a general purpose Discord bot maintained by [SKBotNL](https://git
 
 There are many features of the bot. These features include:
 
-- VirusTotal file scanning
-- Message encryption
 - Moderation
-- Fun commands
 - Utility commands
-- Custom playing status that you can customize per instance
+- Fun commands
+- Message twisting
 - Self updating feature
-- Lots more commands, and more commands being added regularly!
+- Custom playing status that you can customize per instance
+- VirusTotal file scanning
+- And a lot of more commands, and there are also more commands being added regularly!
 
 [![Join our Discord server!](https://invidget.switchblade.xyz/myzbqnVUFN)](http://discord.gg/myzbqnVUFN)
 
