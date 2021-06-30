@@ -31,11 +31,11 @@ class VT(commands.Cog):
             await ctx.send(embed = em, delete_after=5.0)
             return
         timer = 80
-        em = discord.Embed(title = "<:scanning:854364754092490802> Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+        em = discord.Embed(title = "Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
         while timer != 0:
-            new_embed = discord.Embed(title = "<:scanning:854364754092490802> Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+            new_embed = discord.Embed(title = "Re-analyzing file...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             await msg.edit(embed=new_embed)
             timer -= 1
@@ -47,7 +47,7 @@ class VT(commands.Cog):
             if qstatus == "queued":
                 timer = 80
                 while timer != 0:
-                    new_embed = discord.Embed(title = f"<:scanning:854364754092490802> The task still in queue.", description =f"Please wait {timer} more seconds.", color = discord.Color.orange())
+                    new_embed = discord.Embed(title = f"The task still in queue.", description =f"Please wait {timer} more seconds.", color = discord.Color.orange())
                     new_embed.set_author(name="VirusTotal", icon_url=iconurl)
                     await msg.edit(embed=new_embed)
                     timer -= 1
@@ -104,11 +104,11 @@ class VT(commands.Cog):
             return
         vturl = f"https://www.virustotal.com/api/v3/urls/{result_id}"
         timer = 25
-        em = discord.Embed(title = "<:scanning:854364754092490802> Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+        em = discord.Embed(title = "Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
         em.set_author(name="VirusTotal", icon_url=iconurl)
         msg = await ctx.send(embed = em)
         while timer != 0:
-            new_embed = discord.Embed(title = "<:scanning:854364754092490802> Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
+            new_embed = discord.Embed(title = "Analyzing URL...", description = f"Please wait for {timer} seconds.", color = discord.Color.blue())
             new_embed.set_author(name="VirusTotal", icon_url=iconurl)
             await msg.edit(embed=new_embed)
             timer -= 1
