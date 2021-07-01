@@ -14,8 +14,8 @@ class VT(commands.Cog):
 
     @commands.max_concurrency(1, per=commands.BucketType.guild, wait=False)
     @commands.cooldown(1, 45, commands.BucketType.guild)
-    @commands.command(aliases=['rescan', 'recheckfile'])
-    async def vt_hash(self, ctx, *, hash: str):
+    @commands.command(aliases=['vthash', 'recheckfile', 'vt_hash'])
+    async def rescan(self, ctx, *, hash: str):
         """VirusTotal Integration"""
         await ctx.message.delete()
         hash = hash.replace(' ', '')
@@ -85,8 +85,8 @@ class VT(commands.Cog):
 
     @commands.max_concurrency(1, per=commands.BucketType.guild, wait=False)
     @commands.cooldown(1, 45, commands.BucketType.user)
-    @commands.command(aliases=['checkurl','urlcheck','scanurl'])
-    async def scan_url(self, ctx, *, url: str):
+    @commands.command(aliases=['checkurl','urlcheck','scan_url'])
+    async def scanurl(self, ctx, *, url: str):
         #Need to import base64 module to work
         await ctx.message.delete()
         url = url.replace(' ', '')

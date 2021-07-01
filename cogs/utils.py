@@ -147,7 +147,7 @@ class Utils(commands.Cog):
         embedmsg = await ctx.send(embed = firstem)
         try:
             websiteresponse = requests.get(website)
-        except:
+        except Exception:
             secondem = discord.Embed(title = f"An error occured, it is most likely that {website} doesn't exist or it is down", color = discord.Color.red())
             await embedmsg.edit(embed=secondem)
             return

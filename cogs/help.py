@@ -19,7 +19,7 @@ class Help(commands.Cog):
             firstem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             firstem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             firstem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            firstem.add_field(name = "Fun", value = "choose, f, emote, cat, dog")
+            firstem.add_field(name = "Fun", value = "cat, choose, dog, emote, f, wikipedia")
             firstem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             firstem.add_field(name = "VirusTotal", value = "scanurl, rescan")
             firstem.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -31,7 +31,7 @@ class Help(commands.Cog):
             secondem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             secondem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
             secondem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            secondem.add_field(name = "Fun", value = "choose, f, emote, cat")
+            secondem.add_field(name = "Fun", value = "cat, choose, dog, emote, f, wikipedia")
             secondem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             secondem.add_field(name = "VirusTotal", value = "scanurl, rescan")
             secondem.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -129,12 +129,17 @@ class Help(commands.Cog):
 
     @help.command(name="cat")
     async def _cat(self, ctx):
-        em = discord.Embed(title = "Fun: Cat", description = config.prefix + "cat \n\nGet a cat picture.", color = discord.Color.blue())
+        em = discord.Embed(title = "Fun: Cat", description = config.prefix + "cat \n\nGet a cat picture.\nAliases: kat, cats, kitten", color = discord.Color.blue())
         await ctx.send(embed = em)
     
     @help.command(name="dog")
     async def _dog(self, ctx):
-        em = discord.Embed(title = "Fun: Dog", description = config.prefix + "dog \n\nGet a dog picture.", color = discord.Color.blue())
+        em = discord.Embed(title = "Fun: Dog", description = config.prefix + "dog \n\nGet a dog picture.\nAliases: puppy, doggo", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="wikipedia")
+    async def _wikipedia(self, ctx):
+        em = discord.Embed(title = "Fun: Wikipedia", description = config.prefix + "wikipedia <something> \n\nGet information about something.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Settings commands
@@ -209,14 +214,14 @@ class Help(commands.Cog):
         await ctx.send(embed = em)
 
     # VirusTotal commands
-    @help.command(name="scanurl")
-    async def _scan_url(self, ctx):
+    @help.command(name="scanurl", aliases=['checkurl','urlcheck','scan_url'])
+    async def _scanurl(self, ctx):
         em = discord.Embed(title = "VirusTotal: Scan URL", description = config.prefix + "scanurl <link> \n\nScans a URL through VirusTotal.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="rescan")
-    async def _vt_hash(self, ctx):
-        em = discord.Embed(title = "VirusTotal: Re-analyzing File", description = config.prefix + "rescan <file hash> SHA-256 SHA-1 or MD5 \n\nRe-analyzing a known file through VirusTotal.", color = discord.Color.blue())
+    @help.command(name="rescan", aliases=['vt_hash', 'recheckfile', 'vthash'])
+    async def _rescan(self, ctx):
+        em = discord.Embed(title = "VirusTotal: Re-analyze File", description = config.prefix + "rescan <file hash> SHA-256 SHA-1 or MD5 \n\nRe-analyzing a known file through VirusTotal.\nAliases: vt_hash, recheckfile. vthash", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Owner commands

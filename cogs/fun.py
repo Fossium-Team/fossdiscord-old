@@ -122,7 +122,7 @@ class Fun(commands.Cog):
                     imagejson = requests.get(f"https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles={args}").json()
                     imagelink = imagejson["query"]["pages"][0]["original"]["source"]
                     secondem.set_thumbnail(url=imagelink)
-                except:
+                except Exception:
                     pass
                 secondem.set_footer(text=page_py.fullurl)
                 await embedmsg.edit(embed=secondem)

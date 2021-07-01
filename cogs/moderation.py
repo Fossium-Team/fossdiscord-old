@@ -158,7 +158,7 @@ class Moderation(commands.Cog):
                     warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
                     warns.write(writeReasonTemplate)
                     warns.close()
-            except:
+            except Exception:
                 em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
                 await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
@@ -185,7 +185,7 @@ class Moderation(commands.Cog):
             elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
                 em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
                 await ctx.send(embed = em)
-        except:
+        except Exception:
             em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
 
