@@ -8,6 +8,9 @@ import psutil
 import config
 import bot
 import random
+import wikipediaapi
+import requests
+import re
 from flickrapi import FlickrAPI
 
 class Fun(commands.Cog):
@@ -92,6 +95,39 @@ class Fun(commands.Cog):
         secondem = discord.Embed(title = "Dog Picture:", color = discord.Color.blue())
         secondem.set_image(url=url)
         await embedmsg.edit(embed=secondem)
-        
+
+    @commands.command()
+    async def wikipedia(self, ctx, *page):
+        if len(page) >= 2:
+            args = "_".join(page[:])
+        else:
+            args = " ".join(page[:])
+        firstem = discord.Embed(title = "Getting data from Wikipedia...", color = discord.Color.orange())
+        embedmsg = await ctx.send(embed=firstem)
+        wiki_wiki = wikipediaapi.Wikipedia('en')
+        page_py = wiki_wiki.page(args)
+        if page_py.exists():
+            if re.search("may refer to:", page_py.summary[0:500]):
+                wiki_wiki = wikipediaapi.Wikipedia(
+                        language='en',
+                        extract_format=wikipediaapi.ExtractFormat.WIKI
+                )
+                p_wiki = wiki_wiki.page(args)
+                pwikitext = p_wiki.text.replace(f"{args} may refer to:\n", "")
+                em = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:1000]}...", color = discord.Color.blue())
+                await ctx.send(embed=em)
+            else:
+                secondem = discord.Embed(title = page_py.title, description = f"{page_py.summary[0:500]}...", color = discord.Color.blue())
+                try:
+                    imagejson = requests.get(f"https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles={args}").json()
+                    imagelink = imagejson["query"]["pages"][0]["original"]["source"]
+                    secondem.set_thumbnail(url=imagelink)
+                except:
+                    pass
+                secondem.set_footer(text=page_py.fullurl)
+                await embedmsg.edit(embed=secondem)
+        else:
+            secondem = discord.Embed(title = "That page doesn't exist", color = discord.Color.red())
+            await embedmsg.edit(embed=secondem)
 def setup(bot):
     bot.add_cog(Fun(bot))
