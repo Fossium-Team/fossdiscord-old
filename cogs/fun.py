@@ -81,9 +81,9 @@ class Fun(commands.Cog):
                         language='en',
                         extract_format=wikipediaapi.ExtractFormat.WIKI
                 )
-                p_wiki = wiki_wiki.page(args)
-                pwikitext = "\n".join(p_wiki.text.split("\n")[2:])
-                secondem = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:4093]}...", color = discord.Color.blue())
+                url = f"https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search={args}&redirects=resolve"
+                wiki_link = str(requests.get(url).json()[3]).replace("'", '').replace('[', '').replace(']', '').replace(",", " ")
+                secondem = discord.Embed(title = f"{args} may refer to:", description = f"{wiki_link}...", color = discord.Color.blue())
                 await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = page_py.title, description = f"{page_py.summary[0:500]}...", color = discord.Color.blue())
