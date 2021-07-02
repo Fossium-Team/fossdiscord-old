@@ -137,9 +137,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Fun: Dog", description = config.prefix + "dog \n\nGet a dog picture.\nAliases: puppy, doggo", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="wikipedia")
+    @help.command(name="wiki")
     async def _wikipedia(self, ctx):
-        em = discord.Embed(title = "Fun: Wikipedia", description = config.prefix + "wikipedia <something> \n\nGet information about something.", color = discord.Color.blue())
+        em = discord.Embed(title = "Fun: Wikipedia", description = config.prefix + "wiki <something> \n\nGet information about something.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Settings commands

@@ -96,7 +96,8 @@ class Fun(commands.Cog):
         secondem.set_image(url=url)
         await embedmsg.edit(embed=secondem)
 
-    @commands.command()
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.command(aliases=['wiki','wikipedia'])
     async def wikipedia(self, ctx, *page):
         if len(page) >= 2:
             args = "_".join(page[:])
