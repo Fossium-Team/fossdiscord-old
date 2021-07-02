@@ -74,7 +74,7 @@ class Admin(commands.Cog):
             #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
-            os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
+            subprocess.Popen([sys.executable, "bot.py"]) 
         else:
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
