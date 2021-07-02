@@ -97,7 +97,7 @@ class Fun(commands.Cog):
         await embedmsg.edit(embed=secondem)
 
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(aliases=['wiki','wikipedia'])
+    @commands.command(aliases=['wiki'])
     async def wikipedia(self, ctx, *page):
         if len(page) >= 2:
             args = "_".join(page[:])
