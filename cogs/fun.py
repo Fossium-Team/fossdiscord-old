@@ -96,7 +96,7 @@ class Fun(commands.Cog):
         secondem.set_image(url=url)
         await embedmsg.edit(embed=secondem)
 
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.command(aliases=['wiki'])
     async def wikipedia(self, ctx, *page):
         if len(page) >= 2:
@@ -114,9 +114,9 @@ class Fun(commands.Cog):
                         extract_format=wikipediaapi.ExtractFormat.WIKI
                 )
                 p_wiki = wiki_wiki.page(args)
-                pwikitext = p_wiki.text.replace(f"{args} may refer to:\n", "")
-                em = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:1000]}...", color = discord.Color.blue())
-                await ctx.send(embed=em)
+                pwikitext = "\n".join(p_wiki.text.split("\n")[2:])
+                secondem = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:1000]}...", color = discord.Color.blue())
+                await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = page_py.title, description = f"{page_py.summary[0:500]}...", color = discord.Color.blue())
                 try:
