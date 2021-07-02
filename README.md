@@ -5,7 +5,7 @@ FOSSDiscord is a general purpose Discord bot maintained by [SKBotNL](https://git
 ## Documentation
 
 ### Starting the bot
-#### Make sure you have [Python 3](https://www.python.org/downloads/) installed (and put in path, if you're on Windows 10)!!!
+#### Make sure you have [Python 3](https://www.python.org/downloads/) installed. (and make sure that Python is in path, if you're on Windows!!!)
 1. Download the latest source zip or tarball from [Here](https://github.com/FOSS-Devs/fossdiscord/releases/latest)
 2. Unzip the zip or tarball, shift + right click in the `FOSSDiscord-<version>` folder, click on `Open Powershell window here` or `Open in Windows Terminal` if you have Windows Terminal installed., 
 3. Make sure all the dependencies are installed, Windows: `python -m pip install -r requirements.txt` Linux: `pip3 install -r requirements.txt`.
