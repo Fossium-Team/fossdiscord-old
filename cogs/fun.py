@@ -83,7 +83,7 @@ class Fun(commands.Cog):
                 )
                 p_wiki = wiki_wiki.page(args)
                 pwikitext = "\n".join(p_wiki.text.split("\n")[2:])
-                secondem = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:1000]}...", color = discord.Color.blue())
+                secondem = discord.Embed(title = f"{args} may refer to:", description = f"{pwikitext[0:4093]}...", color = discord.Color.blue())
                 await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = page_py.title, description = f"{page_py.summary[0:500]}...", color = discord.Color.blue())
