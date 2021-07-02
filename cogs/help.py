@@ -3,9 +3,11 @@
 
 import discord
 from discord.ext import commands
+from discord.utils import get
 import config
 import globalconfig
 import requests
+import asyncio
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -13,41 +15,72 @@ class Help(commands.Cog):
     @commands.cooldown(5, 15, commands.BucketType.channel)
     @commands.group(invoke_without_command=True, aliases=['commands'])
     async def help(self, ctx):
-        if ctx.invoked_subcommand is None:
-            firstem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-            firstem.add_field(name = "General", value = "about")
-            firstem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
-            firstem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-            firstem.add_field(name = "Utils", value = "avatar, emote, joined, ping, quickpoll, uptime, userinfo")
-            firstem.add_field(name = "Fun", value = "cat, choose, dog, f, wikipedia")
-            firstem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-            firstem.add_field(name = "VirusTotal", value = "scanurl, rescan")
-            firstem.add_field(name = "Update", value = "updatecheck, updatebot")
-            firstem.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
-            firstem.add_field(name = "Help", value = "help - Shows this message")
-            embedmsg = await ctx.send(embed = firstem)
-            secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-            secondem.add_field(name = "General", value = "about")
-            secondem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
-            secondem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-            secondem.add_field(name = "Utils", value = "avatar, emote, joined, ping, quickpoll, uptime, userinfo")
-            secondem.add_field(name = "Fun", value = "cat, choose, dog, f, wikipedia")
-            secondem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
-            secondem.add_field(name = "VirusTotal", value = "scanurl, rescan")
-            secondem.add_field(name = "Update", value = "updatecheck, updatebot")
-            secondem.add_field(name = "Admin", value = "blacklist, getchannels, getinvite, loadcog, reloadcog, servers, shutdownbot, unloadcog")
-            secondem.add_field(name = "Help", value = "help - Shows this message")
-            latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
-            latestversionget = latestversionresponse.json()["name"]
-            latestversion = latestversionget.split(' ', 1)[1]
-            if globalconfig.currentversion == latestversion:
-                secondem.add_field(name = "Updates", value = "There are no updates available.")
-            elif globalconfig.currentversion > latestversion:
-                secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.")
+        em = discord.Embed(title = "Help")
+        em.add_field(name = "Options", value = "⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+        embedmsg = await ctx.send(embed=em)
+        await embedmsg.add_reaction("⚔️")
+        await embedmsg.add_reaction("⚙️")
+        await embedmsg.add_reaction("🪛")
+        await embedmsg.add_reaction("😄")
+        await embedmsg.add_reaction("a:virustotal:860596422881181737")
+
+        latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+        latestversionget = latestversionresponse.json()["name"]
+        latestversion = latestversionget.split(' ', 1)[1]
+        secondem = discord.Embed(title = "Help")
+        secondem.add_field(name = "Options", value = "⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+        if globalconfig.currentversion == latestversion:
+            secondem.add_field(name = "Updates", value = "There are no updates available.", inline=False)
+        elif globalconfig.currentversion > latestversion:
+            secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.", inline=False)
+        else:
+            secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
+        await embedmsg.edit(embed=secondem)
+        def check(reaction, user):
+            return embedmsg == reaction.message
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', check=check, timeout=150)
+            except asyncio.TimeoutError:
+                secondem = discord.Embed(title = "Timed out", description = "To prevent high resource usage, I've suspended this embed.", color = discord.Color.orange())
+                await embedmsg.edit(embed=secondem)
+                await embedmsg.clear_reaction("⚔️")
+                await embedmsg.clear_reaction("⚙️")
+                await embedmsg.clear_reaction("🪛")
+                await embedmsg.clear_reaction("😄")
+                break
             else:
-                secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.")
-            await embedmsg.edit(embed=secondem)
-            
+                if str(reaction.emoji) == "⚔️":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
+                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarns")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("⚔️", user)
+
+                if str(reaction.emoji) == "⚙️":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
+                    secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("⚙️", user)
+
+                if str(reaction.emoji) == "🪛":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.")
+                    secondem.add_field(name = "Utils", value = "about\navatar\njoined\nping\nquickpoll\nuptime\nuserinfo")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("🪛", user)
+
+                if str(reaction.emoji) == "😄":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use !help <command> for extended information on a command.")
+                    secondem.add_field(name = "Fun", value = "cat\nchoose\ndog\nemote\nf")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("😄", user)
 
     # Moderation commands
     @help.command(name="ban")
