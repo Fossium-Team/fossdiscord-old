@@ -30,39 +30,7 @@ class Fun(commands.Cog):
             else:
                 em = discord.Embed(title = random.choice(choices), color = discord.Color.orange())
                 await ctx.send(embed = em)
-    
-    @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(description='#emotes')
-    async def emote(self, ctx, emote : discord.Emoji = None):
-        """emote command"""
-        if emote == None:
-            em = discord.Embed(title="No emote given", description = f"Please use `{config.prefix}emote <emote>`.", color = discord.Color.red())
-            await ctx.send(embed=em)
-            return
-        else:
-            try:
-                em = discord.Embed(timestamp=emote.created_at, color = discord.Color.green())
-                em.set_author(name=emote.name, icon_url=emote.url)
-                em.set_thumbnail(url=emote.url)
-                em.set_footer(text="Created on")
-                em.add_field(name="ID", value=emote.id)
-                em.add_field(name="Usage", value=f"`{emote}`")
-                em.add_field(name="URL", value=f"<{emote.url}>")
-                await ctx.send(embed=em)
-                return
-            except Exception:
-                em = discord.Embed(title="That emote probably is not in the server that the bot is in.")
-                await ctx.send(embed=em)
-                return
-        '''
-        else:
-            try:
-                emote = discord.utils(self.bot.get_all_emojis())
-                emote = discord.utils.get(self.bot.Emoji, name=emote)
-            except Exception as e:
-                await ctx.send(str(e))
-                return
-        '''
+
     @commands.cooldown(1, 15, commands.BucketType.channel)
     @commands.command()
     async def f(self, ctx, *, message2):

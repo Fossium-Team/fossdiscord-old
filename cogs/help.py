@@ -18,8 +18,8 @@ class Help(commands.Cog):
             firstem.add_field(name = "General", value = "about")
             firstem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             firstem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-            firstem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            firstem.add_field(name = "Fun", value = "cat, choose, dog, emote, f, wikipedia")
+            firstem.add_field(name = "Utils", value = "avatar, emote, joined, ping, quickpoll, uptime, userinfo")
+            firstem.add_field(name = "Fun", value = "cat, choose, dog, f, wikipedia")
             firstem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             firstem.add_field(name = "VirusTotal", value = "scanurl, rescan")
             firstem.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -30,8 +30,8 @@ class Help(commands.Cog):
             secondem.add_field(name = "General", value = "about")
             secondem.add_field(name = "Moderation", value = "ban, changenick, delwarn, kick, modnick, mute, purge, unban, unmute, warn, warns")
             secondem.add_field(name = "Settings", value = "botstatus, botstatusrepeat")
-            secondem.add_field(name = "Utils", value = "avatar, joined, ping, quickpoll, uptime, userinfo")
-            secondem.add_field(name = "Fun", value = "cat, choose, dog, emote, f, wikipedia")
+            secondem.add_field(name = "Utils", value = "avatar, emote, joined, ping, quickpoll, uptime, userinfo")
+            secondem.add_field(name = "Fun", value = "cat, choose, dog, f, wikipedia")
             secondem.add_field(name = "Caesarcrypt", value = "twisted_msg, untwisted_msg")
             secondem.add_field(name = "VirusTotal", value = "scanurl, rescan")
             secondem.add_field(name = "Update", value = "updatecheck, updatebot")
@@ -122,11 +122,6 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Fun: F", description = config.prefix + "f <message> \n\nSays F in the chat and adds an F emoji to the message.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="emote")
-    async def _emote(self, ctx):
-        em = discord.Embed(title = "Fun: Emote", description = config.prefix + "emote \n\nEmote command.", color = discord.Color.blue())
-        await ctx.send(embed = em)
-
     @help.command(name="cat")
     async def _cat(self, ctx):
         em = discord.Embed(title = "Fun: Cat", description = config.prefix + "cat \n\nGet a cat picture.\nAliases: kat, cats, kitten", color = discord.Color.blue())
@@ -189,6 +184,11 @@ class Help(commands.Cog):
     @help.command(name="userinfo")
     async def _userinfo(self, ctx):
         em = discord.Embed(title = "Utils: Userinfo", description = config.prefix + "userinfo <user> \n\nGives you information about a user.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="emote")
+    async def _emote(self, ctx):
+        em = discord.Embed(title = "Utils: Emote", description = config.prefix + "emote <:emote:> \n\nGet info about an emote.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # Caesar commands

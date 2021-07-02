@@ -2,9 +2,14 @@
 # See LICENSE in the project root for license information.
 
 import discord
-import time, os, random, asyncio, config, string
 from discord.ext import commands
 from discord.utils import get
+import time
+import os
+import random
+import asyncio
+import config
+import string
 
 def timeconvertion(time):# Time convertion
     convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
