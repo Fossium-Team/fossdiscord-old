@@ -46,6 +46,8 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, user: discord.Member, *reason):
         """Kick a member."""
         args = " ".join(reason[:])
+        if user == ctx.author:
+            em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
         if not reason:
             await user.kick()
             em = discord.Embed(title = f"**{user}** has been kicked, reason: **none**.", color = discord.Color.orange())
@@ -61,6 +63,8 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, user: discord.Member, *reason):
         """Ban a member."""
         args = " ".join(reason[:])
+        if user == ctx.author:
+            em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
             await user.ban()
             em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.red())
