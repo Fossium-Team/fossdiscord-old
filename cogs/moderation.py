@@ -36,12 +36,36 @@ class Moderation(commands.Cog):
             await ctx.send(embed=em)
         else:
             await ctx.channel.purge(limit=int(amount)+1)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{ctx.author} has purged {amount} messages in {ctx.message.channel}.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
+            em.add_field(name = "Channel", value = ctx.message.channel)
     
     @purge.command(name="user")
     @commands.has_permissions(manage_messages=True)
     async def _user(self, ctx, user: discord.Member, amount=10):
         await ctx.message.delete()
         await ctx.channel.purge(limit=int(amount), check=lambda message: message.author == user)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has purged all messages of {user} in the last {amount} messages.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
+            em.add_field(name = "Channel", value = ctx.message.channel)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -59,6 +83,17 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = f"**{user}** has been kicked, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
 
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been kicked.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, user: discord.Member, *reason):
@@ -74,6 +109,17 @@ class Moderation(commands.Cog):
             await user.ban(reason=args)
             em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.red())
             await ctx.send(embed = em)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been banned.", color = discord.Color.red())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
 
 
     @commands.command() # Takes 1s 1m 1h 1d
@@ -105,6 +151,17 @@ class Moderation(commands.Cog):
         elif timeconvertion(mutetime) is False:
             em = discord.Embed(title = "The time format doesn't seem right.", color = discord.Color.red())
             await ctx.send(embed = em)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been muted.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Mute time", value = str(mutetime))
             
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -120,6 +177,16 @@ class Moderation(commands.Cog):
         em = discord.Embed(title = f"Unmuted `{user.display_name}`", color = discord.Color.green())
         await ctx.send(embed = em)
 
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been unmuted.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def softban(self, ctx, user: discord.Member, *reason):
@@ -132,6 +199,17 @@ class Moderation(commands.Cog):
         else:
             em = discord.Embed(title = f"**{user}** has been softbanned, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been softbanned.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -178,8 +256,8 @@ class Moderation(commands.Cog):
 
         if not os.path.exists('settings'):
             os.makedirs('settings')
-        if os.path.isfile(f"settings/logging.json"):
-            with open(f"settings/logging.json") as file:
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
