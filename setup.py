@@ -57,7 +57,7 @@ def ownerIDWrite() :
         exit()
 
 def vtapiWrite() :
-    print("If you don't have a VirusTotal API key, or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\n")
+    print("If you don't have a VirusTotal API key (get one here https://virustotal.com), or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\n")
     vtapiToken = input("Enter your VirusTotal API key: ")
     verificationFour = input("Is this correct? (y/n/s): '" + vtapiToken + "'")
     if verificationFour == "y":
@@ -85,7 +85,7 @@ def vtapiWrite() :
         exit()
 
 def flickrapiWrite() :
-    print("If you don't have a Flickr API key, or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct. (Needed for the cat command)\nThe format is ")
+    print("If you don't have a Flickr API key (get one here https://flickr.com/services/api/), or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct. (Needed for the cat and dog commands)\nThe format is ")
     print('Flickr Public Key, Flickr Secret Key \n')
     flickrapiToken = input("Enter your Flickr Public Key and your Flickr Secret Key (don't forget the comma): ")
     verificationFour = input("Is this correct? (y/n/s): '" + flickrapiToken + "'")

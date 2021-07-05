@@ -173,7 +173,7 @@ class Settings(commands.Cog):
             os.makedirs('settings')
         if channel == "off":
             try:
-                os.remove("settings/logging.json")
+                os.remove(f"settings/logging-{ctx.guild.id}.json")
                 em = discord.Embed(title = 'Disabled logging.', color = discord.Color.green())
                 await ctx.send(embed=em)
             except FileNotFoundError:
@@ -190,14 +190,14 @@ class Settings(commands.Cog):
             else:
                 try:
                     writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
-                    with open("settings/logging.json", 'w') as file:
+                    with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
                         json.dump(writeblacklist, file)
                     em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
                 except FileNotFoundError:
                     writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
-                    with open("settings/logging.json", 'w') as file:
+                    with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
                         json.dump(writeblacklist, file)
                     em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
                     await ctx.send(embed=em)
