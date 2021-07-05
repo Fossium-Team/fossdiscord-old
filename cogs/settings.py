@@ -183,8 +183,7 @@ class Settings(commands.Cog):
             em = discord.Embed(title = 'Please pass a valid argument.', color = discord.Color.red())
             await ctx.send(embed=em)
         else:
-            channeltest = self.bot.get_channel(channel)
-            print(channeltest)
+            channeltest = self.bot.get_channel(int(channel))
             if channeltest is None:
                 em = discord.Embed(title = "That channel doesn't exist.", color = discord.Color.red())
                 await ctx.send(embed=em)

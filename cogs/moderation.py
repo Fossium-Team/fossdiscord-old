@@ -182,7 +182,7 @@ class Moderation(commands.Cog):
             with open(f"settings/logging.json") as file:
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
-            channel = self.bot.get_channel(848826372390518805)
+            channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been warned.", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
