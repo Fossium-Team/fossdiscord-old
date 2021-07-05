@@ -3,13 +3,14 @@
 
 import discord
 from discord.ext import commands
-from discord.utils import get
 import time
 import os
 import random
 import asyncio
 import config
 import string
+import json
+from datetime import datetime
 
 def timeconvertion(time):# Time convertion
     convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
@@ -37,6 +38,7 @@ class Moderation(commands.Cog):
             await ctx.channel.purge(limit=int(amount)+1)
     
     @purge.command(name="user")
+    @commands.has_permissions(manage_messages=True)
     async def _user(self, ctx, user: discord.Member, amount=10):
         await ctx.message.delete()
         await ctx.channel.purge(limit=int(amount), check=lambda message: message.author == user)
@@ -49,14 +51,13 @@ class Moderation(commands.Cog):
         if user == ctx.author:
             em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
         if not reason:
-            await user.kick()
+            await user.kick(reason=args)
             em = discord.Embed(title = f"**{user}** has been kicked, reason: **none**.", color = discord.Color.orange())
             await ctx.send(embed = em)
         else:
-            await user.kick()
+            await user.kick(reason=args)
             em = discord.Embed(title = f"**{user}** has been kicked, reason: **{args}**.", color = discord.Color.orange())
             await ctx.send(embed = em)
-
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -66,11 +67,11 @@ class Moderation(commands.Cog):
         if user == ctx.author:
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
-            await user.ban()
+            await user.ban(reason=args)
             em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.red())
             await ctx.send(embed = em)
         else:
-            await user.ban()
+            await user.ban(reason=args)
             em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.red())
             await ctx.send(embed = em)
 
@@ -174,6 +175,33 @@ class Moderation(commands.Cog):
                 warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
                 warns.write(writeReasonTemplate)
                 warns.close()
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging.json"):
+            with open(f"settings/logging.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(848826372390518805)
+            em = discord.Embed(title = f"{user} has been warned.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
+
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
+
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
+        else:
+            pass
 
 
     @commands.command()

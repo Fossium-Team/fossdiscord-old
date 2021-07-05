@@ -8,12 +8,14 @@ import datetime
 import time
 import requests
 import re
+import json
+import os
 start_time = time.time()
 class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.cooldown(1, 15, commands.BucketType.guild)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     async def ping(self, ctx):
         '''
@@ -46,7 +48,16 @@ class Utils(commands.Cog):
                 usernickname = "None"
             else:
                 usernickname = user.display_name
-            date_format = config.date_format
+
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+
             embed = discord.Embed(color = discord.Color.blue())
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
@@ -63,7 +74,16 @@ class Utils(commands.Cog):
                 usernickname = "None"
             else:
                 usernickname = user.display_name
-            date_format = config.date_format
+
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+
             embed = discord.Embed(color = discord.Color.blue())
             embed.set_author(name=str(user), icon_url=user.avatar_url)
             embed.set_thumbnail(url=user.avatar_url)
@@ -86,7 +106,7 @@ class Utils(commands.Cog):
         await ctx.send(embed = em)
 
 
-    @commands.cooldown(1, 15, commands.BucketType.guild)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     async def serverinfo(self, ctx):
         """Gives some information about the server."""
@@ -102,11 +122,21 @@ class Utils(commands.Cog):
             description=description,
             color=discord.Color.blue()
             )
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+            with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                dateformatjson = json.load(file)
+            date_format = dateformatjson["data"]["dateformat"]["format"]
+        else:
+            date_format = config.date_format
+            
         embed.set_thumbnail(url=icon)
         embed.set_author(name=name, icon_url=icon)
         embed.add_field(name="Owner", value=owner, inline=True)
         embed.add_field(name="Server ID", value=id, inline=True)
-        embed.add_field(name="Server Created", value=ctx.guild.created_at.__format__(config.date_format))
+        embed.add_field(name="Server Created", value=ctx.guild.created_at.__format__(date_format))
         embed.add_field(name="Region", value=region, inline=True)
         embed.add_field(name="Number of Members", value=memberCount, inline=True)
         embed.add_field(name="Number of Roles", value=str(role_count), inline=True)

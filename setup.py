@@ -173,7 +173,7 @@ def blacklistWrite() :
         exit()
 
 def dateformatWrite() :
-    print("Please choose the date format you want to use in the commands.")
+    print("Please choose the default date format that will be used in the messages.")
     print("Choices: 1) day/month/year hour:minutes AM/PM 2) month/day/year hour:minutes AM/PM 3) day/month/year hour:minutes (24 hour) 4) month/day/year hour:minutes (24 hour)")
     writedateformat = input("Enter the number of your choice: ")
     verificationOne = input("Is this correct? (y/n): '" + writedateformat + "'")

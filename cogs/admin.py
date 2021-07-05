@@ -158,39 +158,6 @@ class Admin(commands.Cog):
         else:
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
             await ctx.send(embed = em)
-
-    # @commands.command()
-    # async def blacklist(self, ctx, user : discord.Member):
-    #     if str(ctx.message.author.id) == config.ownerID:
-    #         with open("blacklist.py") as blacklistfilecheck:
-    #             if str(user.id) in blacklistfilecheck:
-    #                 em = discord.Embed(title = "That member is already blacklisted.", color = discord.Color.red())
-    #             else:
-    #                 await ctx.send("Successfully blacklisted that member.")
-    #                 writeBlacklist = str(user.id)
-    #                 blacklistfile = open("config/blacklist.py", 'a')
-    #                 blacklistfile.write(writeBlacklist)
-    #                 blacklistfile.close()
-    #     else:
-    #         em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
-    #         await ctx.send(embed = em)
-
-    # @commands.command()
-    # async def delblacklist(self,ctx, user : discord.Member):
-    #     if not os.path.exists('warns'):
-    #         os.makedirs('warns')
-    #     fn = "blacklist.py"
-    #     f = open(fn)
-    #     output = []
-    #     word=str(user.id)
-    #     for line in f:
-    #         if not line.startswith(word):
-    #             output.append(line)
-    #     f.close()
-    #     f = open(fn, 'w')
-    #     f.writelines(output)
-    #     f.close()
-    #     em = discord.Embed(title = "Successfully removed the blacklist.", delete_after=10.0, color = discord.Color.green())
     
 def setup(bot):
     bot.add_cog(Admin(bot))

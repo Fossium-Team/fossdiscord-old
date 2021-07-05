@@ -97,7 +97,6 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandOnCooldown):
-        await ctx.message.delete()
         em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
         await ctx.send(embed=em, delete_after=10.0)
     elif isinstance(error, commands.MaxConcurrencyReached):

@@ -145,7 +145,7 @@ class Help(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    secondem.add_field(name = "Admin", value = "getchannels\ngetinvite\nloadcog\nreloadcog\nservers\nshutdownbot\nunloadcog")
+                    secondem.add_field(name = "Admin", value = "blacklist\ngetchannels\ngetinvite\nloadcog\nreloadcog\nservers\nshutdownbot\nunloadcog")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("👑", user)
 

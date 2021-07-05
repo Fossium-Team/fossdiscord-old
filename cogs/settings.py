@@ -6,9 +6,9 @@ from discord.ext import commands
 import os
 import sys
 import asyncio
-sys.path.append(os.path.realpath('.'))
 import config
 import json
+import re
 
 class Settings(commands.Cog):
     def __init__(self, bot):
@@ -156,6 +156,166 @@ class Settings(commands.Cog):
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
+
+    @commands.group(invoke_without_command=True)
+    @commands.has_permissions(administrator=True)
+    async def settings(self, ctx):
+        em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
+        em.add_field(name = f"{config.prefix}settings logging <channelID or off>", value="Set a logging channel.")
+        em.add_field(name = f"{config.prefix}settings dateformat", value="Set the date format used in the current guild.")
+        em.add_field(name = f"{config.prefix}settings filter (add or remove) <on or off>", value="Turn the filter on or off. (`<>` is needed and `()` is optional)")
+        await ctx.send(embed=em)
+
+    @settings.command(name="logging")
+    @commands.has_permissions(administrator=True)
+    async def _logging(self, ctx, channel):
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if channel == "off":
+            try:
+                os.remove("settings/logging.json")
+                em = discord.Embed(title = 'Disabled logging.', color = discord.Color.green())
+                await ctx.send(embed=em)
+            except FileNotFoundError:
+                em = discord.Embed(title = 'Logging was already disabled.', color = discord.Color.red())
+                await ctx.send(embed=em)
+        elif not channel:
+            em = discord.Embed(title = 'Please pass a valid argument.', color = discord.Color.red())
+            await ctx.send(embed=em)
+        else:
+            channeltest = self.bot.get_channel(channel)
+            print(channeltest)
+            if channeltest is None:
+                em = discord.Embed(title = "That channel doesn't exist.", color = discord.Color.red())
+                await ctx.send(embed=em)
+            else:
+                try:
+                    writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
+                    with open("settings/logging.json", 'w') as file:
+                        json.dump(writeblacklist, file)
+                    em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
+                    await ctx.send(embed=em)
+
+                except FileNotFoundError:
+                    writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
+                    with open("settings/logging.json", 'w') as file:
+                        json.dump(writeblacklist, file)
+                    em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
+                    await ctx.send(embed=em)
+
+    @settings.command(name="dateformat")
+    @commands.has_permissions(administrator=True)
+    async def _dateformat(self, ctx):
+        em = discord.Embed(title = "Choose the date format you want", color = discord.Color.blue())
+        em.add_field(name = "Date formats:", value = "1️⃣ - day/month/year hour:minutes AM/PM\n2️⃣ - month/day/year hour:minutes AM/PM\n3️⃣ - day/month/year hour:minutes (24 hour clock)\n4️⃣ - month/day/year hour:minutes (24 hour clock)")
+        embedmsg = await ctx.send(embed=em)
+        await embedmsg.add_reaction("1️⃣")
+        await embedmsg.add_reaction("2️⃣")
+        await embedmsg.add_reaction("3️⃣")
+        await embedmsg.add_reaction("4️⃣")
+
+        def check(reaction, user):
+            return embedmsg == reaction.message
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', check=check, timeout=60)
+            except asyncio.TimeoutError:
+                secondem = discord.Embed(title = "Timed out", description = "You took too long to react.", color = discord.Color.orange())
+                await embedmsg.edit(embed=secondem)
+                await embedmsg.add_reaction("1️⃣")
+                await embedmsg.add_reaction("2️⃣")
+                await embedmsg.add_reaction("3️⃣")
+                await embedmsg.add_reaction("4️⃣")
+                break
+            else:
+                if str(reaction.emoji) == "1️⃣":
+                    if user.name == self.bot.user.name:
+                        continue
+                    try:
+                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    except FileNotFoundError:
+                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    await embedmsg.clear_reaction("1️⃣")
+                    await embedmsg.clear_reaction("2️⃣")
+                    await embedmsg.clear_reaction("3️⃣")
+                    await embedmsg.clear_reaction("4️⃣")
+
+                    secondem = discord.Embed(title = "Date format set", description = "`day/month/year hour:minutes AM/PM` will now be used.", color = discord.Color.green())
+                    await embedmsg.edit(embed=secondem)
+                    return
+
+                if str(reaction.emoji) == "2️⃣":
+                    if user.name == self.bot.user.name:
+                        continue
+                    try:
+                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+                        
+
+                    except FileNotFoundError:
+                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+                
+                    await embedmsg.clear_reaction("1️⃣")
+                    await embedmsg.clear_reaction("2️⃣")
+                    await embedmsg.clear_reaction("3️⃣")
+                    await embedmsg.clear_reaction("4️⃣")
+
+                    secondem = discord.Embed(title = "Date format set", description = "`month/day/year hour:minutes AM/PM` will now be used.", color = discord.Color.green())
+                    await embedmsg.edit(embed=secondem)
+                    return
+
+                if str(reaction.emoji) == "3️⃣":
+                    if user.name == self.bot.user.name:
+                        continue
+                    try:
+                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    except FileNotFoundError:
+                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    await embedmsg.clear_reaction("1️⃣")
+                    await embedmsg.clear_reaction("2️⃣")
+                    await embedmsg.clear_reaction("3️⃣")
+                    await embedmsg.clear_reaction("4️⃣")
+
+                    secondem = discord.Embed(title = "Date format set", description = "`day/month/year hour:minutes (24 hour clock)` will now be used.", color = discord.Color.green())
+                    await embedmsg.edit(embed=secondem)
+                    return
+
+                if str(reaction.emoji) == "4️⃣":
+                    if user.name == self.bot.user.name:
+                        continue
+                    try:
+                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    except FileNotFoundError:
+                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
+                        with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
+                            json.dump(writeblacklist, file)
+
+                    await embedmsg.clear_reaction("1️⃣")
+                    await embedmsg.clear_reaction("2️⃣")
+                    await embedmsg.clear_reaction("3️⃣")
+                    await embedmsg.clear_reaction("4️⃣")
+
+                    secondem = discord.Embed(title = "Date format set", description = "`month/day/year hour:minutes (24 hour clock)` will now be used.", color = discord.Color.green())
+                    await embedmsg.edit(embed=secondem)
+                    return
 
 def setup(bot):
     bot.add_cog(Settings(bot))
