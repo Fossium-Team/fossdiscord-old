@@ -108,7 +108,7 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 
-# multi-instances prevention
+# multi-instance prevention
 def start():
     host = "127.0.0.1"
     port = 18265

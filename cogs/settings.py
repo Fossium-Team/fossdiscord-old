@@ -162,8 +162,9 @@ class Settings(commands.Cog):
     async def settings(self, ctx):
         em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
         em.add_field(name = f"{config.prefix}settings logging <channelID or off>", value="Set a logging channel.")
-        em.add_field(name = f"{config.prefix}settings dateformat", value="Set the date format used in the current guild.")
-        em.add_field(name = f"{config.prefix}settings filter (add or remove) <on or off>", value="Turn the filter on or off. (`<>` is needed and `()` is optional)")
+        em.add_field(name = f"{config.prefix}settings dateformat", value="Set the date format used in the current guild.", inline = False)
+        em.add_field(name = f"{config.prefix}settings filter <on or off>", value="Turn the filter on or off.")
+        em.add_field(name = f"{config.prefix}settings filter <add or remove>", value="Add or remove words to the filter.")
         await ctx.send(embed=em)
 
     @settings.command(name="logging")
@@ -189,16 +190,16 @@ class Settings(commands.Cog):
                 await ctx.send(embed=em)
             else:
                 try:
-                    writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
+                    writelogging = {"data": {"logging": {"channel":f'{channel}'}}}
                     with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
-                        json.dump(writeblacklist, file)
+                        json.dump(writelogging, file)
                     em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
                 except FileNotFoundError:
-                    writeblacklist = {"data": {"logging": {"channel":f'{channel}'}}}
+                    writelogging = {"data": {"logging": {"channel":f'{channel}'}}}
                     with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
-                        json.dump(writeblacklist, file)
+                        json.dump(writelogging, file)
                     em = discord.Embed(title = 'Set that channel as the logging channel.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
@@ -231,14 +232,14 @@ class Settings(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     try:
-                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     except FileNotFoundError:
-                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -253,15 +254,15 @@ class Settings(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     try:
-                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
                         
 
                     except FileNotFoundError:
-                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
                 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -276,14 +277,14 @@ class Settings(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     try:
-                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     except FileNotFoundError:
-                        writeblacklist = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -298,14 +299,14 @@ class Settings(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     try:
-                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     except FileNotFoundError:
-                        writeblacklist = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
+                        writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writeblacklist, file)
+                            json.dump(writedateformat, file)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -315,6 +316,101 @@ class Settings(commands.Cog):
                     secondem = discord.Embed(title = "Date format set", description = "`month/day/year hour:minutes (24 hour clock)` will now be used.", color = discord.Color.green())
                     await embedmsg.edit(embed=secondem)
                     return
+
+    @settings.command(name="filter")
+    @commands.has_permissions(administrator=True)
+    async def _filter(self, ctx, args, *word):
+        word = " ".join(word[:])
+        if not args:
+            if "filter" in enabled_settings:
+                em = discord.Embed(title = "The filter is currently enabled", color = discord.Color.green())
+            else:
+                em = discord.Embed(title = "The filter is currently disabled", color = discord.Color.red())
+            ctx.send(embed=em)
+
+        if args == "on":
+
+        if args == "off":
+            if not os.path.exists('settings'):
+                os.makedirs('settings')
+            try:
+                if os.stat("settings/filter.json").st_size > 0:
+                    lst = []
+                    with open("settings/filter.json") as file:
+                        filterjson = json.load(file)
+                    filteritem = filterjson['data']
+                    for attr, value in filteritem.items():
+                        if str("false") == filteritem[attr]["enabled"]:
+                            em = discord.Embed(title = 'The filter is already disabled.', color = discord.Color.red())
+                            await ctx.send(embed=em)
+                            return
+                        else:
+                            pass
+                    for attr, value in filteritem.items():
+                        lst.append(attr)
+                    filterjson["data"].update({"filter": {"enabled": 'false'}})
+                    with open("settings/filter.json", 'w') as file:
+                        json.dump(filterjson, file)
+                    em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+                    await ctx.send(embed=em)
+                
+                elif os.stat("settings/filter.json").st_size == 0:
+                    filterjson = {"data": {"filter": {"enabled": "false"}}}
+                    with open("settings/filter.json", 'w') as file:
+                        json.dump(filterjson, file)
+                    em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+                    await ctx.send(embed=em)
+
+            except FileNotFoundError:
+                writefilter = {"data": {"filter": {"enabled": "false"}}}
+                with open("settings/filter.json", 'w') as file:
+                    json.dump(writefilter, file)
+                em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+                await ctx.send(embed=em)
+
+        if args == "add":
+            if not word:
+                em = discord.Embed(title = 'Please pass a word.', color = discord.Color.red())
+                await ctx.send(embed=em)
+            else:
+                if not os.path.exists('settings'):
+                    os.makedirs('settings')
+                try:
+                    if os.stat("settings/filter.json").st_size > 0:
+                        lst = []
+                        with open("settings/filter.json") as file:
+                            filterjson = json.load(file)
+                        filteritem = filterjson['data']
+                        for attr, value in filteritem.items():
+                            if str("true") == filteritem[attr]["word"]:
+                                em = discord.Embed(title = 'Word is already in the filter.', color = discord.Color.red())
+                                await ctx.send(embed=em)
+                                return
+                            else:
+                                pass
+                        for attr, value in filteritem.items():
+                            lst.append(attr)
+                        wordnum = str(lst[-1])
+                        wordnum = str(int(''.join(filter(str.isdigit, str(wordnum)))) + 1)
+                        filterjson["data"].update({f"word{wordnum}": {"word": f'{word}'}})
+                        with open("settings/filter.json", 'w') as file:
+                            json.dump(filterjson, file)
+                        em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+                        await ctx.send(embed=em)
+                    
+                    elif os.stat("settings/filterlist.json").st_size == 0:
+                        filterjson = {"data": {"word0": {"word": f'{word}'}}}
+                        with open("settings/filter.json", 'w') as file:
+                            json.dump(filterjson, file)
+                        em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+                        await ctx.send(embed=em)
+
+                except FileNotFoundError:
+                    writefilter = {"data": {"word0": {"word": f'{word}'}}}
+                    with open("settings/filter.json", 'w') as file:
+                        json.dump(writefilter, file)
+                    em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+                    await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Settings(bot))
