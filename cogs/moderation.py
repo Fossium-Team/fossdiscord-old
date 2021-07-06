@@ -48,6 +48,9 @@ class Moderation(commands.Cog):
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
     
     @purge.command(name="user")
     @commands.has_permissions(manage_messages=True)
@@ -66,6 +69,9 @@ class Moderation(commands.Cog):
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -93,6 +99,9 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = f"{user} has been kicked.", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -120,6 +129,9 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = f"{user} has been banned.", color = discord.Color.red())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
 
     @commands.command() # Takes 1s 1m 1h 1d
@@ -162,6 +174,9 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = f"{user} has been muted.", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Mute time", value = str(mutetime))
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
             
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -186,6 +201,9 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been unmuted.", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -210,6 +228,9 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = f"{user} has been softbanned.", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -217,6 +238,20 @@ class Moderation(commands.Cog):
         await ctx.guild.unban(user)
         em = discord.Embed(title = f"**{user}** has been unbanned", color = discord.Color.green())
         await ctx.send(embed = em)
+
+        if not os.path.exists('settings'):
+            os.makedirs('settings')
+        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+            with open(f"settings/logging-{ctx.guild.id}.json") as file:
+                loggingjson = json.load(file)
+            loggingchannel = loggingjson["data"]["logging"]["channel"]
+            channel = self.bot.get_channel(int(loggingchannel))
+            em = discord.Embed(title = f"{user} has been unbanned.", color = discord.Color.orange())
+            em.set_author(name=user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = args)
+            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+        else:
+            return
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -279,7 +314,7 @@ class Moderation(commands.Cog):
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
             await channel.send(embed=em)
         else:
-            pass
+            return
 
 
     @commands.command()
