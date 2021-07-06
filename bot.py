@@ -46,7 +46,7 @@ bot.load_extension("cogs.vtscan")
 bot.load_extension("cogs.fun")
 
 @bot.event
-async def on_message(msg):
+async def on_message(ctx, msg):
     if not os.path.exists('settings'):
         os.makedirs('settings')
     if os.path.isfile(f"settings/blacklist.json"):
@@ -69,15 +69,26 @@ async def on_message(msg):
                     pass
     else:
         pass
-    await bot.process_commands(msg)
     
-    # check for bad words
-    for word in config.bad_words:
-        if word in msg.content.lower():
-            await msg.delete()
-            await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
-        else:
-            await bot.process_commands(msg)
+    try:
+        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
+            data = json.load(file)
+        enable = data["settings"]["commands"]
+    except Exception:
+        default = {"settings": {"filter": True, "commands": True}}
+        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
+            data = json.dump(default, file)
+    if enable is True:
+        await bot.process_commands(msg)
+        # check for bad words
+        for word in config.bad_words:
+            if word in msg.content.lower():
+                await msg.delete()
+                await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
+            else:
+                await bot.process_commands(msg)
+    else:
+        pass
 
 # error handling
 @bot.event
@@ -108,7 +119,7 @@ async def on_command_error(ctx, error):
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 
-# multi-instance prevention
+# multi-instances prevention
 def start():
     host = "127.0.0.1"
     port = 18265
