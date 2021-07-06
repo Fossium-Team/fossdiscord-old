@@ -75,10 +75,10 @@ async def on_message(ctx, msg):
             data = json.load(file)
         enable = data["settings"]["commands"]
     except Exception:
-        default = {"settings": {"filter": True, "commands": True}}
+        default = {"settings": {"filter": 1, "commands": 1}}
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
             data = json.dump(default, file)
-    if enable is True:
+    if enable is 1:
         await bot.process_commands(msg)
         # check for bad words
         for word in config.bad_words:
