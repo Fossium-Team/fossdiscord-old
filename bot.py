@@ -88,7 +88,7 @@ async def on_message(ctx, msg):
             else:
                 await bot.process_commands(msg)
     else:
-        pass
+        return
 
 # error handling
 @bot.event
