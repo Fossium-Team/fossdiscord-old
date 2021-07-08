@@ -412,5 +412,24 @@ class Settings(commands.Cog):
                     em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
+    @commands.command(name="word_filter")
+    @commands.has_permissions(administrator=True)
+    async def _enable_filter(self, ctx, option):
+        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
+            data = json.load(file)
+        if str(option).lower == "on":
+            data.update({"settings": {"filter": 1}})
+            em = discord.Embed(title = 'Word filter is on.', color = discord.Color.green())
+        elif str(option).lower == "off":
+            data.update({"settings": {"filter": 0}})
+            em = discord.Embed(title = 'Word filter is off.', color = discord.Color.orange())
+        else:
+            em = discord.Embed(title = 'Your option is not correct.', color = discord.Color.red())
+            await ctx.send(embed=em)
+            return
+        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
+            data = json.dump(data, file)
+        await ctx.send(embed=em)
+
 def setup(bot):
     bot.add_cog(Settings(bot))
