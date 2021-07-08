@@ -58,6 +58,8 @@ async def on_message(message):
         default = {"settings": {"filter": 1, "commands": 1}}
         with open(f"settings/enablement-{message.guild.id}.json", 'w') as file:
             data = json.dump(default, file)
+        filter_enable = 1
+        command_enable = 1
     if filter_enable == 1:
         #Check for bad words.
         for word in config.bad_words:
