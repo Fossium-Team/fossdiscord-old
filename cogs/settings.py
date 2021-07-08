@@ -172,7 +172,7 @@ class Settings(commands.Cog):
     async def _logging(self, ctx, channel):
         if not os.path.exists('settings'):
             os.makedirs('settings')
-        if channel == "off":
+        if channel.lower() == "off":
             try:
                 os.remove(f"settings/logging-{ctx.guild.id}.json")
                 em = discord.Embed(title = 'Disabled logging.', color = discord.Color.green())
@@ -328,9 +328,9 @@ class Settings(commands.Cog):
                 em = discord.Embed(title = "The filter is currently disabled", color = discord.Color.red())
             ctx.send(embed=em)
 
-        if args == "on":
-
-        if args == "off":
+        if args.lower() == "on":
+            print("now it doesnt error")
+        if args.lower() == "off":
             if not os.path.exists('settings'):
                 os.makedirs('settings')
             try:
@@ -368,7 +368,7 @@ class Settings(commands.Cog):
                 em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
                 await ctx.send(embed=em)
 
-        if args == "add":
+        if args.lower() == "add":
             if not word:
                 em = discord.Embed(title = 'Please pass a word.', color = discord.Color.red())
                 await ctx.send(embed=em)
@@ -412,19 +412,32 @@ class Settings(commands.Cog):
                     em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
                     await ctx.send(embed=em)
 
-    @commands.command(name="word_filter")
+    @settings.command(name="filter")
     @commands.has_permissions(administrator=True)
-    async def _enable_filter(self, ctx, option):
+    async def _filter(self, ctx, option, *word):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
-        if str(option).lower == "on":
+            print(data)
+        if str(option).lower() == "on":
             data.update({"settings": {"filter": 1}})
-            em = discord.Embed(title = 'Word filter is on.', color = discord.Color.green())
-        elif str(option).lower == "off":
-            data.update({"settings": {"filter": 0}})
-            em = discord.Embed(title = 'Word filter is off.', color = discord.Color.orange())
+            em = discord.Embed(title = 'The word filter is now turned on.', color = discord.Color.green())
+        elif str(option).lower() == "off":
+            data["settings"]["filter"] = 0
+            print(data)
+            em = discord.Embed(title = 'The word filter is now turned off.', color = discord.Color.green())
+        elif str(option).lower() == "add":
+            if not word:
+                em = discord.Embed(title = "Please pass a word.", color = discord.Color.red())
+                await ctx.send(embed=em)
+            else:
+                try:
+                    #badwordsfile = open(f"settings/bad_words-{ctx.guild.id}.py", 'w')
+                    fileread = open(f"settings/bad_words-{ctx.guild.id}.py", "r")
+                except Exception:
+                    
+
         else:
-            em = discord.Embed(title = 'Your option is not correct.', color = discord.Color.red())
+            em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
             await ctx.send(embed=em)
             return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:

@@ -46,24 +46,25 @@ bot.load_extension("cogs.vtscan")
 bot.load_extension("cogs.fun")
 
 @bot.event
-async def on_message(ctx, msg):
+async def on_message(message):
     if not os.path.exists('settings'):
         os.makedirs('settings')
     try:
-        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
+        with open(f"settings/enablement-{message.guild.id}.json") as file:
             data = json.load(file)
         command_enable = data["settings"]["commands"]
         filter_enable = data["settings"]["filter"]
     except Exception:
         default = {"settings": {"filter": 1, "commands": 1}}
-        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
+        with open(f"settings/enablement-{message.guild.id}.json", 'w') as file:
             data = json.dump(default, file)
-    if filter_enable is 1:
+    if filter_enable == 1:
         #Check for bad words.
         for word in config.bad_words:
-            if word in msg.content.lower():
-                await msg.delete()
-                await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
+            if word in message.content.lower():
+                await message.delete()
+                em = discord.Embed(title = "Please don't use that word.", color = discord.Color.orange())
+                await message.channel.send(embed=em, delete_after=10.0)
             else:
                 pass
     else:
@@ -76,11 +77,11 @@ async def on_message(ctx, msg):
             pass
         else:
             for attr, value in blacklist.items():
-                if re.search(str(msg.author.id), blacklist[attr]["id"]):
-                    if re.match(f'{config.prefix}', msg.content):
+                if re.search(str(message.author.id), blacklist[attr]["id"]):
+                    if re.match(f'{config.prefix}', message.content):
                         BotOwner = await bot.fetch_user(config.ownerID)
                         em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-                        await msg.channel.send(embed = em, delete_after=10.0)
+                        await message.channel.send(embed = em, delete_after=10.0)
                         return
                     else:
                         pass
@@ -88,10 +89,10 @@ async def on_message(ctx, msg):
                     pass
     else:
         pass
-    if command_enable is 1:
-        await bot.process_commands(msg)
+    if command_enable == 1:
+        await bot.process_commands(message)
     else:
-        return
+        pass
 
 # error handling
 @bot.event
