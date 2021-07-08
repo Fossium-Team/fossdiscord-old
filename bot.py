@@ -49,6 +49,25 @@ bot.load_extension("cogs.fun")
 async def on_message(ctx, msg):
     if not os.path.exists('settings'):
         os.makedirs('settings')
+    try:
+        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
+            data = json.load(file)
+        command_enable = data["settings"]["commands"]
+        filter_enable = data["settings"]["filter"]
+    except Exception:
+        default = {"settings": {"filter": 1, "commands": 1}}
+        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
+            data = json.dump(default, file)
+    if filter_enable is 1:
+        #Check for bad words.
+        for word in config.bad_words:
+            if word in msg.content.lower():
+                await msg.delete()
+                await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
+            else:
+                pass
+    else:
+        pass
     if os.path.isfile(f"settings/blacklist.json"):
         with open(f"settings/blacklist.json") as file:
             blacklistjson = json.load(file)
@@ -67,26 +86,6 @@ async def on_message(ctx, msg):
                         pass
                 else:
                     pass
-    else:
-        pass
-    
-    try:
-        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
-            data = json.load(file)
-        command_enable = data["settings"]["commands"]
-        filter_enable = data["settings"]["filter"]
-    except Exception:
-        default = {"settings": {"filter": 1, "commands": 1}}
-        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
-            data = json.dump(default, file)
-    if filter_enable is 1:
-        #Check for bad words.
-        for word in config.bad_words:
-            if word in msg.content.lower():
-                await msg.delete()
-                await msg.channel.send("Please don't use that word.", delete_after=10.0, color = discord.Color.orange())
-            else:
-                pass
     else:
         pass
     if command_enable is 1:
