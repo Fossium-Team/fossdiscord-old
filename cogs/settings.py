@@ -329,7 +329,6 @@ class Settings(commands.Cog):
             data = json.load(file)
         data = data["settings"]
         if str(option).lower() == "on":
-<<<<<<< HEAD
             data.update({"filter": 1})
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
         elif str(option).lower() == "off":
@@ -360,17 +359,6 @@ class Settings(commands.Cog):
         #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
         #    await ctx.send(embed=em)
         #    return
-=======
-            data.update({"settings": {"filter": 1}})
-            em = discord.Embed(title = 'The profanity filter is now turned on', color = discord.Color.green())
-        elif str(option).lower() == "off":
-            data["settings"]["filter"] = 0
-            em = discord.Embed(title = 'The profanity filter is now turned off', color = discord.Color.green())
-        else:
-            em = discord.Embed(title = "That argument isn't corrent", color = discord.Color.red())
-            await ctx.send(embed=em)
-            return
->>>>>>> f0588488317e61602084ef8752653a00d99bd2da
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
             data = json.dump(data, file)
         await ctx.send(embed=em)
