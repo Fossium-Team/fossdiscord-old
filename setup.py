@@ -84,94 +84,6 @@ def vtapiWrite() :
         print("Invalid response, please rerun the script.")
         exit()
 
-def flickrapiWrite() :
-    print("If you don't have a Flickr API key (get one here https://flickr.com/services/api/), or don't want this feature, just hit enter on this prompt and type 's' when it asks if what you inputted is correct. (Needed for the cat and dog commands)\nThe format is ")
-    print('Flickr Public Key, Flickr Secret Key \n')
-    flickrapiToken = input("Enter your Flickr Public Key and your Flickr Secret Key (don't forget the comma): ")
-    verificationFour = input("Is this correct? (y/n/s): '" + flickrapiToken + "'")
-    if verificationFour == "y":
-        flickrapisplit = flickrapiToken.split(", ")
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "flickr_public = '" + flickrapisplit[0] + "'\nflickr_secret = '" + flickrapisplit[1] + "'\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-    elif verificationFour == "n":
-        print("Please rerun the file and input your Flickr API key.")
-        exit()
-    elif verificationFour == "s":
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "flickr_public = ''\nflickr_private = ''\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-        print("You have chosen not to input a Flickr API key. You may add one by editing the config.py file later.")
-    elif verificationFour != "n" or "y" or "s":
-        print("Invalid response, please rerun the script.")
-        exit()
-
-def badwordWrite() :
-    print("Please put in bad words that you want to be filtered by the bot.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
-    print('["badword1", "badword2", "badword3"]\n')
-    badwords = input("Enter the bad words (make sure to use the format): ")
-    verificationFour = input("Is this correct? (y/n/s): '" + badwords + "'")
-    if verificationFour == "y":
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "bad_words = " + badwords + "\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-    elif verificationFour == "n":
-        print("Please rerun the file and input the bad words you want to be filtered.")
-        exit()
-    elif verificationFour == "s":
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "bad_words = []\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-        print("You have chosen not to input bad words. You may add them by editing the config.py file later.")
-    elif verificationFour != "n" or "y" or "s":
-        print("Invalid response, please rerun the script.")
-        exit()
-
-def blacklistWrite() :
-    print("Please put in blacklisted users that can't use the bot.\nIf you don't want this feature just hit enter on this prompt and type 's' when it asks if what you inputted is correct.\nThe format is ")
-    print('["blacklisteduser1", "blacklisteduser2", "blacklisteduser3"]')
-    badwords = input("Enter the bad words (make sure to use the format): ")
-    verificationFour = input("Is this correct? (y/n/s): '" + blacklist + "'")
-    if verificationFour == "y":
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "blacklist = " + blacklist + "\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-    elif verificationFour == "n":
-        print("Please rerun the file and input the bad words you want to be filtered.")
-        exit()
-    elif verificationFour == "s":
-        print("Writing...")
-        config = open('config.py', 'a')
-        writePrefixTemplate = "blacklist = []\n"
-        config.write(writePrefixTemplate)
-        config.close()
-        print("Written!")
-        print()
-        print("You have chosen not to input bad words. You may add them by editing the config.py file later.")
-    elif verificationFour != "n" or "y" or "s":
-        print("Invalid response, please rerun the script.")
-        exit()
-
 def dateformatWrite() :
     print("Please choose the default date format that will be used in the messages.")
     print("Choices: 1) day/month/year hour:minutes AM/PM 2) month/day/year hour:minutes AM/PM 3) day/month/year hour:minutes (24 hour) 4) month/day/year hour:minutes (24 hour)")
@@ -219,10 +131,7 @@ tokenWrite()
 prefixWrite()
 ownerIDWrite()
 vtapiWrite()
-flickrapiWrite()
-badwordWrite()
 dateformatWrite()
-#blacklistWrite()
 
 print("Your config file should be written now!")
 print("To start your bot, run 'python (or python3) bot.py'")

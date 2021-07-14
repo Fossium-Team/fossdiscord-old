@@ -11,7 +11,6 @@ import random
 import wikipediaapi
 import requests
 import re
-from flickrapi import FlickrAPI
 
 class Fun(commands.Cog):
     def __init__(self, bot):

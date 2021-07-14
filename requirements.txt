@@ -4,5 +4,4 @@ asyncio==3.4.3
 wget==3.2
 psutil==5.8.0
 DateTime==4.3
-flickrapi==2.4.0
 Wikipedia-API==0.5.4
