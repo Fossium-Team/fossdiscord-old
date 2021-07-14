@@ -417,13 +417,11 @@ class Settings(commands.Cog):
     async def _filter(self, ctx, option, *word):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
-            print(data)
         if str(option).lower() == "on":
             data.update({"settings": {"filter": 1}})
             em = discord.Embed(title = 'The word filter is now turned on.', color = discord.Color.green())
         elif str(option).lower() == "off":
             data["settings"]["filter"] = 0
-            print(data)
             em = discord.Embed(title = 'The word filter is now turned off.', color = discord.Color.green())
         elif str(option).lower() == "add":
             if not word:

@@ -74,52 +74,31 @@ async def on_message(message):
                     pass
         else:
             pass
-        else:  
-            try:
-                with open(f"settings/enablement-{message.guild.id}.json") as file:
-                    data = json.load(file)
-                command_enable = data["settings"]["commands"]
-                filter_enable = data["settings"]["filter"]
-            except Exception:
-                default = {"settings": {"filter": 1, "commands": 1}}
-                with open(f"settings/enablement-{message.guild.id}.json", 'w') as file:
-                    data = json.dump(default, file)
-            if filter_enable == 1:
-                #Check for bad words.
-                for word in config.bad_words:
-                    if word in message.content.lower():
-                        await message.delete()
-                        em = discord.Embed(title = "Please don't use that word.", color = discord.Color.orange())
-                        await message.channel.send(embed=em, delete_after=10.0)
-                    else:
-                        pass
-            else:
-                pass
-            if command_enable == 1:
-                await bot.process_commands(message)
-            else:
-                pass
 
-    if os.path.isfile(f"settings/blacklist.json"):
-        with open(f"settings/blacklist.json") as file:
-            blacklistjson = json.load(file)
-        blacklist = blacklistjson["data"]
-        if blacklist == {}:
-            pass
-        else:
-            for attr, value in blacklist.items():
-                if re.search(str(message.author.id), blacklist[attr]["id"]):
-                    if re.match(f'{config.prefix}', message.content):
-                        BotOwner = await bot.fetch_user(config.ownerID)
-                        em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
-                        await message.channel.send(embed = em, delete_after=10.0)
-                        return
+        if os.path.isfile(f"settings/blacklist.json"):
+            with open(f"settings/blacklist.json") as file:
+                blacklistjson = json.load(file)
+            blacklist = blacklistjson["data"]
+            if blacklist == {}:
+                pass
+            else:
+                for attr, value in blacklist.items():
+                    if re.search(str(message.author.id), blacklist[attr]["id"]):
+                        if re.match(f'{config.prefix}', message.content):
+                            BotOwner = await bot.fetch_user(config.ownerID)
+                            em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                            await message.channel.send(embed = em, delete_after=10.0)
+                            return
+                        else:
+                            pass
                     else:
                         pass
-                else:
-                    pass
-    else:
-        pass
+        else:
+            pass
+        if command_enable == 1:
+            await bot.process_commands(message)
+        else:
+            pass
 
 # error handling
 @bot.event
