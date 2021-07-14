@@ -427,12 +427,14 @@ class Settings(commands.Cog):
             if not word:
                 em = discord.Embed(title = "Please pass a word.", color = discord.Color.red())
                 await ctx.send(embed=em)
+                return
             else:
                 try:
                     #badwordsfile = open(f"settings/bad_words-{ctx.guild.id}.py", 'w')
                     fileread = open(f"settings/bad_words-{ctx.guild.id}.py", "r")
                 except Exception:
                     print("now no error")
+                return
         else:
             em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
             await ctx.send(embed=em)
