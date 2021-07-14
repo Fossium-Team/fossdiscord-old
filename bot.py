@@ -91,7 +91,7 @@ async def on_message(message):
 
                     datetimenow = datetime.now()
                     currentdate = datetime.strftime(datetimenow, date_format)
-                    em.set_footer(text = f"At {currentdate}")
+                    em.set_footer(text = f"{currentdate}")
                     await channel.send(embed=em)
                 else:
                     return
@@ -111,7 +111,7 @@ async def on_message(message):
                     if re.search(str(message.author.id), blacklist[attr]["id"]):
                         if re.match(f'{config.prefix}', message.content):
                             BotOwner = await bot.fetch_user(config.ownerID)
-                            em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.")
+                            em = discord.Embed(title = "You Are Blacklisted", description = f"You are blacklisted from using the bot. Please contact {BotOwner} for more information.", color = discord.Color.red())
                             await message.channel.send(embed = em, delete_after=10.0)
                             return
                         else:
@@ -123,9 +123,9 @@ async def on_message(message):
         if command_enable == 1:
             await bot.process_commands(message)
         else:
-            if "settings" in message.content or "shutdownbot" in message.content:
+            if f"{config.prefix}settings" in message.content or f"{config.prefix}shutdownbot" in message.content:
                 await bot.process_commands(message)
-            elif "restartbot" in message.content:
+            elif f"{config.prefix}restartbot" in message.content:
                 await bot.process_commands(message)
             else:
                 pass

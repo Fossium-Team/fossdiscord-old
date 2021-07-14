@@ -177,7 +177,7 @@ class Settings(commands.Cog):
                 em = discord.Embed(title = 'Disabled logging.', color = discord.Color.green())
                 await ctx.send(embed=em)
             except FileNotFoundError:
-                em = discord.Embed(title = 'Logging was already disabled', color = discord.Color.red())
+                em = discord.Embed(title = 'Logging is already disabled', color = discord.Color.red())
                 await ctx.send(embed=em)
         elif not channel:
             em = discord.Embed(title = 'Please pass a valid argument', color = discord.Color.red())
@@ -324,20 +324,21 @@ class Settings(commands.Cog):
 
     @settings.command(name="filter")
     @commands.has_permissions(administrator=True)
-    async def _filter(self, ctx, option):
+    async def _filter(self, ctx, *option):
+        option = " ".join(option[:])
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
         if str(option).lower() == "on":
             data["settings"]["filter"] = 1
-            em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
+            em = discord.Embed(title = 'The profanity filter is now turned on', color = discord.Color.green())
         elif str(option).lower() == "off":
             data["settings"]["filter"] = 0
-            em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
-        #else:
-        #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
-        #    await ctx.send(embed=em)
-        #    return
+            em = discord.Embed(title = 'The profanity filter is now turned off', color = discord.Color.green())
+        else:
+           em = discord.Embed(title = "Please pass a valid argument", color = discord.Color.red())
+           await ctx.send(embed=em)
+           return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
             data = json.dump(data, file)
         await ctx.send(embed=em)
@@ -348,18 +349,18 @@ class Settings(commands.Cog):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
-        if str(option).lower() == "true":
+        if str(option).lower() == "on":
             data["settings"]["commands"] = 1
             #data.update({"commands": 1})
-            em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
-        elif str(option).lower() == "false":
+            em = discord.Embed(title = 'The bot is now disabled', color = discord.Color.green())
+        elif str(option).lower() == "off":
             data["settings"]["commands"] = 0
             #data.update({"commands": 0})
-            em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
-        #else:
-        #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
-        #    await ctx.send(embed=em)
-        #    return
+            em = discord.Embed(title = 'The bot is now enabled', color = discord.Color.green())
+        else:
+           em = discord.Embed(title = "Please pass a valid argument", color = discord.Color.red())
+           await ctx.send(embed=em)
+           return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
             data = json.dump(data, file)
         await ctx.send(embed=em)
