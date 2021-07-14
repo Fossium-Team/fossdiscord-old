@@ -10,6 +10,7 @@ import os
 import json
 import re
 import time
+from profanity import profanity
 
 intents = discord.Intents.default()
 intents.members = True
@@ -64,14 +65,13 @@ async def on_message(message):
             filter_enable = 1
             command_enable = 1
         if filter_enable == 1:
-            #Check for bad words.
-            for word in config.bad_words:
-                if word in message.content.lower():
-                    await message.delete()
-                    em = discord.Embed(title = "Please don't use that word.", color = discord.Color.orange())
-                    await message.channel.send(embed=em, delete_after=10.0)
-                else:
-                    pass
+            #Check for profanity.
+            if profanity.contains_profanity(message.content) == True:
+                await message.delete()
+                em = discord.Embed(title = "Please don't use that language", color = discord.Color.orange())
+                await message.channel.send(embed=em, delete_after=10.0)
+            else:
+                pass
         else:
             pass
 
