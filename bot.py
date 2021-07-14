@@ -123,7 +123,9 @@ async def on_message(message):
         if command_enable == 1:
             await bot.process_commands(message)
         else:
-            if "settings" in message or "shutdownbot" in message:
+            if "settings" in message.content or "shutdownbot" in message.content:
+                await bot.process_commands(message)
+            elif "restartbot" in message.content:
                 await bot.process_commands(message)
             else:
                 pass

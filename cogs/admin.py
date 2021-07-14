@@ -21,10 +21,10 @@ class Admin(commands.Cog):
             args = "cogs." + " ".join(args[:])
             self.bot.unload_extension(args)
             self.bot.load_extension(args)
-            em = discord.Embed(title = "Cog Reloaded", description = "`" + args + "` has been reloaded.", color = discord.Color.green())
+            em = discord.Embed(title = "Cog Reloaded", description = "`" + args + "` has been reloaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -33,10 +33,10 @@ class Admin(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             args = "cogs." + " ".join(args[:])
             self.bot.unload_extension(args)
-            em = discord.Embed(title = "Cog Unloaded", description = "`" + args + "` has been unloaded.", color = discord.Color.green())
+            em = discord.Embed(title = "Cog Unloaded", description = "`" + args + "` has been unloaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -45,10 +45,10 @@ class Admin(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             args = "cogs." + " ".join(args[:])
             self.bot.load_extension(args)
-            em = discord.Embed(title = "Cog Loaded", description = "`" + args + "` has been loaded.", color = discord.Color.green())
+            em = discord.Embed(title = "Cog Loaded", description = "`" + args + "` has been loaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -57,12 +57,12 @@ class Admin(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             first_embed = discord.Embed(title = "Shutting down bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
-            new_embed = discord.Embed(title = "The bot is shut down!", description = "Check your console, as it may still be running. If it is, press `ctrl + c` on your keyboard to end the process.", color = discord.Color.green())
+            new_embed = discord.Embed(title = "The bot is shut down!", description = "Check your console, as it may still be running. If it is, press `ctrl + c` on your keyboard to end the process", color = discord.Color.green())
             #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -76,7 +76,7 @@ class Admin(commands.Cog):
             await ctx.bot.close()
             subprocess.Popen([sys.executable, "bot.py"]) 
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -91,7 +91,7 @@ class Admin(commands.Cog):
             #await ctx.send(f"Connected on {str(len(servers))} servers:")
             #await ctx.send('\n'.join(guild.name for guild in self.bot.guilds))
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -123,7 +123,7 @@ class Admin(commands.Cog):
             #invite = channel.create_invite()
             #await ctx.send(invite)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -145,7 +145,7 @@ class Admin(commands.Cog):
                 #invite = channel.create_invite()
                 #await ctx.send(invite)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
@@ -153,10 +153,10 @@ class Admin(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             server = self.bot.get_guild(int(serverID))
             await server.leave()
-            embed = discord.Embed(title = f"Left the server '{server.name}'.", color = discord.Color.green())
+            embed = discord.Embed(title = f"Left the server '{server.name}'", color = discord.Color.green())
             await ctx.send(embed = embed)
         else:
-            em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
+            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
     
 def setup(bot):
