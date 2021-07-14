@@ -329,10 +329,10 @@ class Settings(commands.Cog):
             data = json.load(file)
         data = data["settings"]
         if str(option).lower() == "on":
-            data.update({"filter": 1})
+            data["settings"]["filter"] = 1
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
         elif str(option).lower() == "off":
-            data.update({"filter": 0})
+            data["settings"]["filter"] = 1
             em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
         #else:
         #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
@@ -347,13 +347,14 @@ class Settings(commands.Cog):
     async def _disable (self, ctx, option):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
-        data = data["settings"]
-        if str(option).lower() == "on":
-            data.update({"commands": 1})
+        #data = data["settings"]
+        if str(option).lower() == "true":
+            data["settings"]["commands"] = 1
+            #data.update({"commands": 1})
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
-        elif str(option).lower() == "off":
-            #data["settings"]["commands"] = 0
-            data.update({"commands": 0})
+        elif str(option).lower() == "false":
+            data["settings"]["commands"] = 0
+            #data.update({"commands": 0})
             em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
         #else:
         #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
