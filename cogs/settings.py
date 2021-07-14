@@ -317,100 +317,100 @@ class Settings(commands.Cog):
                     await embedmsg.edit(embed=secondem)
                     return
 
-    @settings.command(name="filter")
-    @commands.has_permissions(administrator=True)
-    async def _filter(self, ctx, args, *word):
-        word = " ".join(word[:])
-        if not args:
-            if "filter" in enabled_settings:
-                em = discord.Embed(title = "The filter is currently enabled", color = discord.Color.green())
-            else:
-                em = discord.Embed(title = "The filter is currently disabled", color = discord.Color.red())
-            ctx.send(embed=em)
+    # @settings.command(name="filter")
+    # @commands.has_permissions(administrator=True)
+    # async def _filter(self, ctx, args, *word):
+    #     word = " ".join(word[:])
+    #     if not args:
+    #         if "filter" in enabled_settings:
+    #             em = discord.Embed(title = "The filter is currently enabled", color = discord.Color.green())
+    #         else:
+    #             em = discord.Embed(title = "The filter is currently disabled", color = discord.Color.red())
+    #         ctx.send(embed=em)
 
-        if args.lower() == "on":
-            print("now it doesnt error")
-        if args.lower() == "off":
-            if not os.path.exists('settings'):
-                os.makedirs('settings')
-            try:
-                if os.stat("settings/filter.json").st_size > 0:
-                    lst = []
-                    with open("settings/filter.json") as file:
-                        filterjson = json.load(file)
-                    filteritem = filterjson['data']
-                    for attr, value in filteritem.items():
-                        if str("false") == filteritem[attr]["enabled"]:
-                            em = discord.Embed(title = 'The filter is already disabled.', color = discord.Color.red())
-                            await ctx.send(embed=em)
-                            return
-                        else:
-                            pass
-                    for attr, value in filteritem.items():
-                        lst.append(attr)
-                    filterjson["data"].update({"filter": {"enabled": 'false'}})
-                    with open("settings/filter.json", 'w') as file:
-                        json.dump(filterjson, file)
-                    em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
-                    await ctx.send(embed=em)
+    #     if args.lower() == "on":
+    #         print("now it doesnt error")
+    #     if args.lower() == "off":
+    #         if not os.path.exists('settings'):
+    #             os.makedirs('settings')
+    #         try:
+    #             if os.stat("settings/filter.json").st_size > 0:
+    #                 lst = []
+    #                 with open("settings/filter.json") as file:
+    #                     filterjson = json.load(file)
+    #                 filteritem = filterjson['data']
+    #                 for attr, value in filteritem.items():
+    #                     if str("false") == filteritem[attr]["enabled"]:
+    #                         em = discord.Embed(title = 'The filter is already disabled.', color = discord.Color.red())
+    #                         await ctx.send(embed=em)
+    #                         return
+    #                     else:
+    #                         pass
+    #                 for attr, value in filteritem.items():
+    #                     lst.append(attr)
+    #                 filterjson["data"].update({"filter": {"enabled": 'false'}})
+    #                 with open("settings/filter.json", 'w') as file:
+    #                     json.dump(filterjson, file)
+    #                 em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+    #                 await ctx.send(embed=em)
                 
-                elif os.stat("settings/filter.json").st_size == 0:
-                    filterjson = {"data": {"filter": {"enabled": "false"}}}
-                    with open("settings/filter.json", 'w') as file:
-                        json.dump(filterjson, file)
-                    em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
-                    await ctx.send(embed=em)
+    #             elif os.stat("settings/filter.json").st_size == 0:
+    #                 filterjson = {"data": {"filter": {"enabled": "false"}}}
+    #                 with open("settings/filter.json", 'w') as file:
+    #                     json.dump(filterjson, file)
+    #                 em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+    #                 await ctx.send(embed=em)
 
-            except FileNotFoundError:
-                writefilter = {"data": {"filter": {"enabled": "false"}}}
-                with open("settings/filter.json", 'w') as file:
-                    json.dump(writefilter, file)
-                em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
-                await ctx.send(embed=em)
+    #         except FileNotFoundError:
+    #             writefilter = {"data": {"filter": {"enabled": "false"}}}
+    #             with open("settings/filter.json", 'w') as file:
+    #                 json.dump(writefilter, file)
+    #             em = discord.Embed(title = 'Disabled the filter.', color = discord.Color.green())
+    #             await ctx.send(embed=em)
 
-        if args.lower() == "add":
-            if not word:
-                em = discord.Embed(title = 'Please pass a word.', color = discord.Color.red())
-                await ctx.send(embed=em)
-            else:
-                if not os.path.exists('settings'):
-                    os.makedirs('settings')
-                try:
-                    if os.stat("settings/filter.json").st_size > 0:
-                        lst = []
-                        with open("settings/filter.json") as file:
-                            filterjson = json.load(file)
-                        filteritem = filterjson['data']
-                        for attr, value in filteritem.items():
-                            if str("true") == filteritem[attr]["word"]:
-                                em = discord.Embed(title = 'Word is already in the filter.', color = discord.Color.red())
-                                await ctx.send(embed=em)
-                                return
-                            else:
-                                pass
-                        for attr, value in filteritem.items():
-                            lst.append(attr)
-                        wordnum = str(lst[-1])
-                        wordnum = str(int(''.join(filter(str.isdigit, str(wordnum)))) + 1)
-                        filterjson["data"].update({f"word{wordnum}": {"word": f'{word}'}})
-                        with open("settings/filter.json", 'w') as file:
-                            json.dump(filterjson, file)
-                        em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
-                        await ctx.send(embed=em)
+    #     if args.lower() == "add":
+    #         if not word:
+    #             em = discord.Embed(title = 'Please pass a word.', color = discord.Color.red())
+    #             await ctx.send(embed=em)
+    #         else:
+    #             if not os.path.exists('settings'):
+    #                 os.makedirs('settings')
+    #             try:
+    #                 if os.stat("settings/filter.json").st_size > 0:
+    #                     lst = []
+    #                     with open("settings/filter.json") as file:
+    #                         filterjson = json.load(file)
+    #                     filteritem = filterjson['data']
+    #                     for attr, value in filteritem.items():
+    #                         if str("true") == filteritem[attr]["word"]:
+    #                             em = discord.Embed(title = 'Word is already in the filter.', color = discord.Color.red())
+    #                             await ctx.send(embed=em)
+    #                             return
+    #                         else:
+    #                             pass
+    #                     for attr, value in filteritem.items():
+    #                         lst.append(attr)
+    #                     wordnum = str(lst[-1])
+    #                     wordnum = str(int(''.join(filter(str.isdigit, str(wordnum)))) + 1)
+    #                     filterjson["data"].update({f"word{wordnum}": {"word": f'{word}'}})
+    #                     with open("settings/filter.json", 'w') as file:
+    #                         json.dump(filterjson, file)
+    #                     em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+    #                     await ctx.send(embed=em)
                     
-                    elif os.stat("settings/filterlist.json").st_size == 0:
-                        filterjson = {"data": {"word0": {"word": f'{word}'}}}
-                        with open("settings/filter.json", 'w') as file:
-                            json.dump(filterjson, file)
-                        em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
-                        await ctx.send(embed=em)
+    #                 elif os.stat("settings/filterlist.json").st_size == 0:
+    #                     filterjson = {"data": {"word0": {"word": f'{word}'}}}
+    #                     with open("settings/filter.json", 'w') as file:
+    #                         json.dump(filterjson, file)
+    #                     em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+    #                     await ctx.send(embed=em)
 
-                except FileNotFoundError:
-                    writefilter = {"data": {"word0": {"word": f'{word}'}}}
-                    with open("settings/filter.json", 'w') as file:
-                        json.dump(writefilter, file)
-                    em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
-                    await ctx.send(embed=em)
+    #             except FileNotFoundError:
+    #                 writefilter = {"data": {"word0": {"word": f'{word}'}}}
+    #                 with open("settings/filter.json", 'w') as file:
+    #                     json.dump(writefilter, file)
+    #                 em = discord.Embed(title = 'Added that word to the filter.', color = discord.Color.green())
+    #                 await ctx.send(embed=em)
 
     @settings.command(name="filter")
     @commands.has_permissions(administrator=True)
@@ -434,8 +434,7 @@ class Settings(commands.Cog):
                     #badwordsfile = open(f"settings/bad_words-{ctx.guild.id}.py", 'w')
                     fileread = open(f"settings/bad_words-{ctx.guild.id}.py", "r")
                 except Exception:
-                    
-
+                    print("now no error")
         else:
             em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
             await ctx.send(embed=em)

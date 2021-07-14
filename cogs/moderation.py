@@ -82,11 +82,15 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
         if not reason:
             await user.kick(reason=args)
-            em = discord.Embed(title = f"**{user}** has been kicked, reason: **none**.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason.", value = "none")
             await ctx.send(embed = em)
         else:
             await user.kick(reason=args)
-            em = discord.Embed(title = f"**{user}** has been kicked, reason: **{args}**.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason.", value = args)
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -112,11 +116,15 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **none**.", color = discord.Color.red())
+            em = discord.Embed(title = f"**{user}** has been banned.", color = discord.Color.orange())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason.", value = "none")
             await ctx.send(embed = em)
         else:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned, reason: **{args}**.", color = discord.Color.red())
+            em = discord.Embed(title = f"**{user}** has been banned.", color = discord.Color.orange())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason.", value = "none")
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
