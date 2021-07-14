@@ -327,7 +327,7 @@ class Settings(commands.Cog):
     async def _filter(self, ctx, option):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
-        data = data["settings"]
+        #data = data["settings"]
         if str(option).lower() == "on":
             data["settings"]["filter"] = 1
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
