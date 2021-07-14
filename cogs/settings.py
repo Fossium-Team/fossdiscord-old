@@ -332,7 +332,7 @@ class Settings(commands.Cog):
             data["settings"]["filter"] = 1
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
         elif str(option).lower() == "off":
-            data["settings"]["filter"] = 1
+            data["settings"]["filter"] = 0
             em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
         #else:
         #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
