@@ -319,19 +319,41 @@ class Settings(commands.Cog):
 
     @settings.command(name="filter")
     @commands.has_permissions(administrator=True)
-    async def _filter(self, ctx, option, *word):
+    async def _filter(self, ctx, option):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
+        data = data["settings"]
         if str(option).lower() == "on":
-            data.update({"settings": {"filter": 1}})
+            data.update({"filter": 1})
             em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
         elif str(option).lower() == "off":
-            data["settings"]["filter"] = 0
+            data.update({"filter": 0})
             em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
-        else:
-            em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
-            await ctx.send(embed=em)
-            return
+        #else:
+        #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
+        #    await ctx.send(embed=em)
+        #    return
+        with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
+            data = json.dump(data, file)
+        await ctx.send(embed=em)
+
+    @settings.command(name="disable")
+    @commands.has_permissions(administrator=True)
+    async def _disable (self, ctx, option):
+        with open(f"settings/enablement-{ctx.guild.id}.json") as file:
+            data = json.load(file)
+        data = data["settings"]
+        if str(option).lower() == "on":
+            data.update({"commands": 1})
+            em = discord.Embed(title = 'The profanity filter is now turned on.', color = discord.Color.green())
+        elif str(option).lower() == "off":
+            #data["settings"]["commands"] = 0
+            data.update({"commands": 0})
+            em = discord.Embed(title = 'The profanity filter is now turned off.', color = discord.Color.green())
+        #else:
+        #    em = discord.Embed(title = "That argument isn't corrent.", color = discord.Color.red())
+        #    await ctx.send(embed=em)
+        #    return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
             data = json.dump(data, file)
         await ctx.send(embed=em)
