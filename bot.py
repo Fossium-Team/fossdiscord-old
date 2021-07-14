@@ -10,6 +10,7 @@ import os
 import json
 import re
 import time
+from datetime import datetime
 from profanity import profanity
 
 intents = discord.Intents.default()
@@ -68,8 +69,32 @@ async def on_message(message):
             #Check for profanity.
             if profanity.contains_profanity(message.content) == True:
                 await message.delete()
-                em = discord.Embed(title = "Please don't use that language", color = discord.Color.orange())
+                em = discord.Embed(title = "Please don't use that sort of language", color = discord.Color.orange())
                 await message.channel.send(embed=em, delete_after=10.0)
+                if not os.path.exists('settings'):
+                    os.makedirs('settings')
+                if os.path.isfile(f"settings/logging-{message.guild.id}.json"):
+                    with open(f"settings/logging-{message.guild.id}.json") as file:
+                        loggingjson = json.load(file)
+                    loggingchannel = loggingjson["data"]["logging"]["channel"]
+                    channel = bot.get_channel(int(loggingchannel))
+                    em = discord.Embed(title = f"{message.author} used swear word(s)", color = discord.Color.red())
+                    em.set_author(name=message.author, icon_url=message.author.avatar_url)
+                    em.add_field(name = "Message", value = message.content)
+
+                    if os.path.isfile(f"settings/dateformat-{message.guild.id}.json"):
+                        with open(f"settings/dateformat-{message.guild.id}.json") as file:
+                            dateformatjson = json.load(file)
+                        date_format = dateformatjson["data"]["dateformat"]["format"]
+                    else:
+                        date_format = config.date_format
+
+                    datetimenow = datetime.now()
+                    currentdate = datetime.strftime(datetimenow, date_format)
+                    em.set_footer(text = f"At {currentdate}")
+                    await channel.send(embed=em)
+                else:
+                    return
             else:
                 pass
         else:

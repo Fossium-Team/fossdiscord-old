@@ -44,11 +44,20 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{ctx.author} has purged {amount} messages in {ctx.message.channel}.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{ctx.author} has purged {amount} messages in {ctx.message.channel}", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em) 
         else:
             return
     
@@ -65,11 +74,20 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has purged all messages of {user} in the last {amount} messages.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has purged all messages of {user} in the last {amount} messages", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -100,10 +118,19 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been kicked.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been kicked", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -116,13 +143,13 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
             em.add_field(name = "Reason.", value = "none")
             await ctx.send(embed = em)
         else:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned.", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
             em.add_field(name = "Reason.", value = "none")
             await ctx.send(embed = em)
@@ -134,10 +161,19 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been banned.", color = discord.Color.red())
+            em = discord.Embed(title = f"{user} has been banned", color = discord.Color.red())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -159,17 +195,17 @@ class Moderation(commands.Cog):
         if timeconvertion(mutetime) is not False:
             role = discord.utils.get(user.guild.roles, name="Muted")
             if role in user.roles:
-                em = discord.Embed(title = f"`{user.display_name}` is already muted.", color = discord.Color.red())
+                em = discord.Embed(title = f"`{user.display_name}` is already muted", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
             else:
                 await user.add_roles(role)
-            em = discord.Embed(title = f"`{user.display_name}` has been muted for " + "`{}`".format(str(mutetime)) + ".", color = discord.Color.orange())
+            em = discord.Embed(title = f"`{user.display_name}` has been muted for " + "`{}`".format(str(mutetime)), color = discord.Color.orange())
             await ctx.send(embed = em)
             await asyncio.sleep(timeconvertion(mutetime))
             await user.remove_roles(role)
         elif timeconvertion(mutetime) is False:
-            em = discord.Embed(title = "The time format doesn't seem right.", color = discord.Color.red())
+            em = discord.Embed(title = "The time format doesn't seem right", color = discord.Color.red())
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -179,10 +215,19 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been muted.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been muted", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Mute time", value = str(mutetime))
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
             
@@ -192,7 +237,7 @@ class Moderation(commands.Cog):
         """Unmute a member."""
         role = discord.utils.get(user.guild.roles, name="Muted")
         if role not in user.roles:
-            em = discord.Embed(title = f"`{user.display_name}` is not muted.", color = discord.Color.red())
+            em = discord.Embed(title = f"`{user.display_name}` is not muted", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         else:
@@ -207,9 +252,18 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been unmuted.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been unmuted", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -233,10 +287,19 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been softbanned.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been softbanned", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -254,10 +317,19 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been unbanned.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been unbanned", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
+            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+                    dateformatjson = json.load(file)
+                date_format = dateformatjson["data"]["dateformat"]["format"]
+            else:
+                date_format = config.date_format
+            datetimenow = datetime.now()
+            currentdate = datetime.strftime(datetimenow, date_format)
             em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+            await channel.send(embed=em)
         else:
             return
 
@@ -274,7 +346,7 @@ class Moderation(commands.Cog):
                 os.makedirs('warns')
             try:
                 if os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size > 0:
-                    em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+                    em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
                     await ctx.send(embed=em)
                     writeReasonTemplate = str(args)
                     warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
@@ -283,14 +355,14 @@ class Moderation(commands.Cog):
                     warns.close()
 
                 elif os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size == 0:
-                    em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+                    em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
                     await ctx.send(embed=em)
                     writeReasonTemplate = str(args)
                     warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
                     warns.write(writeReasonTemplate)
                     warns.close()
             except Exception:
-                em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
                 await ctx.send(embed=em)
                 writeReasonTemplate = str(args)
                 warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
@@ -304,7 +376,7 @@ class Moderation(commands.Cog):
                 loggingjson = json.load(file)
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been warned.", color = discord.Color.orange())
+            em = discord.Embed(title = f"{user} has been warned", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = args)
 
