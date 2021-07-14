@@ -1,5 +1,5 @@
 discord.py==1.7.3
-requests==2.25.1
+requests==2.26.0
 asyncio==3.4.3
 wget==3.2
 psutil==5.8.0
