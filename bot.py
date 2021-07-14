@@ -123,7 +123,10 @@ async def on_message(message):
         if command_enable == 1:
             await bot.process_commands(message)
         else:
-            pass
+            if "settings" in message or "shutdownbot" in message:
+                await bot.process_commands(message)
+            else:
+                pass
 
 # error handling
 @bot.event
