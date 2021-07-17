@@ -411,7 +411,7 @@ class Moderation(commands.Cog):
             with open("./warns.json", "w") as file:
                 json.dump(data, file)
         except Exception:
-            data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
+            data = data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
             with open(f"settings/warns-{ctx.guild.id}.json") as file:
                 json.dump(data, file)
         em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
