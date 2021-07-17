@@ -401,11 +401,11 @@ class Moderation(commands.Cog):
     async def warn(self, ctx, user : discord.Member, *, reason = "empty"):
         userid = user.id
         try:
-            with open(f"settings/warns-{ctx.guild.id}.json", "r") as file:
+            with open(f"warns/warns-{ctx.guild.id}.json", "r") as file:
                 data = json.load(file)
         except Exception:
             data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
-            with open(f"settings/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
             em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
             await ctx.send(embed=em)
@@ -414,7 +414,7 @@ class Moderation(commands.Cog):
             data["data"]
         except KeyError:
             data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
-            with open(f"settings/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
             em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
             await ctx.send(embed=em)
@@ -424,11 +424,11 @@ class Moderation(commands.Cog):
             #case = data["data"][f"{user}"]["case"][caseid]
             data["data"][f"{userid}"]["case"].append(f"{reason}")
             data["data"][f"{userid}"]["count"] = case_count
-            with open(f"settings/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
         except KeyError:
             data["data"].update({f"{user}":{"id":f"{user}","count": 1,"case":[f"{reason}"]}})
-            with open(f"settings/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
         em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
         await ctx.send(embed=em)
