@@ -420,13 +420,13 @@ class Moderation(commands.Cog):
             await ctx.send(embed=em)
             return
         try:
-            case_count = len(data["data"][f"{userid}"]["case"])
             #case = data["data"][f"{user}"]["case"][caseid]
             data["data"][f"{userid}"]["case"].append(f"{reason}")
+            case_count = len(data["data"][f"{userid}"]["case"])
             data["data"][f"{userid}"]["count"] = case_count
             with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
-        except KeyError:
+        except Exception:
             data["data"].update({f"{user}":{"id":f"{user}","count": 1,"case":[f"{reason}"]}})
             with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file)
