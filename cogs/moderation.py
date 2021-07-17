@@ -403,6 +403,11 @@ class Moderation(commands.Cog):
         try:
             with open(f"settings/warns-{ctx.guild.id}.json") as file:
                 data = json.load(file)
+        except Exception:
+            data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
+            with open(f"settings/warns-{ctx.guild.id}.json") as file:
+                json.dump(data, file)
+        try:
             data["data"][f"{userid}"]
             case_count = len(data["data"][f"{userid}"]["case"])
             #case = data["data"][f"{user}"]["case"][caseid]
@@ -411,11 +416,7 @@ class Moderation(commands.Cog):
             with open("./warns.json", "w") as file:
                 json.dump(data, file)
         except KeyError:
-            data = data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
-            with open(f"settings/warns-{ctx.guild.id}.json") as file:
-                json.dump(data, file)
-        else:
-            data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
+            data["data"].update({f"{user}":{"id":f"{user}","count": 1,"case":[f"{reason}"]}})
             with open(f"settings/warns-{ctx.guild.id}.json") as file:
                 json.dump(data, file)
         em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
