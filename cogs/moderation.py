@@ -333,69 +333,89 @@ class Moderation(commands.Cog):
         else:
             return
 
+    #@commands.command()
+    #@commands.has_permissions(manage_messages=True)
+    #async def warn(self, ctx, user : discord.Member, *reason):
+    #    args = " ".join(reason[:])
+        
+    #    if args == "":
+    #        em = discord.Embed(title = "No reason given.", color = discord.Color.red())
+    #        await ctx.send(embed=em)
+    #    else:
+    #        if not os.path.exists('warns'):
+    #            os.makedirs('warns')
+    #        try:
+    #            if os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size > 0:
+    #                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
+    #                await ctx.send(embed=em)
+    #                writeReasonTemplate = str(args)
+    #                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
+    #                warns.write("\n")
+    #                warns.write(writeReasonTemplate)
+    #                warns.close()
+    #
+    #            elif os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size == 0:
+    #                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
+    #                await ctx.send(embed=em)
+    #                writeReasonTemplate = str(args)
+    #                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
+    #                warns.write(writeReasonTemplate)
+    #                warns.close()
+    #        except Exception:
+    #            em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
+    #            await ctx.send(embed=em)
+    #            writeReasonTemplate = str(args)
+    #            warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
+    #            warns.write(writeReasonTemplate)
+    #            warns.close()
+    #
+    #    if not os.path.exists('settings'):
+    #        os.makedirs('settings')
+    #    if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
+    #        with open(f"settings/logging-{ctx.guild.id}.json") as file:
+    #            loggingjson = json.load(file)
+    #        loggingchannel = loggingjson["data"]["logging"]["channel"]
+    #        channel = self.bot.get_channel(int(loggingchannel))
+    #        em = discord.Embed(title = f"{user} has been warned", color = discord.Color.orange())
+    #        em.set_author(name=user, icon_url=user.avatar_url)
+    #        em.add_field(name = "Reason", value = args)
+    #
+    #        if not os.path.exists('settings'):
+    #            os.makedirs('settings')
+    #        if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
+    #            with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
+    #                dateformatjson = json.load(file)
+    #            date_format = dateformatjson["data"]["dateformat"]["format"]
+    #        else:
+    #            date_format = config.date_format
+    #        datetimenow = datetime.now()
+    #        currentdate = datetime.strftime(datetimenow, date_format)
+    #
+    #        em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
+    #        await channel.send(embed=em)
+    #    else:
+    #        return
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user : discord.Member, *reason):
-        args = " ".join(reason[:])
-        
-        if args == "":
-            em = discord.Embed(title = "No reason given.", color = discord.Color.red())
-            await ctx.send(embed=em)
-        else:
-            if not os.path.exists('warns'):
-                os.makedirs('warns')
-            try:
-                if os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size > 0:
-                    em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-                    await ctx.send(embed=em)
-                    writeReasonTemplate = str(args)
-                    warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-                    warns.write("\n")
-                    warns.write(writeReasonTemplate)
-                    warns.close()
-
-                elif os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size == 0:
-                    em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-                    await ctx.send(embed=em)
-                    writeReasonTemplate = str(args)
-                    warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-                    warns.write(writeReasonTemplate)
-                    warns.close()
-            except Exception:
-                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-                await ctx.send(embed=em)
-                writeReasonTemplate = str(args)
-                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-                warns.write(writeReasonTemplate)
-                warns.close()
-
-        if not os.path.exists('settings'):
-            os.makedirs('settings')
-        if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
-            with open(f"settings/logging-{ctx.guild.id}.json") as file:
-                loggingjson = json.load(file)
-            loggingchannel = loggingjson["data"]["logging"]["channel"]
-            channel = self.bot.get_channel(int(loggingchannel))
-            em = discord.Embed(title = f"{user} has been warned", color = discord.Color.orange())
-            em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
-
-            if not os.path.exists('settings'):
-                os.makedirs('settings')
-            if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
-                with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
-                    dateformatjson = json.load(file)
-                date_format = dateformatjson["data"]["dateformat"]["format"]
-            else:
-                date_format = config.date_format
-            datetimenow = datetime.now()
-            currentdate = datetime.strftime(datetimenow, date_format)
-
-            em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
-            await channel.send(embed=em)
-        else:
-            return
-
+    async def warn(self, ctx, user : discord.Member, *, reason = "empty"):
+        userid = user.id
+        try:
+            with open(f"settings/warns-{ctx.guild.id}.json") as file:
+                data = json.load(file)
+            data["data"][f"{userid}"]
+            case_count = len(data["data"][f"{userid}"]["case"])
+            #case = data["data"][f"{user}"]["case"][caseid]
+            data["data"][f"{userid}"]["case"].append(f"{reason}")
+            data["data"][f"{userid}"]["count"] = case_count
+            with open("./warns.json", "w") as file:
+                json.dump(data, file)
+        except Exception:
+            data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
+            with open(f"settings/warns-{ctx.guild.id}.json") as file:
+                json.dump(data, file)
+        em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+        await ctx.send(embed=em)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
