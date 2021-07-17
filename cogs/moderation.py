@@ -410,8 +410,12 @@ class Moderation(commands.Cog):
             data["data"][f"{userid}"]["count"] = case_count
             with open("./warns.json", "w") as file:
                 json.dump(data, file)
-        except Exception:
+        except KeyError:
             data = data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
+            with open(f"settings/warns-{ctx.guild.id}.json") as file:
+                json.dump(data, file)
+        else:
+            data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
             with open(f"settings/warns-{ctx.guild.id}.json") as file:
                 json.dump(data, file)
         em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
