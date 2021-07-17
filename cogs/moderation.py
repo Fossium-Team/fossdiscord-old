@@ -400,6 +400,8 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, user : discord.Member, *, reason = "empty"):
         userid = user.id
+        if not os.path.exists('warns'):
+            os.makedirs('warns')
         try:
             with open(f"warns/warns-{ctx.guild.id}.json", "r") as file:
                 data = json.load(file)
