@@ -14,149 +14,148 @@ class Help(commands.Cog):
     @commands.cooldown(5, 15, commands.BucketType.channel)
     @commands.group(invoke_without_command=True, aliases=['commands'])
     async def help(self, ctx):
-        if ctx.invoked_subcommand is None:
-            em = discord.Embed(title = "Help", color = discord.Color.blue())
-            em.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
-            em.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
-            embedmsg = await ctx.send(embed=em)
-            await embedmsg.add_reaction("🏠")
-            await embedmsg.add_reaction("⚔️")
-            await embedmsg.add_reaction("⚙️")
-            await embedmsg.add_reaction("🪛")
-            await embedmsg.add_reaction("😄")
-            await embedmsg.add_reaction("🔐")
-            await embedmsg.add_reaction("🔍")
-            await embedmsg.add_reaction("🔄")
-            await embedmsg.add_reaction("👑")
-            await embedmsg.add_reaction("❓")
+        em = discord.Embed(title = "Help", color = discord.Color.blue())
+        em.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+        em.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
+        embedmsg = await ctx.send(embed=em)
+        await embedmsg.add_reaction("🏠")
+        await embedmsg.add_reaction("⚔️")
+        await embedmsg.add_reaction("⚙️")
+        await embedmsg.add_reaction("🪛")
+        await embedmsg.add_reaction("😄")
+        await embedmsg.add_reaction("🔐")
+        await embedmsg.add_reaction("🔍")
+        await embedmsg.add_reaction("🔄")
+        await embedmsg.add_reaction("👑")
+        await embedmsg.add_reaction("❓")
 
-            latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
-            latestversionget = latestversionresponse.json()["name"]
-            latestversion = latestversionget.split(' ', 1)[1]
-            secondem = discord.Embed(title = "Help", color = discord.Color.blue())
-            secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
-            secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
-            if globalconfig.currentversion == latestversion:
-                secondem.add_field(name = "Updates", value = "There are no updates available.", inline=False)
-            elif globalconfig.currentversion > latestversion:
-                secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.", inline=False)
+        latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+        latestversionget = latestversionresponse.json()["name"]
+        latestversion = latestversionget.split(' ', 1)[1]
+        secondem = discord.Embed(title = "Help", color = discord.Color.blue())
+        secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+        secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
+        if globalconfig.currentversion == latestversion:
+            secondem.add_field(name = "Updates", value = "There are no updates available.", inline=False)
+        elif globalconfig.currentversion > latestversion:
+            secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.", inline=False)
+        else:
+            secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
+        await embedmsg.edit(embed=secondem)
+        def check(reaction, user):
+            return embedmsg == reaction.message
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', check=check, timeout=300)
+            except asyncio.TimeoutError:
+                secondem = discord.Embed(title = "Timed out", description = "To prevent high resource usage, I've suspended this embed.", color = discord.Color.orange())
+                await embedmsg.edit(embed=secondem)
+                await embedmsg.clear_reaction("🏠")
+                await embedmsg.clear_reaction("⚔️")
+                await embedmsg.clear_reaction("⚙️")
+                await embedmsg.clear_reaction("🪛")
+                await embedmsg.clear_reaction("😄")
+                await embedmsg.clear_reaction("🔐")
+                await embedmsg.clear_reaction("🔍")
+                await embedmsg.clear_reaction("🔄")
+                await embedmsg.clear_reaction("👑")
+                await embedmsg.clear_reaction("❓")
+                break
             else:
-                secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
-            await embedmsg.edit(embed=secondem)
-            def check(reaction, user):
-                return embedmsg == reaction.message
-            while True:
-                try:
-                    reaction, user = await self.bot.wait_for('reaction_add', check=check, timeout=300)
-                except asyncio.TimeoutError:
-                    secondem = discord.Embed(title = "Timed out", description = "To prevent high resource usage, I've suspended this embed.", color = discord.Color.orange())
+                if str(reaction.emoji) == "🏠":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", color = discord.Color.blue())
+                    secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+                    secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
                     await embedmsg.edit(embed=secondem)
-                    await embedmsg.clear_reaction("🏠")
-                    await embedmsg.clear_reaction("⚔️")
-                    await embedmsg.clear_reaction("⚙️")
-                    await embedmsg.clear_reaction("🪛")
-                    await embedmsg.clear_reaction("😄")
-                    await embedmsg.clear_reaction("🔐")
-                    await embedmsg.clear_reaction("🔍")
-                    await embedmsg.clear_reaction("🔄")
-                    await embedmsg.clear_reaction("👑")
-                    await embedmsg.clear_reaction("❓")
-                    break
-                else:
-                    if str(reaction.emoji) == "🏠":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", color = discord.Color.blue())
-                        secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
-                        secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("🏠", user)
+                    await embedmsg.remove_reaction("🏠", user)
 
-                        latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
-                        latestversionget = latestversionresponse.json()["name"]
-                        latestversion = latestversionget.split(' ', 1)[1]
-                        secondem = discord.Embed(title = "Help", color = discord.Color.blue())
-                        secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
-                        secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
-                        if globalconfig.currentversion == latestversion:
-                            secondem.add_field(name = "Updates", value = "There are no updates available.", inline=False)
-                        elif globalconfig.currentversion > latestversion:
-                            secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.", inline=False)
-                        else:
-                            secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
-                        await embedmsg.edit(embed=secondem)
+                    latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+                    latestversionget = latestversionresponse.json()["name"]
+                    latestversion = latestversionget.split(' ', 1)[1]
+                    secondem = discord.Embed(title = "Help", color = discord.Color.blue())
+                    secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
+                    secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
+                    if globalconfig.currentversion == latestversion:
+                        secondem.add_field(name = "Updates", value = "There are no updates available.", inline=False)
+                    elif globalconfig.currentversion > latestversion:
+                        secondem.add_field(name = "Updates", value = f"Error while checking for updates, try running {config.prefix}updatecheck.", inline=False)
+                    else:
+                        secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
+                    await embedmsg.edit(embed=secondem)
 
-                    if str(reaction.emoji) == "⚔️":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarns")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("⚔️", user)
+                if str(reaction.emoji) == "⚔️":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarns")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("⚔️", user)
 
-                    if str(reaction.emoji) == "⚙️":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("⚙️", user)
+                if str(reaction.emoji) == "⚙️":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("⚙️", user)
 
-                    if str(reaction.emoji) == "🪛":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Utils", value = "about\navatar\njoined\nping\nquickpoll\nuptime\nuserinfo")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("🪛", user)
+                if str(reaction.emoji) == "🪛":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Utils", value = "about\navatar\njoined\nping\nquickpoll\nuptime\nuserinfo")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("🪛", user)
 
-                    if str(reaction.emoji) == "😄":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Fun", value = "cat\nchoose\ndog\nemote\nf")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("😄", user)
+                if str(reaction.emoji) == "😄":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Fun", value = "cat\nchoose\ndog\nemote\nf")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("😄", user)
 
-                    if str(reaction.emoji) == "🔐":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Caesarcrypt", value = "twisted_msg\nuntwisted_msg")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("🔐", user)
+                if str(reaction.emoji) == "🔐":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Caesarcrypt", value = "twisted_msg\nuntwisted_msg")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("🔐", user)
 
-                    if str(reaction.emoji) == "🔍":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "VirusTotal", value = "scanurl\nrescan")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("🔍", user)
+                if str(reaction.emoji) == "🔍":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "VirusTotal", value = "scanurl\nrescan")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("🔍", user)
 
-                    if str(reaction.emoji) == "🔄":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Update", value = "updatecheck\nupdatebot")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("🔄", user)
+                if str(reaction.emoji) == "🔄":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Update", value = "updatecheck\nupdatebot")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("🔄", user)
 
-                    if str(reaction.emoji) == "👑":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "Admin", value = "blacklist\ngetchannels\ngetinvite\nloadcog\nreloadcog\nservers\nshutdownbot\nunloadcog")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("👑", user)
+                if str(reaction.emoji) == "👑":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "Admin", value = "blacklist\ngetchannels\ngetinvite\nloadcog\nreloadcog\nservers\nshutdownbot\nunloadcog")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("👑", user)
 
-                    if str(reaction.emoji) == "❓":
-                        if user.name == self.bot.user.name:
-                            continue
-                        secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                        secondem.add_field(name = "About", value = "about\nhelp")
-                        await embedmsg.edit(embed=secondem)
-                        await embedmsg.remove_reaction("❓", user)
+                if str(reaction.emoji) == "❓":
+                    if user.name == self.bot.user.name:
+                        continue
+                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem.add_field(name = "About", value = "about\nhelp")
+                    await embedmsg.edit(embed=secondem)
+                    await embedmsg.remove_reaction("❓", user)
 
     # Moderation commands
     @help.command(name="ban")
