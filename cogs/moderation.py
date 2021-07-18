@@ -65,7 +65,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def _user(self, ctx, user: discord.Member = None, amount=10):
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         await ctx.message.delete()
@@ -100,7 +100,7 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, user: discord.Member = None, *reason):
         """Kick a member."""
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         args = " ".join(reason[:])
@@ -110,13 +110,13 @@ class Moderation(commands.Cog):
             await user.kick(reason=args)
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason.", value = "none")
+            em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
         else:
             await user.kick(reason=args)
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason.", value = args)
+            em.add_field(name = "Reason", value = args)
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -147,7 +147,7 @@ class Moderation(commands.Cog):
     async def ban(self, ctx, user: discord.Member = None, *reason):
         """Ban a member."""
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         args = " ".join(reason[:])
@@ -155,15 +155,15 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
             em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason.", value = "none")
+            em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
         else:
             await user.ban(reason=args)
-            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.orange())
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
             em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason.", value = "none")
+            em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -196,11 +196,11 @@ class Moderation(commands.Cog):
         #BTW need to import time&asyncio module to work.
         """Mute a member."""
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         if mutetime is None:
-            em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         if get(ctx.guild.roles, name="Muted"):
@@ -256,7 +256,7 @@ class Moderation(commands.Cog):
     async def unmute(self, ctx, user: discord.Member = None):
         """Unmute a member."""
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is red', color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         role = discord.utils.get(user.guild.roles, name="Muted")
@@ -295,17 +295,25 @@ class Moderation(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def softban(self, ctx, user: discord.Member = None, *reason):
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         args = " ".join(reason[:])
-        await ctx.guild.ban(user)
-        await ctx.guild.unban(user)
+        if user == ctx.author:
+            em = discord.Embed(title = "You cannot softban yourself", color = discord.Color.red())
         if not reason:
-            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **none**.", color = discord.Color.orange())
+            await ctx.guild.ban(user)
+            await ctx.guild.unban(user)
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
         else:
-            em = discord.Embed(title = f"**{user}** has been softbanned, reason: **{args}**.", color = discord.Color.orange())
+            await ctx.guild.ban(user)
+            await ctx.guild.unban(user)
+            em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
+            em.set_author(name = user, icon_url=user.avatar.url)
+            em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -335,7 +343,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user: discord.Member = None):
         if not user:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         await ctx.guild.unban(user)
@@ -369,7 +377,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, user : discord.Member = None, *, reason = "no reason provided"):
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         userid = user.id
@@ -412,7 +420,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warnings(self, ctx, user : discord.Member = None):
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         userid = user.id
@@ -444,11 +452,11 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def delwarning(self, ctx, user : discord.Member = None, casenumber = None):
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         if casenumber is None:
-            em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         userid = user.id

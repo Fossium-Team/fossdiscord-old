@@ -16,6 +16,21 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.cooldown(1, 10, commands.BucketType.channel)
+    @commands.command()
+    async def choose(self, ctx, *choices: str):
+        """Chooses between multiple choices."""
+        if "@everyone" in choices:
+            em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
+            await ctx.send(embed = em)
+        else:
+            if "@here" in choices:
+                em = discord.Embed(title = "Nice try, sadly that won't work here.", color = discord.Color.red())
+                await ctx.send(embed = em)
+            else:
+                em = discord.Embed(title = "The chosen word is:", description = random.choice(choices), color = discord.Color.blue())
+                await ctx.send(embed = em)
+
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.command(aliases=['kat','cats', 'kitten'])
     async def cat(self, ctx):

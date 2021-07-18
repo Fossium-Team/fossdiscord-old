@@ -178,7 +178,7 @@ class Utils(commands.Cog):
         #         await ctx.send(str(e))
         #         return
 
-    @commands.cooldown(1, 15, commands.BucketType.channel)
+    @commands.cooldown(1, 10, commands.BucketType.channel)
     @commands.command()
     async def quickpoll(self, ctx, *poll):
         if not poll:
