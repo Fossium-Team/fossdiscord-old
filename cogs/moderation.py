@@ -398,7 +398,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user : discord.Member, *, reason = "No reason."):
+    async def warn(self, ctx, user : discord.Member, *, reason = "no reason provided"):
         userid = user.id
         if not os.path.exists('warns'):
             os.makedirs('warns')
@@ -483,9 +483,9 @@ class Moderation(commands.Cog):
         for w in data["data"][f"{userid}"]["case"]:
             counter += 1
             if counter == cases:
-                em.add_field(name = f"Case number {counter}: ", value = f"{w}", inline=False)
+                em.add_field(name = f"Case number {counter}: ", value = f"{w}")
             else:
-                em.add_field(name = f"Case number {counter}: ", value = f"{w}", inline=True)
+                em.add_field(name = f"Case number {counter}: ", value = f"{w}")
         await ctx.send(embed = em)
 
     @commands.command()
