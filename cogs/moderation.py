@@ -435,28 +435,60 @@ class Moderation(commands.Cog):
         em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
         await ctx.send(embed=em)
 
+    #@commands.command()
+    #@commands.has_permissions(manage_messages=True)
+    #async def warns(self, ctx, user : discord.Member):
+    #    if not os.path.exists('warns'):
+    #        os.makedirs('warns')
+    #    try:
+    #        if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
+    #            with open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py") as f:
+    #                lines = f.readlines()
+    #                lines_clean = "".join(lines[:])
+    #                if not lines_clean:
+    #                    em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
+    #                else:
+    #                    em = discord.Embed(title = "Warns for " + str(user), description = lines_clean, color = discord.Color.orange())
+    #                    await ctx.send(embed = em)
+    #        elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
+    #            em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
+    #            await ctx.send(embed = em)
+    #    except Exception:
+    #        em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
+    #        await ctx.send(embed = em)
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def warns(self, ctx, user : discord.Member):
-        if not os.path.exists('warns'):
-            os.makedirs('warns')
-        try:
-            if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
-                with open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py") as f:
-                    lines = f.readlines()
-                    lines_clean = "".join(lines[:])
-                    if not lines_clean:
-                        em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-                    else:
-                        em = discord.Embed(title = "Warns for " + str(user), description = lines_clean, color = discord.Color.orange())
-                        await ctx.send(embed = em)
-            elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
-                em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-                await ctx.send(embed = em)
-        except Exception:
-            em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
+        userid = user.id
+        if not os.path.exists('warns') or not os.path.isfile(f"warns/warns-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "No one has been warned yet.", color = discord.Color.green())
             await ctx.send(embed = em)
+            return
+        with open(f"warns/warns-{ctx.guild.id}.json") as file:
+            data = json.load(file)
+        try:
+            user_warns = data["data"][f"{userid}"]
+        except KeyError:
+            em = discord.Embed(title = f"`{user.nick}` has no warning.", color = discord.Color.green())
+            await ctx.send(embed = em)
+            return
+        cases = data["data"][f"{userid}"]["count"]
+        if cases == 0:
+            em = discord.Embed(title = f"`{user.nick}` has no warning.", color = discord.Color.green())
+            await ctx.send(embed = em)
+            return
+        em = discord.Embed(title = f"`{user.nick}`'s warning: ", color = discord.Color.orange())
+        counter = 0
+        for w in data["data"][f"{userid}"]["case"]:
+            if counter == cases:
+                em.add_field(name = f"{counter}: ", value = f"{w}", inline=False)
+            else:
+                em.add_field(name = f"{counter}: ", value = f"{w}", inline=True)
+        await ctx.send(embed = em)
 
+
+        
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
