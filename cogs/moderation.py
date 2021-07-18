@@ -462,7 +462,7 @@ class Moderation(commands.Cog):
     async def warns(self, ctx, user : discord.Member):
         userid = user.id
         if not os.path.exists('warns') or not os.path.isfile(f"warns/warns-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "No one has been warned yet.", color = discord.Color.green())
+            em = discord.Embed(title = "That user hasn't been warned yet.", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         with open(f"warns/warns-{ctx.guild.id}.json") as file:
@@ -470,25 +470,22 @@ class Moderation(commands.Cog):
         try:
             user_warns = data["data"][f"{userid}"]
         except KeyError:
-            em = discord.Embed(title = f"`{user.nick}` has no warning.", color = discord.Color.green())
+            em = discord.Embed(title = f"`{user.display_name}` has no warnings.", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         cases = data["data"][f"{userid}"]["count"]
         if cases == 0:
-            em = discord.Embed(title = f"`{user.nick}` has no warning.", color = discord.Color.green())
+            em = discord.Embed(title = f"`{user.display_name}` has no warnings.", color = discord.Color.green())
             await ctx.send(embed = em)
             return
-        em = discord.Embed(title = f"`{user.nick}`'s warning: ", color = discord.Color.orange())
+        em = discord.Embed(title = f"`{user.display_name}`'s warnings: ", color = discord.Color.orange())
         counter = 0
         for w in data["data"][f"{userid}"]["case"]:
             if counter == cases:
-                em.add_field(name = f"{counter}: ", value = f"{w}", inline=False)
+                em.add_field(name = f"Case number {counter+1}: ", value = f"{w}", inline=False)
             else:
-                em.add_field(name = f"{counter}: ", value = f"{w}", inline=True)
+                em.add_field(name = f"Case number {counter+1}: ", value = f"{w}", inline=True)
         await ctx.send(embed = em)
-
-
-        
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
