@@ -343,17 +343,17 @@ class Settings(commands.Cog):
             data = json.dump(data, file, indent=4)
         await ctx.send(embed=em)
 
-    @settings.command(name="disable")
+    @settings.command(name="bot")
     @commands.has_permissions(administrator=True)
-    async def _disable (self, ctx, option):
+    async def _bot (self, ctx, option):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
-        if str(option).lower() == "on":
+        if str(option).lower() == "enable":
             data["settings"]["commands"] = 1
             #data.update({"commands": 1})
             em = discord.Embed(title = 'The bot is now disabled', color = discord.Color.green())
-        elif str(option).lower() == "off":
+        elif str(option).lower() == "disable":
             data["settings"]["commands"] = 0
             #data.update({"commands": 0})
             em = discord.Embed(title = 'The bot is now enabled', color = discord.Color.green())
