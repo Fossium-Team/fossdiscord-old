@@ -131,33 +131,33 @@ async def on_message(message):
                 pass
 
 # error handling
-# @bot.event
-# async def on_command_error(ctx, error):
-#     if isinstance(error, commands.MissingPermissions):
-#         await ctx.message.delete()
-#         em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
-#         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-#         await ctx.send(embed = em, delete_after=10.0)
-#     elif isinstance(error, commands.MissingRequiredArgument):
-#         em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
-#         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-#         await ctx.send(embed = em, delete_after=10.0)
-#     elif isinstance(error, commands.CommandNotFound):
-#         await ctx.message.delete()
-#         em = discord.Embed(title = "Error", description = "Command not found.", color = discord.Color.red())
-#         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-#         await ctx.send(embed = em, delete_after=10.0)
-#     elif isinstance(error, commands.CommandOnCooldown):
-#         em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
-#         await ctx.send(embed=em, delete_after=10.0)
-#     elif isinstance(error, commands.MaxConcurrencyReached):
-#         await ctx.message.delete()
-#         em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
-#         await ctx.send(embed=em, delete_after=10.0)
-#     else:
-#         em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
-#         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-#         await ctx.send(embed = em)
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.message.delete()
+        em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
+        em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
+        await ctx.send(embed = em, delete_after=10.0)
+    elif isinstance(error, commands.MissingRequiredArgument):
+        em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
+        em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
+        await ctx.send(embed = em, delete_after=10.0)
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.message.delete()
+        em = discord.Embed(title = "Error", description = "Command not found.", color = discord.Color.red())
+        em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
+        await ctx.send(embed = em, delete_after=10.0)
+    elif isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
+        await ctx.send(embed=em, delete_after=10.0)
+    elif isinstance(error, commands.MaxConcurrencyReached):
+        await ctx.message.delete()
+        em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
+        await ctx.send(embed=em, delete_after=10.0)
+    else:
+        em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
+        em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
+        await ctx.send(embed = em)
 
 # multi-instances prevention
 def start():
