@@ -90,21 +90,21 @@ class Settings(commands.Cog):
                     usernum = str(int(''.join(filter(str.isdigit, str(usernum)))) + 1)
                     blacklistjson["data"].update({f"user{usernum}": {"id": f'{userid}'}})
                     with open("settings/blacklist.json", 'w') as file:
-                        json.dump(blacklistjson, file)
+                        json.dump(blacklistjson, file, indent=4)
                     em = discord.Embed(title = 'Blacklisted that user', color = discord.Color.green())
                     await ctx.send(embed=em)
                 
                 elif os.stat("settings/blacklist.json").st_size == 0:
                     blacklistjson = {"data": {"user0": {"id":f'{userid}'}}}
                     with open("settings/blacklist.json", 'w') as file:
-                        json.dump(blacklistjson, file)
+                        json.dump(blacklistjson, file, indent=4)
                     em = discord.Embed(title = 'Blacklisted that user', color = discord.Color.green())
                     await ctx.send(embed=em)
 
             except FileNotFoundError:
                 writeblacklist = {"data": {"user0": {"id":f'{userid}'}}}
                 with open("settings/blacklist.json", 'w') as file:
-                    json.dump(writeblacklist, file)
+                    json.dump(writeblacklist, file, indent=4)
                 em = discord.Embed(title = 'Blacklisted that user', color = discord.Color.green())
                 await ctx.send(embed=em)
 
@@ -140,7 +140,7 @@ class Settings(commands.Cog):
                     try:
                         del blacklistitem[key_to_remove]
                         with open("settings/blacklist.json", 'w') as file:
-                            json.dump(blacklistjson, file)
+                            json.dump(blacklistjson, file, indent=4)
                         em = discord.Embed(title = 'Removed that user from the blacklist', color = discord.Color.green())
                         await ctx.send(embed=em)
                     except NameError:
@@ -197,14 +197,14 @@ class Settings(commands.Cog):
                 try:
                     writelogging = {"data": {"logging": {"channel":f'{channel}'}}}
                     with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
-                        json.dump(writelogging, file)
+                        json.dump(writelogging, file, indent=4)
                     em = discord.Embed(title = 'Set that channel as the logging channel', color = discord.Color.green())
                     await ctx.send(embed=em)
 
                 except FileNotFoundError:
                     writelogging = {"data": {"logging": {"channel":f'{channel}'}}}
                     with open(f"settings/logging-{ctx.guild.id}.json", 'w') as file:
-                        json.dump(writelogging, file)
+                        json.dump(writelogging, file, indent=4)
                     em = discord.Embed(title = 'Set that channel as the logging channel', color = discord.Color.green())
                     await ctx.send(embed=em)
 
@@ -239,12 +239,12 @@ class Settings(commands.Cog):
                     try:
                         writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     except FileNotFoundError:
                         writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -261,13 +261,13 @@ class Settings(commands.Cog):
                     try:
                         writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
                         
 
                     except FileNotFoundError:
                         writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %I:%M %p'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
                 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -284,12 +284,12 @@ class Settings(commands.Cog):
                     try:
                         writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     except FileNotFoundError:
                         writedateformat = {"data": {"dateformat": {"format":'%d/%m/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -306,12 +306,12 @@ class Settings(commands.Cog):
                     try:
                         writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     except FileNotFoundError:
                         writedateformat = {"data": {"dateformat": {"format":'%m/%d/%Y, %H:%M'}}}
                         with open(f"settings/dateformat-{ctx.guild.id}.json", 'w') as file:
-                            json.dump(writedateformat, file)
+                            json.dump(writedateformat, file, indent=4)
 
                     await embedmsg.clear_reaction("1️⃣")
                     await embedmsg.clear_reaction("2️⃣")
@@ -340,7 +340,7 @@ class Settings(commands.Cog):
            await ctx.send(embed=em)
            return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
-            data = json.dump(data, file)
+            data = json.dump(data, file, indent=4)
         await ctx.send(embed=em)
 
     @settings.command(name="disable")
@@ -362,7 +362,7 @@ class Settings(commands.Cog):
            await ctx.send(embed=em)
            return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
-            data = json.dump(data, file)
+            data = json.dump(data, file, indent=4)
         await ctx.send(embed=em)
 
 def setup(bot):

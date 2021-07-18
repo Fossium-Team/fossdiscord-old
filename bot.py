@@ -60,9 +60,9 @@ async def on_message(message):
             command_enable = data["settings"]["commands"]
             filter_enable = data["settings"]["filter"]
         except Exception:
-            default = {"settings": {"filter": 1, "commands": 1}}
+            default = {"settings": {"filter": 0, "commands": 1}}
             with open(f"settings/enablement-{message.guild.id}.json", 'w') as file:
-                data = json.dump(default, file)
+                data = json.dump(default, file, indent=4)
             filter_enable = 1
             command_enable = 1
         if filter_enable == 1:
