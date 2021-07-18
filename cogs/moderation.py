@@ -461,7 +461,7 @@ class Moderation(commands.Cog):
         if not os.path.isdir("warnings"):
             os.makedirs("warnings")
         if not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "Nobody has been warned on this server yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         try:
