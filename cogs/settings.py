@@ -14,47 +14,6 @@ class Settings(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def botstatus(self, ctx, *args):
-        """Sets the status of the bot. Owner only. 'botstatus' to reset"""
-        args = " ".join(args[:])
-        if str(ctx.message.author.id) == config.ownerID:
-            if args == '':
-                await self.bot.change_presence(activity=discord.Game(name=''))
-
-                em = discord.Embed(title = "Bot status successfully reset!", color = discord.Color.green())
-                await ctx.send(embed = em)
-            else:
-                await self.bot.change_presence(activity=discord.Game(name=args))
-
-                em = discord.Embed(title = "Bot status successfully changed to `" + args + "`!", color = discord.Color.green())
-                await ctx.send(embed = em)
-        else:
-            em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
-            await ctx.send(embed = em)
-
-
-    @commands.command()
-    async def botstatusrepeat(self, ctx):
-        if str(ctx.message.author.id) == config.ownerID:
-            em = discord.Embed(title = "Status loop initiated.", color = discord.Color.green())
-            await ctx.send(embed = em)
-
-            while True:
-                await self.bot.change_presence(activity=discord.Game("Made by the FOSS-Devs team!"))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Visual Studio Code"))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Fixing Bugs..."))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game("Publishing Releases..."))
-                await asyncio.sleep(10)
-                await self.bot.change_presence(activity=discord.Game(f'v{globalconfig.currentversion} | {config.prefix}help'))
-                await asyncio.sleep(10)
-        else:
-            em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
-            await ctx.send(embed = em)
-
     @commands.group(invoke_without_command=True)
     async def blacklist(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
@@ -161,8 +120,8 @@ class Settings(commands.Cog):
         em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
         em.add_field(name = f"{config.prefix}settings logging <channelID or off>", value="Set a logging channel.")
         em.add_field(name = f"{config.prefix}settings dateformat", value="Set the date format used in the current guild.", inline = False)
-        em.add_field(name = f"{config.prefix}settings filter <on or off>", value="Turn the filter on or off.")
-        em.add_field(name = f"{config.prefix}settings filter <add or remove>", value="Add or remove words to the filter.")
+        em.add_field(name = f"{config.prefix}settings bot <on or off>", value="Turn the bot on or off.", inline = False)
+        em.add_field(name = f"{config.prefix}settings filter <on or off>", value="Turn the word filter on or off.")
         await ctx.send(embed=em)
 
     @settings.command(name="logging")
@@ -333,7 +292,7 @@ class Settings(commands.Cog):
             data["settings"]["filter"] = 1
             em = discord.Embed(title = 'The profanity filter is now turned on', color = discord.Color.green())
         elif str(option).lower() == "off":
-            data["settings"]["filter"] = 0
+            data["settings"]["filter"] = 0 
             em = discord.Embed(title = 'The profanity filter is now turned off', color = discord.Color.green())
         else:
            em = discord.Embed(title = "Please pass a valid argument", color = discord.Color.red())
@@ -349,14 +308,14 @@ class Settings(commands.Cog):
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
-        if str(option).lower() == "enable":
+        if str(option).lower() == "on":
             data["settings"]["commands"] = 1
             #data.update({"commands": 1})
-            em = discord.Embed(title = 'The bot is now disabled', color = discord.Color.green())
-        elif str(option).lower() == "disable":
+            em = discord.Embed(title = 'The bot is now enabled', color = discord.Color.green())
+        elif str(option).lower() == "off":
             data["settings"]["commands"] = 0
             #data.update({"commands": 0})
-            em = discord.Embed(title = 'The bot is now enabled', color = discord.Color.green())
+            em = discord.Embed(title = 'The bot is now disabled', color = discord.Color.green())
         else:
            em = discord.Embed(title = "Please pass a valid argument", color = discord.Color.red())
            await ctx.send(embed=em)

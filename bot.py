@@ -69,7 +69,7 @@ async def on_message(message):
             #Check for profanity.
             if profanity.contains_profanity(message.content) == True:
                 await message.delete()
-                em = discord.Embed(title = "Please don't use that sort of language", color = discord.Color.orange())
+                em = discord.Embed(title = "Please don't use swear words", color = discord.Color.orange())
                 await message.channel.send(embed=em, delete_after=10.0)
                 if not os.path.exists('settings'):
                     os.makedirs('settings')
