@@ -11,7 +11,7 @@ import json
 import re
 import time
 from datetime import datetime
-from profanity import profanity
+from better_profanity import profanity
 
 intents = discord.Intents.default()
 intents.members = True
