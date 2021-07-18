@@ -63,7 +63,11 @@ class Moderation(commands.Cog):
     
     @purge.command(name="user")
     @commands.has_permissions(manage_messages=True)
-    async def _user(self, ctx, user: discord.Member, amount=10):
+    async def _user(self, ctx, user: discord.Member = None, amount=10):
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         await ctx.message.delete()
         await ctx.channel.purge(limit=int(amount), check=lambda message: message.author == user)
 
@@ -93,8 +97,12 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, user: discord.Member, *reason):
+    async def kick(self, ctx, user: discord.Member = None, *reason):
         """Kick a member."""
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
@@ -136,8 +144,12 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, user: discord.Member, *reason):
+    async def ban(self, ctx, user: discord.Member = None, *reason):
         """Ban a member."""
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
@@ -180,9 +192,17 @@ class Moderation(commands.Cog):
 
     @commands.command() # Takes 1s 1m 1h 1d
     @commands.has_permissions(manage_messages=True)
-    async def mute(self, ctx, user: discord.Member, mutetime):
+    async def mute(self, ctx, user: discord.Member = None, mutetime = None):
         #BTW need to import time&asyncio module to work.
         """Mute a member."""
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
+        if mutetime is None:
+            em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         if get(ctx.guild.roles, name="Muted"):
             pass
         else:
@@ -233,8 +253,12 @@ class Moderation(commands.Cog):
             
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def unmute(self, ctx, user: discord.Member):
+    async def unmute(self, ctx, user: discord.Member = None):
         """Unmute a member."""
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         role = discord.utils.get(user.guild.roles, name="Muted")
         if role not in user.roles:
             em = discord.Embed(title = f"`{user.display_name}` is not muted", color = discord.Color.red())
@@ -269,7 +293,11 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def softban(self, ctx, user: discord.Member, *reason):
+    async def softban(self, ctx, user: discord.Member = None, *reason):
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         args = " ".join(reason[:])
         await ctx.guild.ban(user)
         await ctx.guild.unban(user)
@@ -305,7 +333,11 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def unban(self, ctx, user: discord.Member):
+    async def unban(self, ctx, user: discord.Member = None):
+        if not user:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         await ctx.guild.unban(user)
         em = discord.Embed(title = f"**{user}** has been unbanned", color = discord.Color.green())
         await ctx.send(embed = em)
@@ -333,92 +365,33 @@ class Moderation(commands.Cog):
         else:
             return
 
-    #@commands.command()
-    #@commands.has_permissions(manage_messages=True)
-    #async def warn(self, ctx, user : discord.Member, *reason):
-    #    args = " ".join(reason[:])
-        
-    #    if args == "":
-    #        em = discord.Embed(title = "No reason given.", color = discord.Color.red())
-    #        await ctx.send(embed=em)
-    #    else:
-    #        if not os.path.exists('warns'):
-    #            os.makedirs('warns')
-    #        try:
-    #            if os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size > 0:
-    #                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-    #                await ctx.send(embed=em)
-    #                writeReasonTemplate = str(args)
-    #                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-    #                warns.write("\n")
-    #                warns.write(writeReasonTemplate)
-    #                warns.close()
-    #
-    #            elif os.stat(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py").st_size == 0:
-    #                em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-    #                await ctx.send(embed=em)
-    #                writeReasonTemplate = str(args)
-    #                warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-    #                warns.write(writeReasonTemplate)
-    #                warns.close()
-    #        except Exception:
-    #            em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
-    #            await ctx.send(embed=em)
-    #            writeReasonTemplate = str(args)
-    #            warns = open(f"warns/{str(user.id)}_{str(ctx.message.guild.id)}.py", 'a')
-    #            warns.write(writeReasonTemplate)
-    #            warns.close()
-    #
-    #    if not os.path.exists('settings'):
-    #        os.makedirs('settings')
-    #    if os.path.isfile(f"settings/logging-{ctx.guild.id}.json"):
-    #        with open(f"settings/logging-{ctx.guild.id}.json") as file:
-    #            loggingjson = json.load(file)
-    #        loggingchannel = loggingjson["data"]["logging"]["channel"]
-    #        channel = self.bot.get_channel(int(loggingchannel))
-    #        em = discord.Embed(title = f"{user} has been warned", color = discord.Color.orange())
-    #        em.set_author(name=user, icon_url=user.avatar_url)
-    #        em.add_field(name = "Reason", value = args)
-    #
-    #        if not os.path.exists('settings'):
-    #            os.makedirs('settings')
-    #        if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
-    #            with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
-    #                dateformatjson = json.load(file)
-    #            date_format = dateformatjson["data"]["dateformat"]["format"]
-    #        else:
-    #            date_format = config.date_format
-    #        datetimenow = datetime.now()
-    #        currentdate = datetime.strftime(datetimenow, date_format)
-    #
-    #        em.set_footer(text = f"{ctx.author}, at {currentdate}", icon_url = ctx.author.avatar_url)
-    #        await channel.send(embed=em)
-    #    else:
-    #        return
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user : discord.Member, *, reason = "no reason provided"):
+    async def warn(self, ctx, user : discord.Member = None, *, reason = "no reason provided"):
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         userid = user.id
-        if not os.path.exists('warns'):
-            os.makedirs('warns')
+        if not os.path.exists('warnings'):
+            os.makedirs('warnings')
         try:
-            with open(f"warns/warns-{ctx.guild.id}.json", "r") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "r") as file:
                 data = json.load(file)
         except Exception:
             data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
-            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
-            em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+            em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
             await ctx.send(embed=em)
             return
         try:
             data["data"]
         except KeyError:
             data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
-            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
-            em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+            em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
             await ctx.send(embed=em)
             return
         try:
@@ -426,92 +399,82 @@ class Moderation(commands.Cog):
             data["data"][f"{userid}"]["case"].append(f"{reason}")
             case_count = len(data["data"][f"{userid}"]["case"])
             data["data"][f"{userid}"]["count"] = case_count
-            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
         except Exception:
             data["data"].update({f"{user}":{"id":f"{user}","count": 1,"case":[f"{reason}"]}})
-            with open(f"warns/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
-        em = discord.Embed(title = "Successfully warned that member.", color = discord.Color.orange())
+        em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
         await ctx.send(embed=em)
-
-    #@commands.command()
-    #@commands.has_permissions(manage_messages=True)
-    #async def warns(self, ctx, user : discord.Member):
-    #    if not os.path.exists('warns'):
-    #        os.makedirs('warns')
-    #    try:
-    #        if os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size > 0:
-    #            with open("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py") as f:
-    #                lines = f.readlines()
-    #                lines_clean = "".join(lines[:])
-    #                if not lines_clean:
-    #                    em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-    #                else:
-    #                    em = discord.Embed(title = "Warns for " + str(user), description = lines_clean, color = discord.Color.orange())
-    #                    await ctx.send(embed = em)
-    #        elif os.stat("warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py").st_size == 0:
-    #            em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-    #            await ctx.send(embed = em)
-    #    except Exception:
-    #        em = discord.Embed(title = "Warns for " + str(user), description = "This user has no warnings", color = discord.Color.orange())
-    #        await ctx.send(embed = em)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warns(self, ctx, user : discord.Member):
-        userid = user.id
-        if not os.path.exists('warns') or not os.path.isfile(f"warns/warns-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "That user hasn't been warned yet.", color = discord.Color.green())
+    async def warns(self, ctx, user : discord.Member = None):
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
             await ctx.send(embed = em)
             return
-        with open(f"warns/warns-{ctx.guild.id}.json") as file:
+        userid = user.id
+        if not os.path.exists('warnings') or not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "That user hasn't been warned yet", color = discord.Color.green())
+            await ctx.send(embed = em)
+            return
+        with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
             data = json.load(file)
         try:
             user_warns = data["data"][f"{userid}"]
         except KeyError:
-            em = discord.Embed(title = f"`{user.display_name}` has no warnings.", color = discord.Color.green())
+            em = discord.Embed(title = f"`{user.display_name}` has no warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         cases = data["data"][f"{userid}"]["count"]
         if cases == 0:
-            em = discord.Embed(title = f"`{user.display_name}` has no warnings.", color = discord.Color.green())
+            em = discord.Embed(title = f"`{user.display_name}` has no warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
-        em = discord.Embed(title = f"`{user.display_name}`'s warnings: ", color = discord.Color.orange())
+        em = discord.Embed(title = f"`{user.display_name}`'s warnings:", color = discord.Color.orange())
         counter = 0
         for w in data["data"][f"{userid}"]["case"]:
             counter += 1
-            em.add_field(name = f"Case number {counter}: ", value = f"{w}")
+            em.add_field(name = f"Case number {counter}:", value = f"{w}")
         await ctx.send(embed = em)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def delwarn(self, ctx, user : discord.Member, option):
+    async def delwarn(self, ctx, user : discord.Member = None, casenumber = None):
+        if user is None:
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
+        if casenumber is None:
+            em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         userid = user.id
         try:
-            option = int(option) - 1
+            casenumber = int(casenumber) - 1
         except Exception:
-            em = discord.Embed(title = "Your `option` format not right.", color = discord.Color.red())
+            em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if not os.path.isdir("warns"):
-            os.makedirs("warns")
-        if not os.path.isfile("warns/warns-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "Nobody has been warned yet.", color = discord.Color.red())
+        if not os.path.isdir("warnings"):
+            os.makedirs("warnings")
+        if not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         try:
-            with open("warns/warns-{ctx.guild.id}.json") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                 data = json.load(file)
-            data["data"][f"{userid}"]["case"].pop(option)
+            data["data"][f"{userid}"]["case"].pop(casenumber)
             data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
-            with open("warns/warns-{ctx.guild.id}.json", "w") as file:
+            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
         except IndexError:
-            em = discord.Embed(title = "The warning you try to remove does not exist.", color = discord.Color.red())
+            em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
             await ctx.send(embed = em)
-        em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.green())
+        em = discord.Embed(title = "Successfully removed that warning", delete_after=10.0, color = discord.Color.green())
         await ctx.send(embed=em)
 
     
@@ -520,7 +483,7 @@ class Moderation(commands.Cog):
     async def modnick(self, ctx, *, user: discord.Member = None):
         if user is None:
             em = discord.Embed(title = 'Usage:', color = discord.Color.blue())
-            em.add_field(name = f"{config.prefix}modnick <user ID or mention>", value='Moderates the nickname of a user or a bot (sets the nickname to "ModdedNick-(random letters and numbers)".')
+            em.add_field(name = f"{config.prefix}modnick <user ID or mention>", value='Moderates the nickname of a user or a bot (sets the nickname to "ModdedNick-(random letters and numbers)"')
             await ctx.send(embed=em)
         else:
             source = string.ascii_letters + string.digits

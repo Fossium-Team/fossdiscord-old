@@ -142,7 +142,7 @@ cython_debug/
 config.py
 
 # Bot saved files
-warns/
+warnings/
 settings/
 
 # VSCode Settings

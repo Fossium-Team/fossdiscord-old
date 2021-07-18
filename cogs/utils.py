@@ -100,8 +100,12 @@ class Utils(commands.Cog):
 
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.command()
-    async def joined(self, ctx, member: discord.Member):
+    async def joined(self, ctx, *member: discord.Member):
         """Says when a member joined."""
+        if not member:
+            em = discord.Embed(title = 'The argument `member` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         em = discord.Embed(title = '{0.name} joined in {0.joined_at}'.format(member), color = discord.Color.blue())
         await ctx.send(embed = em)
 
@@ -147,8 +151,8 @@ class Utils(commands.Cog):
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
         if emote == None:
-            em = discord.Embed(title="No emote given", description = f"Please use `{config.prefix}emote <emote>`.", color = discord.Color.red())
-            await ctx.send(embed=em)
+            em = discord.Embed(title = 'The argument `emote` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
             return
         else:
             try:
@@ -162,7 +166,7 @@ class Utils(commands.Cog):
                 await ctx.send(embed=em)
                 return
             except Exception:
-                em = discord.Embed(title="That emote probably is not in the server that the bot is in.")
+                em = discord.Embed(title="That emote probably is not in the server(s) that the bot is in.")
                 await ctx.send(embed=em)
                 return
 
@@ -177,6 +181,10 @@ class Utils(commands.Cog):
     @commands.cooldown(1, 15, commands.BucketType.channel)
     @commands.command()
     async def quickpoll(self, ctx, *poll):
+        if not poll:
+            em = discord.Embed(title = 'The argument `poll` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         await ctx.message.delete()
         args = " ".join(poll[:])
         em = discord.Embed(title = f'{args}')
@@ -199,7 +207,11 @@ class Utils(commands.Cog):
 # going to change this when the Down for Everyone or Just Me API is released
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.command()
-    async def isitdown(self, ctx, website):
+    async def isitdown(self, ctx, *website):
+        if not website:
+            em = discord.Embed(title = 'The argument `website` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         if re.search("https://", website):
             pass
         else:

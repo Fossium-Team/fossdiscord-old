@@ -283,7 +283,11 @@ class Settings(commands.Cog):
 
     @settings.command(name="filter")
     @commands.has_permissions(administrator=True)
-    async def _filter(self, ctx, *option):
+    async def _filter(self, ctx, option = None):
+        if option is None:
+            em = discord.Embed(title = 'The argument `option` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         option = " ".join(option[:])
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
@@ -304,7 +308,11 @@ class Settings(commands.Cog):
 
     @settings.command(name="bot")
     @commands.has_permissions(administrator=True)
-    async def _bot (self, ctx, option):
+    async def _bot (self, ctx, option = None):
+        if option is None:
+            em = discord.Embed(title = 'The argument `option` is missing', color = discord.Color.orange())
+            await ctx.send(embed = em)
+            return
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
