@@ -487,20 +487,30 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def delwarn(self, ctx, user : discord.Member, *, reason):
-        if not os.path.exists('warns'):
-            os.makedirs('warns')
-        fn = "warns/" + str(user.id) + "_" + str(ctx.message.guild.id) + ".py"
-        f = open(fn)
-        output = []
-        word=str(reason)
-        for line in f:
-            if not line.startswith(word):
-                output.append(line)
-        f.close()
-        f = open(fn, 'w')
-        f.writelines(output)
-        f.close()
+    async def delwarn(self, ctx, user : discord.Member, option):
+        userid = user.id
+        try:
+            option = int(option) - 1
+        except Exception:
+            em = discord.Embed(title = "Your `option` format not right.", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        if not os.path.isdir("warns"):
+            os.makedirs("warns")
+        if not os.path.isfile("warns/warns-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "Nobody has been warned yet.", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        try:
+            with open("warns/warns-{ctx.guild.id}.json") as file:
+                data = json.load(file)
+            data["data"][f"{userid}"]["case"].pop(option)
+            data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
+            with open("warns/warns-{ctx.guild.id}.json", "w") as file:
+                json.dump(data, file, indent=4)
+        except IndexError:
+            em = discord.Embed(title = "The warning you try to remove does not exist.", color = discord.Color.red())
+            await ctx.send(embed = em)
         em = discord.Embed(title = "Successfully removed that warning.", delete_after=10.0, color = discord.Color.green())
         await ctx.send(embed=em)
 
