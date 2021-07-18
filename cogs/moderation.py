@@ -482,7 +482,7 @@ class Moderation(commands.Cog):
         counter = 0
         for w in data["data"][f"{userid}"]["case"]:
             counter += 1
-            em.add_field(name = f"Case number {counter}: ", value = f"{w}", inline=False)
+            em.add_field(name = f"Case number {counter}: ", value = f"{w}")
         await ctx.send(embed = em)
 
     @commands.command()
