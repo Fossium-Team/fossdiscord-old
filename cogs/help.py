@@ -89,7 +89,7 @@ class Help(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarns")
+                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarnings")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("⚔️", user)
 
@@ -209,9 +209,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Moderation: Warn", description = config.prefix + "warn <user> <reason> \n\nWarn a member.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="warns")
-    async def _warns(self, ctx):
-        em = discord.Embed(title = "Moderation: Warns", description = config.prefix + "warns <user> \n\nSee the warnings for a member.", color = discord.Color.blue())
+    @help.command(name="warnings")
+    async def _warnings(self, ctx):
+        em = discord.Embed(title = "Moderation: warnings", description = config.prefix + "warnings <user> \n\nSee the warnings for a member.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # General commands

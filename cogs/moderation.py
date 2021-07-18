@@ -410,7 +410,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warns(self, ctx, user : discord.Member = None):
+    async def warnings(self, ctx, user : discord.Member = None):
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
             await ctx.send(embed = em)
@@ -474,6 +474,7 @@ class Moderation(commands.Cog):
         except IndexError:
             em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
             await ctx.send(embed = em)
+            return
         em = discord.Embed(title = "Successfully removed that warning", delete_after=10.0, color = discord.Color.green())
         await ctx.send(embed=em)
 
