@@ -89,7 +89,7 @@ class Help(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarn\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarnings")
+                    secondem.add_field(name = "Moderation", value = "ban\nchangenick\ndelwarning\nkick\nmodnick\nmute\npurge\nunban\nunmute\nwarn\nwarnings")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("⚔️", user)
 
@@ -168,9 +168,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname (if not given the nickname will be reset) \n\nChanges the nickname of a user or a bot.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="delwarn")
-    async def _delwarn(self, ctx):
-        em = discord.Embed(title = "Moderation: Delwarn", description = config.prefix + "delwarn <user> <reason of warn you want to delete> \n\nDelete a warning.", color = discord.Color.blue())
+    @help.command(name="delwarning")
+    async def _delwarning(self, ctx):
+        em = discord.Embed(title = "Moderation: delwarning", description = config.prefix + "delwarning <user> <reason of warn you want to delete> \n\nDelete a warning.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="kick")

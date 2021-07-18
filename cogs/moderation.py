@@ -417,7 +417,7 @@ class Moderation(commands.Cog):
             return
         userid = user.id
         if not os.path.exists('warnings') or not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "That user hasn't been warned yet", color = discord.Color.green())
+            em = discord.Embed(title = f"`{user.display_name}` hasn't been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
@@ -425,12 +425,12 @@ class Moderation(commands.Cog):
         try:
             user_warns = data["data"][f"{userid}"]
         except KeyError:
-            em = discord.Embed(title = f"`{user.display_name}` has no warnings", color = discord.Color.orange())
+            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         cases = data["data"][f"{userid}"]["count"]
         if cases == 0:
-            em = discord.Embed(title = f"`{user.display_name}` has no warnings", color = discord.Color.orange())
+            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
         em = discord.Embed(title = f"`{user.display_name}`'s warnings:", color = discord.Color.orange())
@@ -442,7 +442,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def delwarn(self, ctx, user : discord.Member = None, casenumber = None):
+    async def delwarning(self, ctx, user : discord.Member = None, casenumber = None):
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.orange())
             await ctx.send(embed = em)
