@@ -103,7 +103,7 @@ class Utils(commands.Cog):
     async def joined(self, ctx, *member: discord.Member):
         """Says when a member joined."""
         if not member:
-            em = discord.Embed(title = 'The argument `member` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `member` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         em = discord.Embed(title = '{0.name} joined in {0.joined_at}'.format(member), color = discord.Color.blue())
@@ -151,7 +151,7 @@ class Utils(commands.Cog):
     @commands.command(description='#emotes')
     async def emote(self, ctx, emote : discord.Emoji = None):
         if emote == None:
-            em = discord.Embed(title = 'The argument `emote` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `emote` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         else:
@@ -182,7 +182,7 @@ class Utils(commands.Cog):
     @commands.command()
     async def quickpoll(self, ctx, *poll):
         if not poll:
-            em = discord.Embed(title = 'The argument `poll` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `poll` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         await ctx.message.delete()
@@ -209,7 +209,7 @@ class Utils(commands.Cog):
     @commands.command()
     async def isitdown(self, ctx, *website):
         if not website:
-            em = discord.Embed(title = 'The argument `website` is missing', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `website` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         if re.search("https://", website):

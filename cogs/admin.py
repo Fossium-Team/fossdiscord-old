@@ -15,37 +15,49 @@ class Admin(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def reloadcog(self, ctx, *args):
+    async def reloadcog(self, ctx, *cog):
         """Reloads a cog"""
         if str(ctx.message.author.id) == config.ownerID:
-            args = "cogs." + " ".join(args[:])
-            self.bot.unload_extension(args)
-            self.bot.load_extension(args)
-            em = discord.Embed(title = "Cog Reloaded", description = "`" + args + "` has been reloaded", color = discord.Color.green())
+            if not cog:
+                em = discord.Embed(title = 'The argument `cog` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
+            cog = "cogs." + " ".join(cog[:])
+            self.bot.unload_extension(cog)
+            self.bot.load_extension(cog)
+            em = discord.Embed(title = "Cog Reloaded", description = "`" + cog + "` has been reloaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
-    async def unloadcog(self, ctx, *args):
+    async def unloadcog(self, ctx, *cog):
         """Unloads a cog"""
         if str(ctx.message.author.id) == config.ownerID:
-            args = "cogs." + " ".join(args[:])
-            self.bot.unload_extension(args)
-            em = discord.Embed(title = "Cog Unloaded", description = "`" + args + "` has been unloaded", color = discord.Color.green())
+            if not cog:
+                em = discord.Embed(title = 'The argument `cog` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
+            cog = "cogs." + " ".join(cog[:])
+            self.bot.unload_extension(cog)
+            em = discord.Embed(title = "Cog Unloaded", description = "`" + cog + "` has been unloaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
     @commands.command()
-    async def loadcog(self, ctx, *args):
+    async def loadcog(self, ctx, *cog):
         """Loads a cog"""
         if str(ctx.message.author.id) == config.ownerID:
-            args = "cogs." + " ".join(args[:])
-            self.bot.load_extension(args)
-            em = discord.Embed(title = "Cog Loaded", description = "`" + args + "` has been loaded", color = discord.Color.green())
+            if not cog:
+                em = discord.Embed(title = 'The argument `cog` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
+            cog = "cogs." + " ".join(cog[:])
+            self.bot.load_extension(cog)
+            em = discord.Embed(title = "Cog Loaded", description = "`" + cog + "` has been loaded", color = discord.Color.green())
             await ctx.send(embed = em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
@@ -95,8 +107,12 @@ class Admin(commands.Cog):
             await ctx.send(embed = em)
 
     @commands.command()
-    async def getinvite(self, ctx, serverID, channelName = None):
+    async def getinvite(self, ctx, serverID = None, channelName = None):
         if str(ctx.message.author.id) == config.ownerID:
+            if serverID is None:
+                em = discord.Embed(title = 'The argument `serverID` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
             if channelName != None:
                 channelQuery = channelName
             elif channelName == None:
@@ -127,8 +143,12 @@ class Admin(commands.Cog):
             await ctx.send(embed = em)
 
     @commands.command()
-    async def getchannels(self, ctx, serverID):
+    async def getchannels(self, ctx, serverID = None):
         if str(ctx.message.author.id) == config.ownerID:
+            if serverID is None:
+                em = discord.Embed(title = 'The argument `serverID` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
             server = self.bot.get_guild(int(serverID))
             #await ctx.send(server)
             #channel = discord.utils.get(server.channels, name='general')
@@ -149,8 +169,12 @@ class Admin(commands.Cog):
             await ctx.send(embed = em)
 
     @commands.command()
-    async def leaveserver(self, ctx, serverID):
+    async def leaveserver(self, ctx, serverID = None):
         if str(ctx.message.author.id) == config.ownerID:
+            if serverID is None:
+                em = discord.Embed(title = 'The argument `serverID` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
             server = self.bot.get_guild(int(serverID))
             await server.leave()
             embed = discord.Embed(title = f"Left the server '{server.name}'", color = discord.Color.green())
