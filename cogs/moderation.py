@@ -458,11 +458,14 @@ class Moderation(commands.Cog):
         userid = user.id
         if not os.path.isdir("warnings"):
             os.makedirs("warnings")
-        if not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        elif not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
             em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if os.stat(f"warnings/warnings-{ctx.guild.id}.json").st_size == 0:
+        elif os.stat(f"warnings/warnings-{ctx.guild.id}.json").st_size == 0:
             em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
@@ -487,7 +490,7 @@ class Moderation(commands.Cog):
         else:
             try:
                 casenumber = int(casenumber) - 1
-            except Exception:
+            except ValueError:
                 em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
