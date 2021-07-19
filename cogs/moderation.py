@@ -444,7 +444,6 @@ class Moderation(commands.Cog):
             user_warns = data["data"][f"{userid}"]
         except (IndexError, KeyError):
             em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.green())
-
             await ctx.send(embed = em)
             return
         case_count = data["data"][f"{userid}"]["count"]
@@ -454,7 +453,7 @@ class Moderation(commands.Cog):
             return
         em = discord.Embed(title = f"`{user.display_name}`'s warnings:", color = discord.Color.blue())
         for attr, value in data["data"][f"{user.id}"]["case"].items():
-            em.add_field(name = f"Case number {attr}:", value = f"{value}")
+            em.add_field(name = f"Case number #{attr}:", value = f"{value}")
         await ctx.send(embed = em)
 
     @commands.command()
