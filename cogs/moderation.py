@@ -375,7 +375,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user : discord.Member = None, *, reason = "no reason provided"):
+    async def warn(self, ctx, user : discord.Member = None, *, reason = "No reason provided"):
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
@@ -387,7 +387,7 @@ class Moderation(commands.Cog):
             with open(f"warnings/warnings-{ctx.guild.id}.json", "r") as file:
                 data = json.load(file)
         except Exception:
-            data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
+            data = {"data":{f"{userid}":{"userid":f"{userid}","count": 1,"case":{"1": f"{reason}"}}}}
             with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
             em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
@@ -395,22 +395,23 @@ class Moderation(commands.Cog):
             return
         try:
             data["data"]
-        except KeyError:
-            data = {"data":{f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}}}
+        except (IndexError, KeyError):
+            data = {"data":{f"{userid}":{"userid":f"{userid}","count": 1,"case":{"1": f"{reason}"}}}}
             with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
             em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
             await ctx.send(embed=em)
             return
         try:
-            #case = data["data"][f"{user}"]["case"][caseid]
-            data["data"][f"{userid}"]["case"].append(f"{reason}")
-            case_count = len(data["data"][f"{userid}"]["case"])
-            data["data"][f"{userid}"]["count"] = case_count
+            for attr, value in data["data"][f"{user}"]["case"].items():
+                count = attr
+            caseid = int(count) + 1
+            data["data"][f"{userid}"]["case"].update({f"{caseid}": f"{reason}"})
+            data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
             with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
         except Exception:
-            data["data"].update({f"{userid}":{"id":f"{userid}","count": 1,"case":[f"{reason}"]}})
+            {"data":{f"{userid}":{"userid":f"{userid}","count": 1,"case":{"1": f"{reason}"}}}}
             with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                 json.dump(data, file, indent=4)
         em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
