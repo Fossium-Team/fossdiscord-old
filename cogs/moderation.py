@@ -484,8 +484,12 @@ class Moderation(commands.Cog):
             try:
                 with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                     data = json.load(file)
+                cases = []
                 for attr, value in data["data"][f"{userid}"]["case"].items():
-                    del data["data"][f"{userid}"]["case"][attr]
+                    cases.append(attr)
+                for case in cases:
+                    del data["data"][f"{userid}"]["case"][case]
+                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
                 em = discord.Embed(title = f"Successfully cleared all the warnings of {user.display_name}", color = discord.Color.green())
                 await ctx.send(embed = em)
             except (IndexError, KeyError):
@@ -494,7 +498,7 @@ class Moderation(commands.Cog):
                 return
         else:
             try:
-                casenumber = int(casenumber) - 1
+                int(casenumber)
             except ValueError:
                 em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
                 await ctx.send(embed = em)
