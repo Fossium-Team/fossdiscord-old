@@ -455,11 +455,22 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if casenumber is None:
-            em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
-            await ctx.send(embed = em)
-            return
         userid = user.id
+        if casenumber is None:
+            #em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
+            #await ctx.send(embed = em)
+            #return
+            try:
+                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
+                    data = json.load(file)
+                data["data"][f"{userid}"]["case"].clear()
+                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
+                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
+                    json.dump(data, file, indent=4)
+            except IndexError:
+                em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
         try:
             casenumber = int(casenumber) - 1
         except Exception:
