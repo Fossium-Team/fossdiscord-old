@@ -39,7 +39,7 @@ class Utils(commands.Cog):
             await ctx.send(embed = em)
 
     @commands.cooldown(1, 10, commands.BucketType.user)
-    @commands.command()
+    @commands.command(aliases=['whois'])
     async def userinfo(self, ctx, *, user: discord.Member = None):
         """Gives information about a user."""
         if user is None:
