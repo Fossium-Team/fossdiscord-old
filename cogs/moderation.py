@@ -417,7 +417,7 @@ class Moderation(commands.Cog):
         em = discord.Embed(title = "Successfully warned that member", color = discord.Color.orange())
         await ctx.send(embed=em)
 
-    @commands.command()
+    @commands.command(aliases=['warns'])
     @commands.has_permissions(manage_messages=True)
     async def warnings(self, ctx, user : discord.Member = None):
         if user is None:
@@ -456,7 +456,7 @@ class Moderation(commands.Cog):
             em.add_field(name = f"Case number #{attr}:", value = f"{value}")
         await ctx.send(embed = em)
 
-    @commands.command()
+    @commands.command(aliases=['delwarn'])
     @commands.has_permissions(manage_messages=True)
     async def delwarning(self, ctx, user : discord.Member = None, casenumber = None):
         if user is None:
@@ -478,9 +478,10 @@ class Moderation(commands.Cog):
             await ctx.send(embed = em)
             return
         elif casenumber is None:
-            #em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
-            #await ctx.send(embed = em)
-            #return
+            em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        elif casenumber == "all":
             try:
                 with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                     data = json.load(file)
@@ -499,7 +500,7 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
         else:
-            if casenumber[0] != "#" and not casenumber[1:].isalnum():
+            if casenumber[0] != "#" or not casenumber[1:].isnumeric():
                 em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return

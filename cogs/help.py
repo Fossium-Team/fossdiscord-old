@@ -168,9 +168,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Moderation: ChangeNick", description = config.prefix + "changenick <user ID or mention> <new nickname (if not given the nickname will be reset) \n\nChanges the nickname of a user or a bot.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="delwarning")
+    @help.command(name="delwarning", aliases=['delwarn'])
     async def _delwarning(self, ctx):
-        em = discord.Embed(title = "Moderation: delwarning", description = config.prefix + "delwarning <user> <casenumber or `all`> \n\nDelete a warning.", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: Delwarning", description = config.prefix + "delwarning <user> <casenumber or `all`> \n\nDelete a warning.\nAliases: delwarn", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="kick")
@@ -209,9 +209,9 @@ class Help(commands.Cog):
         em = discord.Embed(title = "Moderation: Warn", description = config.prefix + "warn <user> <reason> \n\nWarn a member.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
-    @help.command(name="warnings")
+    @help.command(name="warnings", aliases=['warns'])
     async def _warnings(self, ctx):
-        em = discord.Embed(title = "Moderation: warnings", description = config.prefix + "warnings <user> \n\nSee the warnings for a member.", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: Warnings", description = config.prefix + "warnings <user> \n\nSee the warnings for a member.\nAliases: warns", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     # General commands
