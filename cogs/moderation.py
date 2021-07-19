@@ -473,29 +473,32 @@ class Moderation(commands.Cog):
                 data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
                 with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                     json.dump(data, file, indent=4)
+                em = discord.Embed(title = f"Successfully removed all warnings from {user.display_name}", delete_after=10.0, color = discord.Color.green())
+                await ctx.send(embed=em)
             except IndexError:
                 em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
-        try:
-            casenumber = int(casenumber) - 1
-        except Exception:
-            em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
-            await ctx.send(embed = em)
-            return
-        try:
-            with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
-                data = json.load(file)
-            data["data"][f"{userid}"]["case"].pop(casenumber)
-            data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
-            with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
-                json.dump(data, file, indent=4)
-        except IndexError:
-            em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
-            await ctx.send(embed = em)
-            return
-        em = discord.Embed(title = "Successfully removed that warning", delete_after=10.0, color = discord.Color.green())
-        await ctx.send(embed=em)
+        else:
+            try:
+                casenumber = int(casenumber) - 1
+            except Exception:
+                em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
+            try:
+                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
+                    data = json.load(file)
+                data["data"][f"{userid}"]["case"].pop(casenumber)
+                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
+                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
+                    json.dump(data, file, indent=4)
+            except IndexError:
+                em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
+            em = discord.Embed(title = "Successfully removed that warning", delete_after=10.0, color = discord.Color.green())
+            await ctx.send(embed=em)
 
     
     @commands.command(pass_context=True)
