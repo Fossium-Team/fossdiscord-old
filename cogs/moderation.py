@@ -424,15 +424,24 @@ class Moderation(commands.Cog):
             await ctx.send(embed = em)
             return
         userid = user.id
-        if not os.path.exists('warnings') or not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = f"`{user.display_name}` hasn't been warned yet", color = discord.Color.green())
+        if not os.path.isdir("warnings"):
+            os.makedirs("warnings")
+            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        elif not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
+        elif os.stat(f"warnings/warnings-{ctx.guild.id}.json").st_size == 0:
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
             data = json.load(file)
         try:
             user_warns = data["data"][f"{userid}"]
-        except KeyError:
+        except (IndexError, KeyError):
             em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.orange())
             await ctx.send(embed = em)
             return
