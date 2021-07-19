@@ -499,12 +499,13 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
         else:
-            try:
-                int(casenumber)
-            except ValueError:
+            if casenumber[0] != "#" or not casenumber[1:].isalnum():
                 em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
+            else:
+                if casenumber[0] == "#":
+                    casenumber = casenumber[1:]
             try:
                 with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                     data = json.load(file)
