@@ -375,7 +375,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user : discord.Member = None, *, reason = "No reason provided"):
+    async def warn(self, ctx, user : discord.Member = None, *, reason = "no reason provided"):
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
@@ -403,7 +403,7 @@ class Moderation(commands.Cog):
             await ctx.send(embed=em)
             return
         try:
-            for attr, value in data["data"][f"{user}"]["case"].items():
+            for attr, value in data["data"][f"{user.id}"]["case"].items():
                 count = attr
             caseid = int(count) + 1
             data["data"][f"{userid}"]["case"].update({f"{caseid}": f"{reason}"})
