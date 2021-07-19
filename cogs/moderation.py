@@ -427,15 +427,15 @@ class Moderation(commands.Cog):
         userid = user.id
         if not os.path.isdir("warnings"):
             os.makedirs("warnings")
-            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         elif not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         elif os.stat(f"warnings/warnings-{ctx.guild.id}.json").st_size == 0:
-            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
@@ -443,19 +443,17 @@ class Moderation(commands.Cog):
         try:
             user_warns = data["data"][f"{userid}"]
         except (IndexError, KeyError):
-            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.orange())
+            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.green())
             await ctx.send(embed = em)
             return
-        cases = data["data"][f"{userid}"]["count"]
-        if cases == 0:
-            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.orange())
+        case_count = data["data"][f"{userid}"]["count"]
+        if case_count == 0:
+            em = discord.Embed(title = f"`{user.display_name}` doesn't have any warnings", color = discord.Color.green())
             await ctx.send(embed = em)
             return
-        em = discord.Embed(title = f"`{user.display_name}`'s warnings:", color = discord.Color.orange())
-        counter = 0
-        for w in data["data"][f"{userid}"]["case"]:
-            counter += 1
-            em.add_field(name = f"Case number {counter}:", value = f"{w}")
+        em = discord.Embed(title = f"`{user.display_name}`'s warnings:", color = discord.Color.red())
+        for attr, value in data["data"][f"{user}"]["case"].items():
+            em.add_field(name = f"Case number {attr}:", value = f"{value}")
         await ctx.send(embed = em)
 
     @commands.command()
