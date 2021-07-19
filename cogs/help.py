@@ -170,7 +170,7 @@ class Help(commands.Cog):
 
     @help.command(name="delwarning")
     async def _delwarning(self, ctx):
-        em = discord.Embed(title = "Moderation: delwarning", description = config.prefix + "delwarning <user> <reason of warn you want to delete> \n\nDelete a warning.", color = discord.Color.blue())
+        em = discord.Embed(title = "Moderation: delwarning", description = config.prefix + "delwarning <user> <casenumber or `all`> \n\nDelete a warning.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="kick")
