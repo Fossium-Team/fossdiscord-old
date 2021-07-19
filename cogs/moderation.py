@@ -490,6 +490,8 @@ class Moderation(commands.Cog):
                 for case in cases:
                     del data["data"][f"{userid}"]["case"][str(case)]
                 data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
+                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
+                    json.dump(data, file, indent=4)
                 em = discord.Embed(title = f"Successfully cleared all the warnings of {user.display_name}", color = discord.Color.green())
                 await ctx.send(embed = em)
             except (IndexError, KeyError):
