@@ -466,35 +466,32 @@ class Moderation(commands.Cog):
         userid = user.id
         if not os.path.isdir("warnings"):
             os.makedirs("warnings")
-            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         elif not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
         elif os.stat(f"warnings/warnings-{ctx.guild.id}.json").st_size == 0:
-            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.green())
             await ctx.send(embed = em)
             return
-        if casenumber is None:
+        elif casenumber is None:
             #em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
             #await ctx.send(embed = em)
             #return
             try:
-                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
+                with open("warnings/warnings.json") as file:
                     data = json.load(file)
-                data["data"][f"{userid}"]["case"].clear()
-                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
-                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
-                    json.dump(data, file, indent=4)
-                em = discord.Embed(title = f"Successfully removed all warnings from {user.display_name}", delete_after=10.0, color = discord.Color.green())
-                await ctx.send(embed=em)
+                for attr, value in data["data"][f"{userid}"]["case"].items():
+                    del data["data"][f"{userid}"]["case"][attr]
+                em = discord.Embed(title = f"Successfully cleared all the warnings of {user.display_name}", color = discord.Color.green())
+                await ctx.send(embed = em)
             except (IndexError, KeyError):
                 em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
-
         else:
             try:
                 casenumber = int(casenumber) - 1
@@ -503,11 +500,11 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
             try:
-                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
+                with open("warnings/warnings.json") as file:
                     data = json.load(file)
-                data["data"][f"{userid}"]["case"].pop(casenumber)
-                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
-                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
+                del data["data"][f"{userid}"]["case"][casenumber]
+                data["data"][f"{userid}"]["count"] = len(data["data"][f"{user}"]["case"])
+                with open("warnings/warnings.json", "w") as file:
                     json.dump(data, file, indent=4)
             except (IndexError, KeyError):
                 em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
