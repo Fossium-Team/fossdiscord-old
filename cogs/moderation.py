@@ -482,7 +482,7 @@ class Moderation(commands.Cog):
             #await ctx.send(embed = em)
             #return
             try:
-                with open("warnings/warnings.json") as file:
+                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                     data = json.load(file)
                 for attr, value in data["data"][f"{userid}"]["case"].items():
                     del data["data"][f"{userid}"]["case"][attr]
@@ -500,11 +500,11 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
             try:
-                with open("warnings/warnings.json") as file:
+                with open(f"warnings/warnings-{ctx.guild.id}.json") as file:
                     data = json.load(file)
                 del data["data"][f"{userid}"]["case"][casenumber]
                 data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
-                with open("warnings/warnings.json", "w") as file:
+                with open(f"warnings/warnings-{ctx.guild.id}.json", "w") as file:
                     json.dump(data, file, indent=4)
             except (IndexError, KeyError):
                 em = discord.Embed(title = "The warning you are trying to remove does not exist", color = discord.Color.red())
