@@ -499,7 +499,7 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
         else:
-            if casenumber[0] != "#" or not casenumber[1:].isalnum():
+            if casenumber[0] != "#" and not casenumber[1:].isalnum():
                 em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
                 await ctx.send(embed = em)
                 return
