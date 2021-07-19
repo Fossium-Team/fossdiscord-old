@@ -503,7 +503,7 @@ class Moderation(commands.Cog):
                 with open("warnings/warnings.json") as file:
                     data = json.load(file)
                 del data["data"][f"{userid}"]["case"][casenumber]
-                data["data"][f"{userid}"]["count"] = len(data["data"][f"{user}"]["case"])
+                data["data"][f"{userid}"]["count"] = len(data["data"][f"{userid}"]["case"])
                 with open("warnings/warnings.json", "w") as file:
                     json.dump(data, file, indent=4)
             except (IndexError, KeyError):
