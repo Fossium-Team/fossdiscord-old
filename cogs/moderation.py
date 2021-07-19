@@ -456,6 +456,12 @@ class Moderation(commands.Cog):
             await ctx.send(embed = em)
             return
         userid = user.id
+        if not os.path.isdir("warnings"):
+            os.makedirs("warnings")
+        if not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
+            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
         if casenumber is None:
             #em = discord.Embed(title = 'The argument `casenumber` is missing', color = discord.Color.red())
             #await ctx.send(embed = em)
@@ -475,12 +481,6 @@ class Moderation(commands.Cog):
             casenumber = int(casenumber) - 1
         except Exception:
             em = discord.Embed(title = "Your `casenumber` format is not right", color = discord.Color.red())
-            await ctx.send(embed = em)
-            return
-        if not os.path.isdir("warnings"):
-            os.makedirs("warnings")
-        if not os.path.isfile(f"warnings/warnings-{ctx.guild.id}.json"):
-            em = discord.Embed(title = "Nobody in this guild has been warned yet", color = discord.Color.red())
             await ctx.send(embed = em)
             return
         try:
