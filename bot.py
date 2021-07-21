@@ -152,7 +152,7 @@ async def on_command_error(ctx, error):
         await ctx.send(embed=em, delete_after=10.0)
     elif isinstance(error, commands.MaxConcurrencyReached):
         await ctx.message.delete()
-        em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait", color = discord.Color.red())
+        em = discord.Embed(title=f"Oops!", description="Someone in this guild is already using that command, please wait", color = discord.Color.red())
         await ctx.send(embed=em, delete_after=10.0)
     else:
         em = discord.Embed(title = "An internal error occurred", color = discord.Color.red())
