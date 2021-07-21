@@ -28,7 +28,7 @@ async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
-    print("REMEMBER: YOU MUST RUN THE COMMAND '" + config.prefix + "shutdownbot' TO SHUTDOWN THE BOT!!!!")
+    print(f"It's a good idea to use {config.prefix} shutdownbot to shut down the bot to prevent multiple instances")
     print('------')
     # Changes bot status to the default status when the bot starts up
     await bot.change_presence(activity=discord.Game(name=f'v{globalconfig.currentversion} | {config.prefix}help'))
@@ -135,27 +135,27 @@ async def on_message(message):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.message.delete()
-        em = discord.Embed(title = "Error", description = "You do not have permission to do that.", color = discord.Color.red())
+        em = discord.Embed(title = "Error", description = "You do not have permission to do that", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em, delete_after=10.0)
-    elif isinstance(error, commands.MissingRequiredArgument):
-        em = discord.Embed(title = "Error", description = "Your command is missing an argument.", color = discord.Color.red())
-        em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
-        await ctx.send(embed = em, delete_after=10.0)
+#     elif isinstance(error, commands.MissingRequiredArgument):
+#         em = discord.Embed(title = "Error", description = "Your command is missing an argument", color = discord.Color.red())
+#         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
+#         await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandNotFound):
         await ctx.message.delete()
-        em = discord.Embed(title = "Error", description = "Command not found.", color = discord.Color.red())
+        em = discord.Embed(title = "Error", description = "Command not found", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em, delete_after=10.0)
     elif isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`.", color = discord.Color.red())
+        em = discord.Embed(title=f"Slow down!", description=f"Try again in `{round(error.retry_after*1)}s`", color = discord.Color.red())
         await ctx.send(embed=em, delete_after=10.0)
     elif isinstance(error, commands.MaxConcurrencyReached):
         await ctx.message.delete()
-        em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait.", color = discord.Color.red())
+        em = discord.Embed(title=f"Oops!", description="Someone on this server is using this command, please wait", color = discord.Color.red())
         await ctx.send(embed=em, delete_after=10.0)
     else:
-        em = discord.Embed(title = "An internal error occurred.", color = discord.Color.red())
+        em = discord.Embed(title = "An internal error occurred", color = discord.Color.red())
         em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
         await ctx.send(embed = em)
 
@@ -168,7 +168,7 @@ def start():
         _socket.bind((host,port))
     except Exception as e:
         print(e)
-        print('Bind port failed, probably another bot instance is running.')
+        print('Bind port failed, probably another bot instance is running\nTry killing all Python processes')
         quit()
     bot.run(config.bot_token)
 
