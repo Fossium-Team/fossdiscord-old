@@ -5,4 +5,4 @@ wget==3.2
 psutil==5.8.0
 DateTime==4.3
 Wikipedia-API==0.5.4
-better_profanity==0.7.0
+ProfanityDetector==0.2
