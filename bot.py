@@ -103,6 +103,7 @@ class main():
                         currentdate = datetime.strftime(datetimenow, date_format)
                         em.set_footer(text = f"{currentdate}")
                         await channel.send(embed=em)
+                        return
                     else:
                         return
                 else:

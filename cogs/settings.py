@@ -288,7 +288,6 @@ class Settings(commands.Cog):
             em = discord.Embed(title = 'The argument `option` is missing', color = discord.Color.orange())
             await ctx.send(embed = em)
             return
-        option = " ".join(option[:])
         with open(f"settings/enablement-{ctx.guild.id}.json") as file:
             data = json.load(file)
         #data = data["settings"]
@@ -299,7 +298,7 @@ class Settings(commands.Cog):
             data["settings"]["filter"] = 0 
             em = discord.Embed(title = 'The profanity filter is now turned off', color = discord.Color.green())
         else:
-           em = discord.Embed(title = "Please pass a valid argument", color = discord.Color.red())
+           em = discord.Embed(title  = "Please pass a valid argument", color = discord.Color.red())
            await ctx.send(embed=em)
            return
         with open(f"settings/enablement-{ctx.guild.id}.json", 'w') as file:
