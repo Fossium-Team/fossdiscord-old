@@ -80,7 +80,7 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has purged all messages of {user} in the last {amount} messages", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
+            #em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
