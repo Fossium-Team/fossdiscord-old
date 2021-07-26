@@ -97,7 +97,7 @@ class Help(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat")
+                    secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("⚙️", user)
 
@@ -249,6 +249,11 @@ class Help(commands.Cog):
     @help.command(name="botstatus")
     async def _botstatus(self, ctx):
         em = discord.Embed(title = "Settings: Botstatus", description = config.prefix + "botstatus <status> \n\nSets the status of the bot. Owner only. '" + config.prefix + "botstatus' to reset", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="settings")
+    async def _settings(self, ctx):
+        em = discord.Embed(title = "Settings: Settings", description = config.prefix + "settings \n\nChange the settings.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="blacklist")

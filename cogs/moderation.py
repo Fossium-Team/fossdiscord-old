@@ -103,19 +103,18 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        #args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
         if reason is None:
             await user.kick(reason="None")
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
-            em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason", value = "none")
+            em.set_author(name = user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = "no reason provided")
             await ctx.send(embed = em)
         else:
             await user.kick(reason=reason)
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
-            em.set_author(name = user, icon_url=user.avatar.url)
+            em.set_author(name = user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = reason)
             await ctx.send(embed = em)
 
@@ -128,7 +127,10 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been kicked", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = reason)
+            if not reason:
+                em.add_field(name = "Reason", value = "no reason provided")
+            else:
+                em.add_field(name = "Reason", value = reason)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
                     dateformatjson = json.load(file)
@@ -144,26 +146,25 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, user: discord.Member = None, *reason):
+    async def ban(self, ctx, user: discord.Member = None, *, reason = None):
         """Ban a member."""
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot ban yourself", color = discord.Color.red())
         if not reason:
-            await user.ban(reason=args)
+            await user.ban(reason=reason)
             em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
-            em.set_author(name = user, icon_url=user.avatar.url)
+            em.set_author(name = user, icon_url=user.avatar_url)
             em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
         else:
-            await user.ban(reason=args)
+            await user.ban(reason=reason)
             em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
-            em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason", value = "none")
+            em.set_author(name = user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = "no reason provided")
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -175,7 +176,10 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been banned", color = discord.Color.red())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
+            if not reason:
+                em.add_field(name = "Reason", value = "no reason provided")
+            else:
+                em.add_field(name = "Reason", value = reason)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
                     dateformatjson = json.load(file)
@@ -256,7 +260,7 @@ class Moderation(commands.Cog):
     async def unmute(self, ctx, user: discord.Member = None):
         """Unmute a member."""
         if user is None:
-            em = discord.Embed(title = 'The argument `user` is red', color = discord.Color.orange())
+            em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
         role = discord.utils.get(user.guild.roles, name="Muted")
@@ -293,27 +297,26 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def softban(self, ctx, user: discord.Member = None, *reason):
+    async def softban(self, ctx, user: discord.Member = None, *, reason = None):
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot softban yourself", color = discord.Color.red())
         if not reason:
             await ctx.guild.ban(user)
             await ctx.guild.unban(user)
             em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
-            em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason", value = "none")
+            em.set_author(name = user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = "no reason provided")
             await ctx.send(embed = em)
         else:
             await ctx.guild.ban(user)
             await ctx.guild.unban(user)
             em = discord.Embed(title = f"**{user}** has been banned", color = discord.Color.red())
-            em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason", value = "none")
+            em.set_author(name = user, icon_url=user.avatar_url)
+            em.add_field(name = "Reason", value = reason)
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -325,7 +328,10 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been softbanned", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
+            if not reason:
+                em.add_field(name = "Reason", value = "no reason provided")
+            else:
+                em.add_field(name = "Reason", value = reason)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
                     dateformatjson = json.load(file)
@@ -359,7 +365,6 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been unbanned", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
                     dateformatjson = json.load(file)
