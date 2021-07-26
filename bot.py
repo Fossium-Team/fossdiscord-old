@@ -11,7 +11,7 @@ import json
 import re
 import time
 from datetime import datetime
-from ProfanityDetector import detector
+from noswear import noswear
 
 intents = discord.Intents.default()
 intents.members = True
@@ -77,10 +77,9 @@ class main():
                 command_enable = 1
             if filter_enable == 1:
                 #Check for profanity.
-                word, detected = detector(message.content)
-                if detected:
+                if noswear(message.content).getresult == True:
                     await message.delete()
-                    em = discord.Embed(title = "Please don't use swear words", color = discord.Color.orange())
+                    em = discord.Embed(title = "Please don't swear", color = discord.Color.orange())
                     await message.channel.send(embed=em, delete_after=10.0)
                     if not os.path.exists('settings'):
                         os.makedirs('settings')
