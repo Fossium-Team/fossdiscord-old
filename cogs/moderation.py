@@ -97,26 +97,26 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, user: discord.Member = None, *reason):
+    async def kick(self, ctx, user: discord.Member = None, *, reason = None):
         """Kick a member."""
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        args = " ".join(reason[:])
+        #args = " ".join(reason[:])
         if user == ctx.author:
             em = discord.Embed(title = "You cannot kick yourself", color = discord.Color.red())
-        if not reason:
-            await user.kick(reason=args)
+        if reason is None:
+            await user.kick(reason="None")
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
             em.add_field(name = "Reason", value = "none")
             await ctx.send(embed = em)
         else:
-            await user.kick(reason=args)
+            await user.kick(reason=reason)
             em = discord.Embed(title = f"**{user}** has been kicked.", color = discord.Color.orange())
             em.set_author(name = user, icon_url=user.avatar.url)
-            em.add_field(name = "Reason", value = args)
+            em.add_field(name = "Reason", value = reason)
             await ctx.send(embed = em)
 
         if not os.path.exists('settings'):
@@ -128,7 +128,7 @@ class Moderation(commands.Cog):
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{user} has been kicked", color = discord.Color.orange())
             em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
+            em.add_field(name = "Reason", value = reason)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
                     dateformatjson = json.load(file)
