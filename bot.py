@@ -61,7 +61,7 @@ class main():
     async def on_message(message):
         if not os.path.exists('settings'):
             os.makedirs('settings')
-        if message.channel.type is discord.ChannelType.private:
+        if message.channel.type is discord.ChannelType.private or message.author == bot.user:
             pass
         else:
             try:
