@@ -17,9 +17,15 @@ intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(command_prefix=config.prefix, intents=intents)
 
-class main():
+class FOSSDiscord():
     
     def __init__(self):
+        try:
+            _socket.bind((host,port))
+        except Exception as e:
+            print(e)
+            print('Bind port failed, probably another bot instance is running\nTry killing all Python processes')
+            return
         bot.remove_command('help')
         bot.load_extension("cogs.general")
         bot.load_extension("cogs.utils")
@@ -34,12 +40,6 @@ class main():
         host = "127.0.0.1"
         port = 18265
         _socket = socket.socket()
-        try:
-            _socket.bind((host,port))
-        except Exception as e:
-            print(e)
-            print('Bind port failed, probably another bot instance is running\nTry killing all Python processes')
-            return
         bot.run(config.bot_token)
 
     @bot.event
@@ -171,4 +171,4 @@ class main():
             await ctx.send(embed = em)
 
 if __name__ == "__main__":
-    main()
+    FOSSDiscord()
