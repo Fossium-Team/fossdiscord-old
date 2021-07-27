@@ -14,7 +14,7 @@ from datetime import datetime
 
 def timeconvertion(time):# Time convertion
     convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
-    letters_inside = ''.join(filter(str.isalpha, time))
+    letters_inside = ''.join(filter(str.isalpha, time.lower()))
     lettercount = len(letters_inside)
     to_convert = ''.join(filter(str.isdigit, time))
     if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
@@ -207,14 +207,18 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if get(ctx.guild.roles, name="Muted"):
+        if discord.utils.get(ctx.guild.roles,name="Muted"):
             pass
         else:
             #permission = discord.Permissions(send_messages=False, read_messages=False)
             #await ctx.guild.create_role(name="Muted", colour=discord.Colour(000000), permissions = permission)
-            guildowner = ctx.bot.get_user(int(ctx.guild.owner_id))
-            em = discord.Embed(title = "A role named `Muted` does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
-            await guildowner.send(embed = em)
+            try:
+                guildowner = ctx.bot.get_user(int(ctx.guild.owner_id))
+                em = discord.Embed(title = "A role named `Muted` does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
+                await guildowner.send(embed = em)
+            except:
+                em = discord.Embed(title = "A role named `Muted` does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
+                await ctx.send(embed = em)
             return
         if timeconvertion(mutetime) is not False:
             role = discord.utils.get(user.guild.roles, name="Muted")
