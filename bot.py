@@ -13,13 +13,21 @@ import time
 from datetime import datetime
 from noswear import noswear
 
-intents = discord.Intents.default()
-intents.members = True
-bot = commands.Bot(command_prefix=config.prefix, intents=intents)
+#intents = discord.Intents.default()
+#intents.members = True
+#bot = commands.Bot(command_prefix=config.prefix, intents=intents)
 
 class FOSSDiscord():
+    global intents
+    global bot
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix=config.prefix, intents=intents)
     
     def __init__(self):
+        host = "127.0.0.1"
+        port = 18265
+        _socket = socket.socket()
         try:
             _socket.bind((host,port))
         except Exception as e:
@@ -37,9 +45,6 @@ class FOSSDiscord():
         bot.load_extension("cogs.admin")
         bot.load_extension("cogs.vtscan")
         bot.load_extension("cogs.fun")
-        host = "127.0.0.1"
-        port = 18265
-        _socket = socket.socket()
         bot.run(config.bot_token)
 
     @bot.event
@@ -55,7 +60,10 @@ class FOSSDiscord():
         await bot.change_presence(activity=discord.Game(name=f'v{globalconfig.currentversion} | {config.prefix}help'))
         botowner = bot.get_user(int(config.ownerID))
         em = discord.Embed(title = "The bot is back online", color = discord.Color.green())
-        await botowner.send(embed = em)
+        try:
+            await botowner.send(embed = em)
+        except Exception:
+            print("The bot is back online")
 
     @bot.event
     async def on_message(message):
