@@ -70,7 +70,6 @@ class Admin(commands.Cog):
             first_embed = discord.Embed(title = "Shutting down bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
             new_embed = discord.Embed(title = "The bot is shut down!", description = "Check your console, as it may still be running. If it is, press `ctrl + c` on your keyboard to end the process", color = discord.Color.green())
-            #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
         else:
