@@ -66,7 +66,9 @@ class Settings(commands.Cog):
                     json.dump(writeblacklist, file, indent=4)
                 em = discord.Embed(title = 'Blacklisted that user', color = discord.Color.green())
                 await ctx.send(embed=em)
-
+        elif userid != config.ownerID:
+            em = discord.Embed(title = "Don't try to blacklist yourself.", color = discord.Color.red())
+            await ctx.send(embed = em)
         else:
             em = discord.Embed(title = "This command is for the bot owner only!", color = discord.Color.red())
             await ctx.send(embed = em)
