@@ -63,7 +63,7 @@ class Admin(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    @commands.command()
+    @commands.command(aliases=['shutdown'])
     async def shutdownbot(self, ctx):
         """Shuts down the bot"""
         if str(ctx.message.author.id) == config.ownerID:
@@ -76,7 +76,7 @@ class Admin(commands.Cog):
             em = discord.Embed(title = "This command is for the bot owner only", color = discord.Color.red())
             await ctx.send(embed = em)
 
-    @commands.command()
+    @commands.command(aliases=['restart'])
     async def restartbot(self, ctx):
         if str(ctx.message.author.id) == config.ownerID:
             first_embed = discord.Embed(title = "Restarting bot...", color = discord.Color.orange())
