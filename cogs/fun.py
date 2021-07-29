@@ -91,5 +91,6 @@ class Fun(commands.Cog):
         else:
             secondem = discord.Embed(title = "That page doesn't exist", color = discord.Color.red())
             await embedmsg.edit(embed=secondem)
+
 def setup(bot):
     bot.add_cog(Fun(bot))
