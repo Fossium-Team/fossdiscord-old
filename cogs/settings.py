@@ -89,7 +89,7 @@ class Settings(commands.Cog):
                     blacklistitem = blacklistjson["data"]
                 except NameError:
                     await ctx.send(embed=em)
-                    return 
+                    return
                 if blacklistitem == {}:
                     await ctx.send(embed=em)
                     return
