@@ -9,13 +9,9 @@ import socket
 import os
 import json
 import re
-import time
+#import time
 from datetime import datetime
 from noswear import noswear
-
-#intents = discord.Intents.default()
-#intents.members = True
-#bot = commands.Bot(command_prefix=config.prefix, intents=intents)
 
 class FOSSDiscord():
     global intents
