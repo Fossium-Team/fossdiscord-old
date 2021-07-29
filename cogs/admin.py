@@ -82,7 +82,6 @@ class Admin(commands.Cog):
             first_embed = discord.Embed(title = "Restarting bot...", color = discord.Color.orange())
             msg = await ctx.send(embed=first_embed)
             new_embed = discord.Embed(title = "The bot has restarted!", color = discord.Color.green())
-            #close_port()
             await msg.edit(embed=new_embed)
             await ctx.bot.close()
             subprocess.Popen([sys.executable, "bot.py"]) 
