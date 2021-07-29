@@ -26,10 +26,11 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @blacklist.command(name="add")
-    async def _add(self, ctx, userid: str):
+    async def _add(self, ctx, user: discord.Member):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
+            userid = str(user.id)
             if userid == config.ownerID:
                 em = discord.Embed(title = "Don't try to blacklist yourself.", color = discord.Color.red())
                 await ctx.send(embed = em)
