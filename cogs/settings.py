@@ -33,6 +33,7 @@ class Settings(commands.Cog):
             if userid == config.ownerID:
                 em = discord.Embed(title = "Don't try to blacklist yourself.", color = discord.Color.red())
                 await ctx.send(embed = em)
+                return
             try:
                 if os.stat("settings/blacklist.json").st_size > 0:
                     lst = []
