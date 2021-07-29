@@ -4,11 +4,11 @@
 import discord
 from discord.ext import commands
 import os
-import sys
+#import sys
 import asyncio
 import config
 import json
-import re
+#import re
 
 class Settings(commands.Cog):
     def __init__(self, bot):
