@@ -3,7 +3,7 @@
 
 import discord
 from discord.ext import commands
-import time
+#import time
 import os
 import random
 import asyncio
@@ -12,19 +12,19 @@ import string
 import json
 from datetime import datetime
 
-def timeconvertion(time):# Time convertion
-    convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
-    letters_inside = ''.join(filter(str.isalpha, time.lower()))
-    lettercount = len(letters_inside)
-    to_convert = ''.join(filter(str.isdigit, time))
-    if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
-            timeconverted = int(to_convert) * convertion[time[-1]]
-            return int(timeconverted)
-    return False
-
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    def timeconvertion(self, time):# Time convertion
+        convertion = {"s": 1, "m": 60, "h": 3600, "d": 86400}
+        letters_inside = ''.join(filter(str.isalpha, time.lower()))
+        lettercount = len(letters_inside)
+        to_convert = ''.join(filter(str.isdigit, time))
+        if time[-1].isalpha() is True and time[0].isdigit() and lettercount == 1 and letters_inside in convertion and time.isalnum() == True:
+            timeconverted = int(to_convert) * convertion[time[-1]]
+            return int(timeconverted)
+        return False
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
@@ -45,8 +45,8 @@ class Moderation(commands.Cog):
             loggingchannel = loggingjson["data"]["logging"]["channel"]
             channel = self.bot.get_channel(int(loggingchannel))
             em = discord.Embed(title = f"{ctx.author} has purged {amount} messages in {ctx.message.channel}", color = discord.Color.orange())
-            em.set_author(name=user, icon_url=user.avatar_url)
-            em.add_field(name = "Reason", value = args)
+            em.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+            #em.add_field(name = "Reason", value = args)
             em.add_field(name = "Channel", value = ctx.message.channel)
             if os.path.isfile(f"settings/dateformat-{ctx.guild.id}.json"):
                 with open(f"settings/dateformat-{ctx.guild.id}.json") as file:
@@ -220,7 +220,8 @@ class Moderation(commands.Cog):
                 em = discord.Embed(title = "A role named `Muted` does not exist in your server, please create it first. And also make sure to create overrides for the channels you don't want a muted user speaking in.", color = discord.Color.red())
                 await ctx.send(embed = em)
             return
-        if timeconvertion(mutetime) is not False:
+        converted = self.timeconvertion(mutetime)
+        if converted is not False:
             role = discord.utils.get(user.guild.roles, name="Muted")
             if role in user.roles:
                 em = discord.Embed(title = f"`{user.display_name}` is already muted", color = discord.Color.red())
@@ -230,9 +231,9 @@ class Moderation(commands.Cog):
                 await user.add_roles(role)
             em = discord.Embed(title = f"`{user.display_name}` has been muted for " + "`{}`".format(str(mutetime)), color = discord.Color.orange())
             await ctx.send(embed = em)
-            await asyncio.sleep(timeconvertion(mutetime))
+            await asyncio.sleep(converted)
             await user.remove_roles(role)
-        elif timeconvertion(mutetime) is False:
+        elif converted is False:
             em = discord.Embed(title = "The time format doesn't seem right", color = discord.Color.red())
             await ctx.send(embed = em)
 
