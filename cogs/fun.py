@@ -12,6 +12,7 @@ import wikipediaapi
 import requests
 import re
 
+
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

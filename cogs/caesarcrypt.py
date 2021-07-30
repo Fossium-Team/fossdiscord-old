@@ -7,6 +7,7 @@ import config
 
 rounds_error = "No rounds given, syntax: command + rounds + message."
 
+
 class Caesarcrypt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

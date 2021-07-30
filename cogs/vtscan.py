@@ -13,6 +13,7 @@ import config
 apikey = config.virustotal_api
 iconurl = "https://raw.githubusercontent.com/FOSS-Devs/fossdiscord/main/src/vt_logo.png"
 
+
 class VT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
