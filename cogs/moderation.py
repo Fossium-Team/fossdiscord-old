@@ -208,7 +208,7 @@ class Moderation(commands.Cog):
             em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if discord.utils.get(ctx.guild.roles,name="Muted"):
+        if discord.utils.get(ctx.guild.roles, name="Muted"):
             pass
         else:
             #permission = discord.Permissions(send_messages=False, read_messages=False)
