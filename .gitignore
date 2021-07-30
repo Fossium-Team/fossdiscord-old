@@ -147,3 +147,6 @@ settings/
 
 # VSCode Settings
 .vscode/
+
+# pycharm Settings
+.idea/
