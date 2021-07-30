@@ -356,7 +356,7 @@ class Help(commands.Cog):
 
     @help.command(name="restartbot")
     async def _restartbot(self, ctx):
-        em = discord.Embed(title = "Owner: RestartBot", description = config.prefix + "restartbot or restart \n\nRestarts the bot. Owner only.\nAliases: restart", color = discord.Color.blue())
+        em = discord.Embed(title = "Owner: RestartBot", description = config.prefix + "restartbot \n\nRestarts the bot. Owner only.\nAliases: restart", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="shutdownbot")
