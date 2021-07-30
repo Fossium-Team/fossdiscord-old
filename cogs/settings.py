@@ -26,11 +26,15 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @blacklist.command(name="add")
-    async def _add(self, ctx, user: discord.Member):
+    async def _add(self, ctx, user: discord.Member = None):
         if str(ctx.message.author.id) == config.ownerID:
             if not os.path.exists('settings'):
                 os.makedirs('settings')
             userid = str(user.id)
+            if user is None:
+                em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
             if userid == config.ownerID:
                 em = discord.Embed(title = "Don't try to blacklist yourself.", color = discord.Color.red())
                 await ctx.send(embed = em)
@@ -76,8 +80,12 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @blacklist.command(name="remove")
-    async def _remove(self, ctx, userid: str):
+    async def _remove(self, ctx, userid: str = None):
         if str(ctx.message.author.id) == config.ownerID:
+            if userid is None:
+                em = discord.Embed(title = 'The argument `userid` is missing', color = discord.Color.red())
+                await ctx.send(embed = em)
+                return
             em = discord.Embed(title = 'Nobody is blacklisted yet', color = discord.Color.red())
             if not os.path.exists('settings'):
                 os.makedirs('settings')
@@ -130,10 +138,13 @@ class Settings(commands.Cog):
 
     @settings.command(name="logging")
     @commands.has_permissions(administrator=True)
-    async def _logging(self, ctx, *channel):
-        channel = " ".join(channel[:])
+    async def _logging(self, ctx, channel = None):
         if not os.path.exists('settings'):
             os.makedirs('settings')
+        if channel is None:
+            em = discord.Embed(title = 'The argument `channel` is missing', color = discord.Color.red())
+            await ctx.send(embed = em)
+            return
         if channel.lower() == "off":
             try:
                 os.remove(f"settings/logging-{ctx.guild.id}.json")
