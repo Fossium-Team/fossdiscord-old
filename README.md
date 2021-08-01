@@ -1,5 +1,5 @@
 # FOSSDiscord
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/FOSS-Devs/fossdiscord?style=for-the-badge)\
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/FOSS-Devs/fossdiscord?style=for-the-badge)![GitHub issues](https://img.shields.io/github/issues/FOSS-Devs/fossdiscord?style=for-the-badge)\
 FOSSDiscord is a general purpose Discord bot maintained by [SKBotNL](https://github.com/SKBotNL) and [Odysseus](https://github.com/Odysseus443). If you find an issue, or have a feature suggestion, please let us know by opening an issue [here](https://github.com/FOSS-Devs/FOSSDiscord/issues).\
 The bot is forked from FreeDiscord. FreeDiscord, now named reoccurcord, is still maintained by the owner and you can find it [here](https://github.com/reoccurcat/reoccurcord).
 
