@@ -6,3 +6,4 @@ psutil==5.8.0
 DateTime==4.3
 Wikipedia-API==0.5.4
 #ProfanityDetector==0.2
+discord-py-slash-command==2.4.0
