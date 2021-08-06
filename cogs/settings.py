@@ -127,7 +127,7 @@ class Settings(commands.Cog):
             await ctx.send(embed = em)
 
     @commands.group(invoke_without_command=True)
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def settings(self, ctx):
         em = discord.Embed(title = 'Arguments:', color = discord.Color.blue())
         em.add_field(name = f"{config.prefix}settings logging <channelID or off>", value="Set a logging channel.")
@@ -137,7 +137,7 @@ class Settings(commands.Cog):
         await ctx.send(embed=em)
 
     @settings.command(name="logging")
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def _logging(self, ctx, channel = None):
         if not os.path.exists('settings'):
             os.makedirs('settings')
@@ -183,7 +183,7 @@ class Settings(commands.Cog):
                     await ctx.send(embed=em)
 
     @settings.command(name="dateformat")
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def _dateformat(self, ctx):
         em = discord.Embed(title = "Choose the date format you want", color = discord.Color.blue())
         em.add_field(name = "Date formats:", value = "1️⃣ - day/month/year hour:minutes AM/PM\n2️⃣ - month/day/year hour:minutes AM/PM\n3️⃣ - day/month/year hour:minutes (24 hour clock)\n4️⃣ - month/day/year hour:minutes (24 hour clock)")
@@ -297,7 +297,7 @@ class Settings(commands.Cog):
                     return
 
     @settings.command(name="filter")
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def _filter(self, ctx, option = None):
         if option is None:
             em = discord.Embed(title = 'The argument `option` is missing', color = discord.Color.orange())
@@ -321,7 +321,7 @@ class Settings(commands.Cog):
         await ctx.send(embed=em)
 
     @settings.command(name="bot")
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def _bot (self, ctx, option = None):
         if option is None:
             em = discord.Embed(title = 'The argument `option` is missing', color = discord.Color.orange())
