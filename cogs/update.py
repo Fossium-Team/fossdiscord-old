@@ -16,6 +16,7 @@ from zipfile import ZipFile
 import requests
 from datetime import datetime
 
+
 # Cross-platform updater
 class Update(commands.Cog):
     def __init__(self, bot):

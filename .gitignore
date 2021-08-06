@@ -147,3 +147,7 @@ settings/
 
 # VSCode Settings
 .vscode/
+
+# pycharm Settings
+.idea/
+venv/

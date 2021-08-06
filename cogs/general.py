@@ -13,6 +13,7 @@ import requests
 import globalconfig
 start_time = time.time()
 
+
 class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -21,7 +22,7 @@ class General(commands.Cog):
     @commands.command(description='Shows information about bot instance.')
     async def about(self, ctx):
         em = discord.Embed(title = "About this instance", color = discord.Color.green())
-        em.add_field(name = "Project URL", value = "https://github.com/FOSS-Devs/fossdiscord/")
+        em.add_field(name = "GitHub Repository", value = "https://github.com/FOSS-Devs/fossdiscord/")
         em.add_field(name = "Support server", value = "https://discord.gg/myzbqnVUFN")
         servers = list(self.bot.guilds)
         serverNumber = len(servers)
