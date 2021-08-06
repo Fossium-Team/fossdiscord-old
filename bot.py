@@ -92,9 +92,9 @@ class FOSSDiscord:
                         os.makedirs('settings')
                     if os.path.isfile(f"settings/logging-{message.guild.id}.json"):
                         with open(f"settings/logging-{message.guild.id}.json") as file:
-                            logingjson = json.load(file)
-                        logingchannel = logingjson["data"]["logging"]["channel"]
-                        channel = bot.get_channel(int(logingchannel))
+                            loggingjson = json.load(file)
+                        loggingchannel = loggingjson["data"]["logging"]["channel"]
+                        channel = bot.get_channel(int(loggingchannel))
                         em = discord.Embed(title = f"{message.author} used swear word(s)", color = discord.Color.red())
                         em.set_author(name=message.author, icon_url=message.author.avatar_url)
                         em.add_field(name = "Message", value = message.content)
