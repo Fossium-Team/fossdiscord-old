@@ -11,7 +11,8 @@ import json
 import re
 #import time
 from datetime import datetime
-from noswear import noswear
+#from noswear import noswear
+from ProfanityDetector import detector
 
 class FOSSDiscord():
     global intents
@@ -81,7 +82,8 @@ class FOSSDiscord():
                 command_enable = 1
             if filter_enable == 1:
                 #Check for profanity.
-                if noswear(message.content).getresult == True:
+                word, detected = detector(message.content)
+                if detected:
                     await message.delete()
                     em = discord.Embed(title = "Please don't swear", color = discord.Color.orange())
                     await message.channel.send(embed=em, delete_after=10.0)
