@@ -197,17 +197,17 @@ class Moderation(commands.Cog):
 
     @commands.command() # Takes 1s 1m 1h 1d
     @commands.has_permissions(manage_messages=True)
-    async def mute(self, ctx, user: discord.Member = None, mutetime = None):
+    async def mute(self, ctx, user: discord.Member = None, mutetime = "15m"):
         #BTW need to import time&asyncio module to work.
         """Mute a member."""
         if user is None:
             em = discord.Embed(title = 'The argument `user` is missing', color = discord.Color.red())
             await ctx.send(embed = em)
             return
-        if mutetime is None:
-            em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.red())
-            await ctx.send(embed = em)
-            return
+        #if mutetime is None:
+        #    em = discord.Embed(title = 'The argument `mutetime` is missing', color = discord.Color.red())
+        #    await ctx.send(embed = em)
+        #    return
         if discord.utils.get(ctx.guild.roles, name="Muted"):
             pass
         else:
