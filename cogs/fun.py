@@ -4,9 +4,9 @@
 import discord
 from discord import embeds
 from discord.ext import commands
-import psutil
-import config
-import bot
+#import psutil
+#import config
+#import bot
 import random
 import wikipediaapi
 import requests

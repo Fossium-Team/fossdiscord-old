@@ -10,8 +10,8 @@ import subprocess
 import config
 import globalconfig
 import wget
-import time
-import re
+#import time
+#import re
 from zipfile import ZipFile
 import requests
 from datetime import datetime

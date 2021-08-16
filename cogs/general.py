@@ -4,11 +4,11 @@
 import discord
 from discord.ext import commands
 import config
-import bot
+#import bot
 import datetime
 import time
-import json
-import os
+#import json
+#import os
 import requests
 import globalconfig
 start_time = time.time()

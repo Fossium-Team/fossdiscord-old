@@ -4,10 +4,10 @@
 import discord
 from discord.ext import commands
 import config
-import globalconfig
-import importlib
+#import globalconfig
+#import importlib
 import subprocess
-import os
+#import os
 import sys
 
 

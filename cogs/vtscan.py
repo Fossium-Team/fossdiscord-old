@@ -3,9 +3,9 @@
 
 import discord
 from discord.ext import commands
-import time
-import json
-import base64
+#import time
+#import json
+#import base64
 import requests
 import asyncio
 import config

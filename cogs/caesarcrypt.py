@@ -3,7 +3,7 @@
 
 import discord, time
 from discord.ext import commands
-import config
+#import config
 
 rounds_error = "No rounds given, syntax: command + rounds + message."
 
