@@ -98,7 +98,10 @@ class Help(commands.Cog):
                 if str(reaction.emoji) == "⚙️":
                     if user.name == self.bot.user.name:
                         continue
-                    secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+                    secondem = discord.This is version 6.1.1 of FOSSDiscord.
+
+Changelog:
+Fixed the old bugs.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
                     #secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
                     secondem.add_field(name = "Settings", value = "bot\nfilter\nlogging\ndateformat")
                     await embedmsg.edit(embed=secondem)
@@ -275,18 +278,18 @@ class Help(commands.Cog):
 
     @help.command(name="bot")
     async def _bot(self, ctx):
-        em = discord.Embed(title = "Settings: bot", description = config.prefix + "settings bot on/off\n\nTo disable or enable the bot.", color = discord.Color.blue())
+        em = discord.Embed(title = "Settings: Bot", description = config.prefix + "settings bot on/off\n\nDisable or enable the bot.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
 
     @help.command(name="filter")
     async def _filter(self, ctx):
-        em = discord.Embed(title = "Settings: filter", description = config.prefix + "settings filter on/off\n\nToggle the profanity filter.", color = discord.Color.blue())
+        em = discord.Embed(title = "Settings: Filter", description = config.prefix + "settings filter on/off\n\nToggle the profanity filter.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="logging")
     async def _logging(self, ctx):
-        em = discord.Embed(title = "Settings: logging", description = config.prefix + "settings logging <channel ID>\n\nTo set the logging channel.", color = discord.Color.blue())
+        em = discord.Embed(title = "Settings: Logging", description = config.prefix + "settings logging <channel ID>\n\nSet the logging channel to log events to.", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="dateformat")
