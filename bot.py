@@ -82,8 +82,11 @@ class FOSSDiscord:
                 filter_enable = 1
                 command_enable = 1
             if filter_enable == 1:
+                ##Test
                 #Check for profanity.
                 word, detected = detector(message.content)
+                #detected = noswear(message.content).getresult
+                ##End                
                 if detected:
                     await message.delete()
                     em = discord.Embed(title = "Please don't swear", color = discord.Color.orange())

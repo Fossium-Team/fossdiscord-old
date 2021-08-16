@@ -99,7 +99,8 @@ class Help(commands.Cog):
                     if user.name == self.bot.user.name:
                         continue
                     secondem = discord.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
+                    #secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
+                    secondem.add_field(name = "Settings", value = "bot\nfilter\nlogging\ndateformat")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("⚙️", user)
 
@@ -248,10 +249,10 @@ class Help(commands.Cog):
         await ctx.send(embed = em)
 
     # Settings commands
-    @help.command(name="botstatus")
-    async def _botstatus(self, ctx):
-        em = discord.Embed(title = "Settings: Botstatus", description = config.prefix + "botstatus <status> \n\nSets the status of the bot. Owner only. '" + config.prefix + "botstatus' to reset", color = discord.Color.blue())
-        await ctx.send(embed = em)
+    #@help.command(name="botstatus")
+    #async def _botstatus(self, ctx):
+    #    em = discord.Embed(title = "Settings: Botstatus", description = config.prefix + "botstatus <status> \n\nSets the status of the bot. Owner only. '" + config.prefix + "botstatus' to reset", color = discord.Color.blue())
+    #    await ctx.send(embed = em)
 
     @help.command(name="settings")
     async def _settings(self, ctx):
@@ -265,10 +266,34 @@ class Help(commands.Cog):
         em.add_field(name = f"{config.prefix}blacklist remove <userid>", value="Remove a user from the blacklist. Owner only.")
         await ctx.send(embed = em)
 
-    @help.command(name="botstatusrepeat")
-    async def _botstatusrepeat(self, ctx):
-        em = discord.Embed(title = "Settings: BotStatusRepeat", description = config.prefix + "botstatusrepeat \n\nRepeatedly sets the status of the bot. Owner only.", color = discord.Color.blue())
+    #@help.command(name="botstatusrepeat")
+    #async def _botstatusrepeat(self, ctx):
+    #    em = discord.Embed(title = "Settings: BotStatusRepeat", description = config.prefix + "botstatusrepeat \n\nRepeatedly sets the status of the bot. Owner only.", color = discord.Color.blue())
+    #    await ctx.send(embed = em)
+
+    #bot, filter, blacklist, logging, dateformat
+
+    @help.command(name="bot")
+    async def _bot(self, ctx):
+        em = discord.Embed(title = "Settings: bot", description = config.prefix + "settings bot on/off\n\nTo disable or enable the bot.", color = discord.Color.blue())
         await ctx.send(embed = em)
+
+
+    @help.command(name="filter")
+    async def _filter(self, ctx):
+        em = discord.Embed(title = "Settings: filter", description = config.prefix + "settings filter on/off\n\nToggle the profanity filter.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="logging")
+    async def _logging(self, ctx):
+        em = discord.Embed(title = "Settings: logging", description = config.prefix + "settings logging <channel ID>\n\nTo set the logging channel.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
+    @help.command(name="dateformat")
+    async def _dateformat(self, ctx):
+        em = discord.Embed(title = "Settings: dateformat", description = config.prefix + "To select the date format of the bot.", color = discord.Color.blue())
+        await ctx.send(embed = em)
+
 
     # Utils commands
     @help.command(name="avatar")
