@@ -16,7 +16,7 @@ from ProfanityDetector import detector
 
 
 class FOSSDiscord:
-    global intents
+    #global intents
     global bot
     intents = discord.Intents.default()
     intents.members = True
@@ -47,7 +47,7 @@ class FOSSDiscord:
 
     @bot.event
     async def on_ready():
-        # What gets printed in the terminal when the bot is succesfully logged in
+        # What gets printed in the terminal when the bot is successfully logged in
         print('\n')
         print('Logged in as')
         print(bot.user.name)
