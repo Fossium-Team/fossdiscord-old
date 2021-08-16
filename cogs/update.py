@@ -76,7 +76,7 @@ class Update(commands.Cog):
                     latestversion = latestversionget[1:]
                     changelog = latestversionresponse["body"]
 
-                    downloadurl = f"https://codeload.github.com/FOSS-Devs/fossdiscord/zip/v{latestversion}"
+                    downloadurl = f"https://github.com/FOSS-Devs/fossdiscord/archive/refs/tags/{latestversion}.zip"
                     currentdir = os.getcwd()
 
                     os.mkdir(f'{currentdir}/updatertemp')
