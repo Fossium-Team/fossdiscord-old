@@ -98,11 +98,11 @@ class Help(commands.Cog):
                 if str(reaction.emoji) == "⚙️":
                     if user.name == self.bot.user.name:
                         continue
-                    secondem = discord.This is version 6.1.1 of FOSSDiscord.
-
-Changelog:
-Fixed the old bugs.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
-                    #secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
+                    secondem = discord.Embed(title="Help", description="Use `" + config.prefix + "help <command>` for extended information on a command.", color=discord.Color.blue())
+#
+#                   Changelog:
+#                   Fixed the old bugs.Embed(title = "Help", description = "Use `" + config.prefix + "help <command>` for extended information on a command.", color = discord.Color.blue())
+#                   secondem.add_field(name = "Settings", value = "botstatus\nbotstatusrepeat\nsettings")
                     secondem.add_field(name = "Settings", value = "bot\nfilter\nlogging\ndateformat")
                     await embedmsg.edit(embed=secondem)
                     await embedmsg.remove_reaction("⚙️", user)
