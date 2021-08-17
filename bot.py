@@ -27,7 +27,7 @@ class FOSSDiscord:
         port = 18265
         _socket = socket.socket()
         try:
-            _socket.bind((host,port))
+            _socket.bind((host, port))
         except Exception as e:
             print(e)
             print('Bind port failed, probably another bot instance is running\nTry killing all Python processes')
@@ -45,6 +45,7 @@ class FOSSDiscord:
         bot.load_extension("cogs.fun")
         bot.run(config.bot_token)
 
+    @staticmethod
     @bot.event
     async def on_ready():
         # What gets printed in the terminal when the bot is successfully logged in
@@ -63,6 +64,7 @@ class FOSSDiscord:
         except Exception:
             print("The bot is back online")
 
+    @staticmethod
     @bot.event
     async def on_message(message):
         if not os.path.exists('settings'):
@@ -152,6 +154,7 @@ class FOSSDiscord:
                     pass
 
     # error handling
+    @staticmethod
     @bot.event
     async def on_command_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
