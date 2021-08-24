@@ -259,7 +259,7 @@ class Help(commands.Cog):
 
     @help.command(name="settings")
     async def _settings(self, ctx):
-        em = discord.Embed(title = "Settings: Settings", description = config.prefix + "settings \n\nChange the settings.", color = discord.Color.blue())
+        em = discord.Embed(title = "Settings: Settings", description = config.prefix + "settings \n\nbot\nfilter\nlogging\ndateformat", color = discord.Color.blue())
         await ctx.send(embed = em)
 
     @help.command(name="blacklist")
