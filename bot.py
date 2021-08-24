@@ -13,6 +13,8 @@ import re
 from datetime import datetime
 #from noswear import noswear
 from ProfanityDetector import detector
+import threading
+from daemon import services
 
 
 class FOSSDiscord:
@@ -24,14 +26,16 @@ class FOSSDiscord:
     
     def __init__(self):
         host = "127.0.0.1"
-        port = 18265
+        botport = 18265
         _socket = socket.socket()
         try:
-            _socket.bind((host, port))
+            _socket.bind((host, botport))
         except Exception as e:
             print(e)
             print('Bind port failed, probably another bot instance is running\nTry killing all Python processes')
             return
+        _services = threading.Thread(target=services, daemon=True)
+        _services.start()
         bot.remove_command('help')
         bot.load_extension("cogs.general")
         bot.load_extension("cogs.utils")
