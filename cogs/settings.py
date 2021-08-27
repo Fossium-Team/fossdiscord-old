@@ -8,6 +8,14 @@ import os
 import asyncio
 import config
 import json
+import asyncio
+import discord
+import json
+import os
+from discord.ext import commands
+import config
+
+
 #import re
 
 
@@ -109,13 +117,13 @@ class Settings(commands.Cog):
                         if blacklistitem[attr]["id"] == userid:
                             key_to_remove = attr
                             break
-                    try:
+                    if 'key_to_remove' in locals():
                         del blacklistitem[key_to_remove]
                         with open("settings/blacklist.json", 'w') as file:
                             json.dump(blacklistjson, file, indent=4)
                         em = discord.Embed(title = 'Removed that user from the blacklist', color = discord.Color.green())
                         await ctx.send(embed=em)
-                    except NameError:
+                    else:
                         em = discord.Embed(title = 'User is not in blacklist', color = discord.Color.red())
                         await ctx.send(embed=em)
                 
