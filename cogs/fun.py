@@ -38,7 +38,7 @@ class Fun(commands.Cog):
                                    color=discord.Color.blue())
                 await ctx.send(embed=em)
 
-#     @commands.cooldown(1, 10, commands.BucketType.user)
+#    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='cat', description='Get a cat picture.')
 #     @commands.command(aliases=['kat', 'cats', 'kitten'])
     async def cat(self, ctx):
@@ -50,7 +50,7 @@ class Fun(commands.Cog):
         em.set_image(url=url)
         await ctx.send(embed=em)
 
-#     @commands.cooldown(1, 10, commands.BucketType.user)
+#    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
 #    @commands.command(aliases=['puppy', 'doggo'])
     async def dog(self, ctx):
@@ -62,7 +62,7 @@ class Fun(commands.Cog):
         em.set_image(url=url)
         await ctx.send(embed=em)
 
-#     @commands.cooldown(1, 10, commands.BucketType.user)
+#    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
 #     @commands.command(aliases=['wiki'])
     #async def wikipedia(self, ctx, *page):
