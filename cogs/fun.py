@@ -10,6 +10,7 @@ from discord_slash import cog_ext
 # import config
 # import bot
 import random
+from discord_slash import SlashContext
 import wikipediaapi
 import requests
 import re
@@ -48,7 +49,7 @@ class Fun(commands.Cog):
         #em = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
         #em.set_image(url=url)
         #await ctx.send(embed=em)
-        msg = await ctx.send(url)
+        await ctx.send(url)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
@@ -61,7 +62,7 @@ class Fun(commands.Cog):
         #em = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
         #em.set_image(url=url)
         #await ctx.send(embed=em)
-        msg = await ctx.send(url)
+        await ctx.send(url)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
