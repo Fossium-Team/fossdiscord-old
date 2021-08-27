@@ -3,7 +3,7 @@
 
 import discord
 from discord.ext import commands
-#from discord_slash import SlashCommand, SlashContext
+from discord_slash import SlashCommand, SlashContext
 import config
 import globalconfig
 import socket
@@ -25,7 +25,7 @@ class FOSSDiscord:
     intents = discord.Intents.default()
     intents.members = True
     bot = commands.Bot(command_prefix=config.prefix, intents=intents, sync_commands=True, sync_on_cog_reload=True)
-    #slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
+    slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
     
     def __init__(self):
         host = "127.0.0.1"
