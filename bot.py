@@ -185,6 +185,9 @@ class FOSSDiscord:
             await ctx.message.delete()
             em = discord.Embed(title=f"Oops!", description="Someone in this guild is already using that command, please wait", color = discord.Color.red())
             await ctx.send(embed=em, delete_after=10.0)
+        elif on_slash_command_error(ctx, ex):
+            em = discord.Embed(title=f"Oops", description=f"{ex}",color=discord.Color.red())
+            await ctx.send(embed=em, delete_after=10.0)
         else:
             em = discord.Embed(title = "An internal error occurred", color = discord.Color.red())
             em.add_field(name = "Detailed Error", value = "`" + str(error) + "`")
