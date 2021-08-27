@@ -46,10 +46,9 @@ class Fun(commands.Cog):
         with open(file, 'r') as f:
             data = json.load(f)
         url = data[random.randint(0, 99)]['url']
-        #em = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
-        #em.set_image(url=url)
-        #await ctx.send(embed=em)
-        await ctx.send(url)
+        em = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
+        em.set_image(url=url)
+        await ctx.send(embed=em)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
@@ -59,10 +58,9 @@ class Fun(commands.Cog):
         with open(file, 'r') as f:
             data = json.load(f)
         url = data[random.randint(0, 99)]['url']
-        #em = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
-        #em.set_image(url=url)
-        #await ctx.send(embed=em)
-        await ctx.send(url)
+        em = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
+        em.set_image(url=url)
+        await ctx.send(embed=em)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
