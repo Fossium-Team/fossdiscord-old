@@ -27,7 +27,7 @@ There are many features of the bot. These features include:
 - VirusTotal file scanning
 - And a lot of more commands, and there are also more commands being added regularly!
 
-[![Join our Discord server!](https://invidget.switchblade.xyz/myzbqnVUFN)](https://discord.gg/myzbqnVUFN)
+[![Join our Discord server!](https://discord.com/api/guilds/848464241219338250/embed.png?style=banner1)](https://discord.gg/myzbqnVUFN)
 
 Like earlier said, if you have any feature requests or issues with the bot, open an issue [here](https://github.com/FOSS-Devs/freediscord/issues)!
 Enjoy the bot! We hope you have as much fun with it as we had programming it! :)
