@@ -1,8 +1,9 @@
-discord.py==1.7.3
-requests==2.26.0
-asyncio==3.4.3
-wget==3.2
-psutil==5.8.0
-DateTime==4.3
-Wikipedia-API==0.5.4
-ProfanityDetector==0.2
+discord.py>=1.7.3
+discord-py-slash-command>=3.0.1
+requests>=2.26.0
+asyncio>=3.4.3
+wget>=3.2
+psutil>=5.8.0
+DateTime>=4.3
+Wikipedia-API>=0.5.4
+ProfanityDetector>=0.2

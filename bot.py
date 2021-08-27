@@ -3,6 +3,7 @@
 
 import discord
 from discord.ext import commands
+from discord_slash import SlashCommand
 import config
 import globalconfig
 import socket
@@ -16,13 +17,15 @@ from ProfanityDetector import detector
 import threading
 from daemon import services
 
-
+# noinspection PyRedeclaration
 class FOSSDiscord:
     #global intents
     global bot
+    global slash
     intents = discord.Intents.default()
     intents.members = True
     bot = commands.Bot(command_prefix=config.prefix, intents=intents)
+    slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
     
     def __init__(self):
         host = "127.0.0.1"

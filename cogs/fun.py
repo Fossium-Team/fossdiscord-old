@@ -5,6 +5,7 @@ import os
 import discord
 #from discord import embeds
 from discord.ext import commands
+from discord_slash import cog_ext
 # import psutil
 # import config
 # import bot
@@ -19,8 +20,9 @@ class Fun(commands.Cog):
         self.bot = bot
         self.datapath = os.path.join(os.path.abspath(os.path.dirname(os.path.abspath(__file__))), '..', 'cache')
 
-    @commands.cooldown(1, 10, commands.BucketType.channel)
-    @commands.command()
+    #@commands.cooldown(1, 10, commands.BucketType.channel)
+    @cog_ext.cog_slash(name='choose', description='Multiple choices.')
+    #@commands.command()
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
         if "@everyone" in choices:
@@ -35,8 +37,9 @@ class Fun(commands.Cog):
                                    color=discord.Color.blue())
                 await ctx.send(embed=em)
 
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    @commands.command(aliases=['kat', 'cats', 'kitten'])
+    #@commands.cooldown(1, 10, commands.BucketType.user)
+    @cog_ext.cog_slash(name='cat', description='Get a cat picture.')
+    #@commands.command(aliases=['kat', 'cats', 'kitten'])
     async def cat(self, ctx):
         #firstem = discord.Embed(title="Getting cat picture...", color=discord.Color.orange())
         #embedmsg = await ctx.send(embed=firstem)
@@ -53,8 +56,9 @@ class Fun(commands.Cog):
         await ctx.send(embed=em)
         #await embedmsg.edit(embed=secondem)
 
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    @commands.command(aliases=['puppy', 'doggo'])
+    #@commands.cooldown(1, 10, commands.BucketType.user)
+    @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
+    #@commands.command(aliases=['puppy', 'doggo'])
     async def dog(self, ctx):
         #firstem = discord.Embed(title="Getting dog picture...", color=discord.Color.orange())
         #embedmsg = await ctx.send(embed=firstem)
@@ -71,8 +75,9 @@ class Fun(commands.Cog):
         #await embedmsg.edit(embed=secondem)
         await ctx.send(embed=em)
 
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    @commands.command(aliases=['wiki'])
+    #@commands.cooldown(1, 10, commands.BucketType.user)
+    @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
+    #@commands.command(aliases=['wiki'])
     async def wikipedia(self, ctx, *page):
         if not page:
             em = discord.Embed(title='The argument `page` is missing', color=discord.Color.red())
