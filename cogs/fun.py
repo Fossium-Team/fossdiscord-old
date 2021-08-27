@@ -41,39 +41,27 @@ class Fun(commands.Cog):
     @cog_ext.cog_slash(name='cat', description='Get a cat picture.')
     #@commands.command(aliases=['kat', 'cats', 'kitten'])
     async def cat(self, ctx):
-        #firstem = discord.Embed(title="Getting cat picture...", color=discord.Color.orange())
-        #embedmsg = await ctx.send(embed=firstem)
-        # request = requests.get("https://api.thecatapi.com/v1/images/search?format=json").json()
-        # url = request[0]["url"]
         file = os.path.join(self.datapath, 'catpic.json')
         with open(file, 'r') as f:
             data = json.load(f)
         url = data[random.randint(0, 99)]['url']
-        #secondem = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
-        #secondem.set_image(url=url)
-        em = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
-        em.set_image(url=url)
-        await ctx.send(embed=em)
-        #await embedmsg.edit(embed=secondem)
+        #em = discord.Embed(title="Cat Picture:", color=discord.Color.blue())
+        #em.set_image(url=url)
+        #await ctx.send(embed=em)
+        msg = await ctx.send(url)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
     #@commands.command(aliases=['puppy', 'doggo'])
     async def dog(self, ctx):
-        #firstem = discord.Embed(title="Getting dog picture...", color=discord.Color.orange())
-        #embedmsg = await ctx.send(embed=firstem)
-        #request = requests.get("https://api.thedogapi.com/v1/images/search").json()
-        #url = request[0]["url"]
         file = os.path.join(self.datapath, 'dogpic.json')
         with open(file, 'r') as f:
             data = json.load(f)
         url = data[random.randint(0, 99)]['url']
-        #secondem = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
-        #secondem.set_image(url=url)
-        em = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
-        em.set_image(url=url)
-        #await embedmsg.edit(embed=secondem)
-        await ctx.send(embed=em)
+        #em = discord.Embed(title="Dog Picture:", color=discord.Color.blue())
+        #em.set_image(url=url)
+        #await ctx.send(embed=em)
+        msg = await ctx.send(url)
 
     #@commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
