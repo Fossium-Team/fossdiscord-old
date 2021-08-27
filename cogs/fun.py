@@ -3,7 +3,7 @@
 import json
 import os
 import discord
-#from discord import embeds
+# from discord import embeds
 from discord.ext import commands
 from discord_slash import cog_ext
 # import psutil
@@ -22,7 +22,7 @@ class Fun(commands.Cog):
         self.datapath = os.path.join(os.path.abspath(os.path.dirname(os.path.abspath(__file__))), '..', 'cache')
 
     @commands.cooldown(1, 10, commands.BucketType.channel)
-#     @cog_ext.cog_slash(name='choose', description='Multiple choices.')
+    #     @cog_ext.cog_slash(name='choose', description='Multiple choices.')
     @commands.command()
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
@@ -38,9 +38,9 @@ class Fun(commands.Cog):
                                    color=discord.Color.blue())
                 await ctx.send(embed=em)
 
-#    @commands.cooldown(1, 10, commands.BucketType.user)
+    #    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='cat', description='Get a cat picture.')
-#     @commands.command(aliases=['kat', 'cats', 'kitten'])
+    #     @commands.command(aliases=['kat', 'cats', 'kitten'])
     async def cat(self, ctx):
         file = os.path.join(self.datapath, 'catpic.json')
         with open(file, 'r') as f:
@@ -50,9 +50,9 @@ class Fun(commands.Cog):
         em.set_image(url=url)
         await ctx.send(embed=em)
 
-#    @commands.cooldown(1, 10, commands.BucketType.user)
+    #    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='dog', description='Get a dog picture.')
-#    @commands.command(aliases=['puppy', 'doggo'])
+    #    @commands.command(aliases=['puppy', 'doggo'])
     async def dog(self, ctx):
         file = os.path.join(self.datapath, 'dogpic.json')
         with open(file, 'r') as f:
@@ -62,18 +62,18 @@ class Fun(commands.Cog):
         em.set_image(url=url)
         await ctx.send(embed=em)
 
-#    @commands.cooldown(1, 10, commands.BucketType.user)
+    #    @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
-#     @commands.command(aliases=['wiki'])
-    #async def wikipedia(self, ctx, *page):
+    #     @commands.command(aliases=['wiki'])
+    # async def wikipedia(self, ctx, *page):
     async def wikipedia(self, ctx, *, page):
-        #if not page:
+        # if not page:
         #    em = discord.Embed(title='The argument `page` is missing', color=discord.Color.red())
         #    await ctx.send(embed=em)
         #    return
-        #f len(page) >= 2:
+        # f len(page) >= 2:
         #    args = "_".join(page[:])
-        #else:
+        # else:
         #    args = " ".join(page[:])
         firstem = discord.Embed(title="Getting data from Wikipedia...", color=discord.Color.orange())
         embedmsg = await ctx.send(embed=firstem)
