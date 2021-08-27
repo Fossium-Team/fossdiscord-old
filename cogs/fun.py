@@ -65,19 +65,20 @@ class Fun(commands.Cog):
 #     @commands.cooldown(1, 10, commands.BucketType.user)
     @cog_ext.cog_slash(name='wiki', description='Search from wikipedia.')
 #     @commands.command(aliases=['wiki'])
-    async def wikipedia(self, ctx, *page):
-        if not page:
-            em = discord.Embed(title='The argument `page` is missing', color=discord.Color.red())
-            await ctx.send(embed=em)
-            return
-        if len(page) >= 2:
-            args = "_".join(page[:])
-        else:
-            args = " ".join(page[:])
+    #async def wikipedia(self, ctx, *page):
+    async def wikipedia(self, ctx, *, page):
+        #if not page:
+        #    em = discord.Embed(title='The argument `page` is missing', color=discord.Color.red())
+        #    await ctx.send(embed=em)
+        #    return
+        #f len(page) >= 2:
+        #    args = "_".join(page[:])
+        #else:
+        #    args = " ".join(page[:])
         firstem = discord.Embed(title="Getting data from Wikipedia...", color=discord.Color.orange())
         embedmsg = await ctx.send(embed=firstem)
         wiki_wiki = wikipediaapi.Wikipedia('en')
-        page_py = wiki_wiki.page(args)
+        page_py = wiki_wiki.page(page)
         if page_py.exists():
             if re.search("may refer to:", page_py.summary[0:500]):
                 wiki_wiki = wikipediaapi.Wikipedia(
