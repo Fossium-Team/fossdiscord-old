@@ -11,12 +11,12 @@ import time
 #import os
 import requests
 import globalconfig
-start_time = time.time()
 
 
 class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.start_time = time.time()
     
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.command(description='Shows information about bot instance.')
@@ -38,7 +38,7 @@ class General(commands.Cog):
             em.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nYou can update the bot with {config.prefix}updatebot.")
         em.add_field(name = "Ping", value = "`"f"{round(self.bot.latency*1000)} ms`")
         current_time = time.time()
-        difference = int(round(current_time - start_time))
+        difference = int(round(current_time - self.start_time))
         text = str(datetime.timedelta(seconds=difference))
         em.add_field(name="Uptime", value=text)
         await ctx.send(embed = em)
