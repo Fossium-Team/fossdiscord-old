@@ -33,11 +33,11 @@ class Update(commands.Cog):
             changelog = latestversionresponse["body"]
             if globalconfig.currentversion == latestversion:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
-                secondem.add_field(name = "Checking for updates succeeded!", value = "There are no updates available.")
+                secondem.add_field(name = "FOSSDiscord Discord.py is DEPRECATED!", value = "There are no updates available.")
                 await embedmsg.edit(embed=secondem)
             elif globalconfig.currentversion > latestversion:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
-                secondem.add_field(name = "Invalid version in the globalconfig.", value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
+                secondem.add_field(name = "FOSSDiscord Discord.py is DEPRECATED!", value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
                 await embedmsg.edit(embed=secondem)
             else:
                 secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
@@ -59,11 +59,11 @@ class Update(commands.Cog):
                 latestversion = latestversionget.split(' ', 1)[1]
                 if globalconfig.currentversion == latestversion:
                     secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    secondem.add_field(name = 'Already the latest version.', value = "There is no need to update.")
+                    secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "There is no need to update.")
                     await embedmsg.edit(embed=secondem)
                 elif globalconfig.currentversion > latestversion:
                     secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    secondem.add_field(name = 'Invalid version in the globalconfig.', value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
+                    secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
                     await embedmsg.edit(embed=secondem)
                 else:
                     secondem = discord.Embed(title = "Updating...", color = discord.Color.orange())
