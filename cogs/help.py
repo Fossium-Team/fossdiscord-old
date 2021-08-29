@@ -33,7 +33,7 @@ class Help(commands.Cog):
 
         latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
         latestversionget = latestversionresponse.json()["name"]
-        latestversion = latestversionget.split(' ', 1)[1]
+        latestversion = "6.1.3"
         secondem = discord.Embed(title = "Help", color = discord.Color.red())
         secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
         secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
@@ -75,7 +75,7 @@ class Help(commands.Cog):
 
                     latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
                     latestversionget = latestversionresponse.json()["name"]
-                    latestversion = latestversionget.split(' ', 1)[1]
+                    latestversion = "6.1.3"
                     secondem = discord.Embed(title = "Help", color = discord.Color.red())
                     secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
                     secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
