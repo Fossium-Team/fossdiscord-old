@@ -38,9 +38,9 @@ class Help(commands.Cog):
         secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
         secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
         if globalconfig.currentversion == latestversion:
-            secondem.add_field(name = "Updates", value = "FOSSDiscord Discord.py is DEPRECATED!", inline=False)
+            secondem.add_field(name = "Updates", value = "FOSSDiscord Discord.py is DEPRECATED! https://github.com/FOSS-Devs/fossdiscord-new", inline=False)
         elif globalconfig.currentversion > latestversion:
-            secondem.add_field(name = "Updates", value = f"FOSSDiscord Discord.py is DEPRECATED!", inline=False)
+            secondem.add_field(name = "Updates", value = f"FOSSDiscord Discord.py is DEPRECATED! https://github.com/FOSS-Devs/fossdiscord-new", inline=False)
         else:
             secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
         await embedmsg.edit(embed=secondem)
@@ -80,9 +80,9 @@ class Help(commands.Cog):
                     secondem.add_field(name = "Options", value = "🏠 - Home (this page)\n⚔️ - Moderation\n⚙️ - Settings\n🪛 - Utils\n😄 - Fun")
                     secondem.add_field(name = "‎", value = "🔐 - Caesarcrypt\n🔍 - VirusTotal\n🔄 - Update\n👑 - Admin\n❓ - About")
                     if globalconfig.currentversion == latestversion:
-                        secondem.add_field(name = "Updates", value = "FOSSDiscord Discord.py is DEPRECATED!", inline=False)
+                        secondem.add_field(name = "Updates", value = "FOSSDiscord Discord.py is DEPRECATED! https://github.com/FOSS-Devs/fossdiscord-new", inline=False)
                     elif globalconfig.currentversion > latestversion:
-                        secondem.add_field(name = "Updates", value = f"FOSSDiscord Discord.py is DEPRECATED!", inline=False)
+                        secondem.add_field(name = "Updates", value = f"FOSSDiscord Discord.py is DEPRECATED! https://github.com/FOSS-Devs/fossdiscord-new", inline=False)
                     else:
                         secondem.add_field(name = "Updates", value = f"You can update the bot from {globalconfig.currentversion} to {latestversion}.\nCheck the changelog with {config.prefix}updatecheck.\nUpdate with {config.prefix}updatebot.", inline=False)
                     await embedmsg.edit(embed=secondem)
