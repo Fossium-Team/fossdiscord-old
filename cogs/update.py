@@ -32,11 +32,11 @@ class Update(commands.Cog):
             latestversion = latestversionget[1:]
             changelog = latestversionresponse["body"]
             if globalconfig.currentversion == latestversion:
-                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
+                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.red())
                 secondem.add_field(name = "FOSSDiscord Discord.py is DEPRECATED!", value = "There are no updates available.")
                 await embedmsg.edit(embed=secondem)
             elif globalconfig.currentversion > latestversion:
-                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.green())
+                secondem = discord.Embed(title = "Updatecheck\n----------------", color = discord.Color.red())
                 secondem.add_field(name = "FOSSDiscord Discord.py is DEPRECATED!", value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
                 await embedmsg.edit(embed=secondem)
             else:
@@ -53,63 +53,59 @@ class Update(commands.Cog):
         if str(ctx.message.author.id) == config.ownerID:
             firstem = discord.Embed(title = "Checking for updates...", color = discord.Color.orange())
             embedmsg = await ctx.send(embed=firstem)
-            if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "win32":
-                latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
-                latestversionget = latestversionresponse.json()["name"]
-                latestversion = latestversionget.split(' ', 1)[1]
-                if globalconfig.currentversion == latestversion:
-                    secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "There is no need to update.")
-                    await embedmsg.edit(embed=secondem)
-                elif globalconfig.currentversion > latestversion:
-                    secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.green())
-                    secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "There is an invalid version in the globalconfig, try downloading a fresh copy of FOSSDiscord.")
-                    await embedmsg.edit(embed=secondem)
-                else:
-                    secondem = discord.Embed(title = "Updating...", color = discord.Color.orange())
-                    await embedmsg.edit(embed=secondem)
-                    datetimenow = datetime.now()
-                    currentdate = datetime.strftime(datetimenow, '%a %b %Y %I-%M-%S%p')
+            latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest")
+            latestversionget = latestversionresponse.json()["name"]
+            latestversion = "6.1.3"
+            if globalconfig.currentversion == latestversion:
+                secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.red())
+                secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "https://github.com/FOSS-Devs/fossdiscord-new.")
+                await embedmsg.edit(embed=secondem)
+            elif globalconfig.currentversion > latestversion:
+                secondem = discord.Embed(title = "Updatebot\n-------------", color = discord.Color.red())
+                secondem.add_field(name = 'FOSSDiscord Discord.py is DEPRECATED!', value = "https://github.com/FOSS-Devs/fossdiscord-new")
+                await embedmsg.edit(embed=secondem)
+            else:
+                secondem = discord.Embed(title = "Updating...", color = discord.Color.orange())
+                await embedmsg.edit(embed=secondem)
+                datetimenow = datetime.now()
+                currentdate = datetime.strftime(datetimenow, '%a %b %Y %I-%M-%S%p')
 
-                    latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest").json()
-                    latestversionget = latestversionresponse["tag_name"]
-                    latestversion = latestversionget[1:]
-                    changelog = latestversionresponse["body"]
+                latestversionresponse = requests.get("https://api.github.com/repos/FOSS-Devs/fossdiscord/releases/latest").json()
+                latestversionget = latestversionresponse["tag_name"]
+                latestversion = latestversionget[1:]
+                changelog = latestversionresponse["body"]
 
-                    downloadurl = f"https://github.com/FOSS-Devs/fossdiscord/archive/refs/tags/{latestversion}.zip"
-                    currentdir = os.getcwd()
+                downloadurl = f"https://github.com/FOSS-Devs/fossdiscord/archive/refs/tags/{latestversion}.zip"
+                currentdir = os.getcwd()
 
-                    os.mkdir(f'{currentdir}/updatertemp')
-                    os.mkdir(f'{currentdir}/updatertemp/unzipped')
-                    wget.download(downloadurl, f'{currentdir}/updatertemp/download.zip')
+                os.mkdir(f'{currentdir}/updatertemp')
+                os.mkdir(f'{currentdir}/updatertemp/unzipped')
+                wget.download(downloadurl, f'{currentdir}/updatertemp/download.zip')
 
-                    with ZipFile(f'{currentdir}/updatertemp/download.zip', 'r') as zipObj:
-                        zipObj.extractall(f'{currentdir}/updatertemp/unzipped')
+                with ZipFile(f'{currentdir}/updatertemp/download.zip', 'r') as zipObj:
+                    zipObj.extractall(f'{currentdir}/updatertemp/unzipped')
 
-                    os.mkdir(f'{currentdir}/backup-{currentdate}')
+                os.mkdir(f'{currentdir}/backup-{currentdate}')
 
-                    allfiles = ["bot.py", "setup.py", "cogs", "requirements.txt", "src", "README.md", ".gitignore", ".github", "LICENSE", "globalconfig.py"]
+                allfiles = ["bot.py", "setup.py", "cogs", "requirements.txt", "src", "README.md", ".gitignore", ".github", "LICENSE", "globalconfig.py"]
 
-                    for f in allfiles:
-                        shutil.move(f'{currentdir}/' + f, f'{currentdir}/backup-{currentdate}')
+                for f in allfiles:
+                    shutil.move(f'{currentdir}/' + f, f'{currentdir}/backup-{currentdate}')
 
-                    allfilesunzipped = os.listdir(f'{currentdir}/updatertemp/unzipped/fossdiscord-{latestversion}')
+                allfilesunzipped = os.listdir(f'{currentdir}/updatertemp/unzipped/fossdiscord-{latestversion}')
 
-                    for f in allfilesunzipped:
-                        shutil.move(f'{currentdir}/updatertemp/unzipped/fossdiscord-{latestversion}/' + f, currentdir)
+                for f in allfilesunzipped:
+                    shutil.move(f'{currentdir}/updatertemp/unzipped/fossdiscord-{latestversion}/' + f, currentdir)
 
-                    shutil.rmtree("updatertemp")
-                    print("Done! The bot will restart to apply the changes! If it doesn't, try to start the bot manually.")
-                    thirdem = discord.Embed(title = "Updated!", description = "FOSSDiscord updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
-                    thirdem.add_field(name = "Changelog", value = changelog)
-                    thirdem.add_field(name = "Note", value = "The bot should start up again. If it doesn't, try to start the bot manually. If the bot errors while starting, please open an issue in FOSSDiscord's GitHub repository.", inline=False)
-                    await embedmsg.edit(embed=thirdem)
-                    #close_port()
-                    await ctx.bot.close()
-                    subprocess.Popen([sys.executable, os.path.abspath(__file__), *sys.argv]) 
-        elif sys.platform == "darwin":
-                em = discord.Embed(title = "We are still testing `updatebot` for macOS.", color = discord.Color.red())
-                await ctx.send(embed = em)
+                shutil.rmtree("updatertemp")
+                print("Done! The bot will restart to apply the changes! If it doesn't, try to start the bot manually.")
+                thirdem = discord.Embed(title = "Updated!", description = "FOSSDiscord updated! No error reported. Check your console to confirm this.", color = discord.Color.green())
+                thirdem.add_field(name = "Changelog", value = changelog)
+                thirdem.add_field(name = "Note", value = "The bot should start up again. If it doesn't, try to start the bot manually. If the bot errors while starting, please open an issue in FOSSDiscord's GitHub repository.", inline=False)
+                await embedmsg.edit(embed=thirdem)
+                #close_port()
+                await ctx.bot.close()
+                subprocess.Popen([sys.executable, os.path.abspath(__file__), *sys.argv]) 
 
         else:
             em = discord.Embed(title = "This command is for the bot owner only.", color = discord.Color.red())
