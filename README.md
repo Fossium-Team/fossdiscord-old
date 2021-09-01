@@ -2,15 +2,15 @@
 We are rewriting the bot, when the rewrite is done you will see the new code [here](https://github.com/FOSS-Devs/fossdiscord-new)
 # PLEASE DON'T CONTINUE DEVELOPMENT OF THE BOT
 Discord.py has [stopped development](https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1)
-# FOSSDiscord-old
+# FOSSDiscord
 
-FOSSDiscord-old was a multipurpose Discord bot
+FOSSDiscord was a multipurpose Discord bot
 
 ## Documentation
 
 ### Starting the bot
 #### Make sure you have [Python 3](https://www.python.org/downloads/) installed. (and make sure that Python is in path, if you're on Windows!)
-1. [Download the latest source zip or tarball.](https://github.com/FOSS-Devs/fossdiscord-old/releases/latest)
+1. [Download the latest source zip or tarball.](https://github.com/FOSS-Devs/fossdiscord/releases/latest)
 2. Unzip the zip or tarball, shift + right click in the `FOSSDiscord-<version>` folder, click on `Open Powershell window here` or `Open in Windows Terminal` if you have Windows Terminal installed., 
 3. Make sure all the dependencies are installed, Windows: `python -m pip install -r requirements.txt` Linux: `pip3 install -r requirements.txt`.
 4. Run `python setup.py` or `python3 setup.py` for a configuration creator. If you don't do this, the bot will not run.
