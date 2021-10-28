@@ -1,5 +1,5 @@
 # Rewrite
-We are rewriting the bot, when the rewrite is done you will see the new code [here](https://github.com/FOSS-Devs/fossdiscord-new)
+You can find the rewrite in C# using DSharpPlus [here](https://github.com/Fossium-Team/FossiumBot)
 # PLEASE DON'T CONTINUE DEVELOPMENT OF THE BOT
 Discord.py has [stopped development](https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1)
 # FOSSDiscord
